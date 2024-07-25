@@ -1,0 +1,380 @@
+Generated on 2023-11-22 19:01:51 by gEcon ver. 1.2.2 (2023-07-10)
+http://gecon.r-forge.r-project.org/
+
+Model name: cge_calibr_sam_usa
+
+Index sets (1):
+    SEC = { 'a_Agri', 'a_Mnfc', 'a_Services' }
+
+Block: CONSUMER
+ Definitions:
+    u = (SUM<s::SEC> alpha<s> * D<s>^(omega^-1 * (-1 + omega)))^(omega * (-1 + omega)^-1)
+ Controls:
+    <s::SEC> D<s>, DEM, INC, SAV, BTINC, PIT_base
+ Objective:
+    U = (SUM<s::SEC> alpha<s> * D<s>^(omega^-1 * (-1 + omega)))^(omega * (-1 + omega)^-1)
+ Constraints:
+    -DEM + (SUM<s::SEC> alpha<s> * D<s>^(omega^-1 * (-1 + omega)))^(omega * (-1 + omega)^-1) = 0    (lambda__CONSUMER_1)
+    -INC + SAV + SUM<s::SEC> p_cons<s> * D<s> = 0    (lambda__CONSUMER_2)
+    BTINC - INC - pit_tax * PIT_base = 0    (lambda__CONSUMER_3)
+    -BTINC + p_k * K + p_l * L = 0    (lambda__CONSUMER_4)
+    -SAV + sav * INC = 0    (lambda__CONSUMER_5)
+ Identities:
+    BTINC - PIT_base = 0
+ First order conditions:
+    <s::SEC> lambda__CONSUMER_2 * p_cons<s> + alpha<s> * D<s>^(-1 + omega^-1 * (-1 + omega)) * (SUM<s::SEC> alpha<s> * D<s>^(omega^-1 * (-1 + omega)))^(-1 + omega * (-1 + omega)^-1) + alpha<s> * lambda__CONSUMER_1 * D<s>^(-1 + omega^-1 * (-1 + omega)) * (SUM<s::SEC> alpha<s> * D<s>^(omega^-1 * (-1 + omega)))^(-1 + omega * (-1 + omega)^-1) = 0    (<s::SEC> D<s>)
+    -lambda__CONSUMER_1 = 0    (DEM)
+    -lambda__CONSUMER_2 - lambda__CONSUMER_3 + sav * lambda__CONSUMER_5 = 0    (INC)
+    lambda__CONSUMER_2 - lambda__CONSUMER_5 = 0    (SAV)
+    lambda__CONSUMER_3 - lambda__CONSUMER_4 = 0    (BTINC)
+    -pit_tax * lambda__CONSUMER_3 = 0    (PIT_base)
+ First order conditions after reduction:
+    <s::SEC> lambda__CONSUMER_5 * p_cons<s> + alpha<s> * D<s>^(-1 + omega^-1 * (-1 + omega)) * (SUM<s::SEC> alpha<s> * D<s>^(omega^-1 * (-1 + omega)))^(-1 + omega * (-1 + omega)^-1) = 0    (<s::SEC> D<s>)
+    -pit_tax * (-lambda__CONSUMER_5 + sav * lambda__CONSUMER_5) = 0    (PIT_base)
+
+Block: <s::SEC> PRODUCTION_OF_GOODS
+ Controls:
+    Y<s>, K<s>, L<s>, Y_VA<s>, Y_INT<s>, <si::SEC> X<si,s>
+ Objective:
+    pi<s> = p<s> * Y<s> - (1 + tax_rate<s>) * (p_k * K<s> * (1 + k_tax) + p_l * L<s> * (1 + l_tax) + SUM<si::SEC> p_int<si> * X<si,s>)
+ Constraints:
+    -Y<s> + Y_VA<s> = 0    (lambda__PRODUCTION_OF_GOODS_1<s>)
+    -Y_VA<s> + Y_INT<s> = 0    (lambda__PRODUCTION_OF_GOODS_2<s>)
+    -Y_VA<s> + gamma_yva<s> * K<s>^beta_k<s> * L<s>^beta_l<s> = 0    (lambda__PRODUCTION_OF_GOODS_3<s>)
+    <si::SEC> -X<si,s> + beta_x<si,s> * Y_INT<s> = 0    (<si::SEC> lambda__PRODUCTION_OF_GOODS_4<s,si>)
+ First order conditions:
+    -lambda__PRODUCTION_OF_GOODS_1<s> + p<s> = 0    (Y<s>)
+    -p_k * (1 + k_tax) * (1 + tax_rate<s>) + beta_k<s> * gamma_yva<s> * lambda__PRODUCTION_OF_GOODS_3<s> * K<s>^(-1 + beta_k<s>) * L<s>^beta_l<s> = 0    (K<s>)
+    -p_l * (1 + l_tax) * (1 + tax_rate<s>) + beta_l<s> * gamma_yva<s> * lambda__PRODUCTION_OF_GOODS_3<s> * K<s>^beta_k<s> * L<s>^(-1 + beta_l<s>) = 0    (L<s>)
+    lambda__PRODUCTION_OF_GOODS_1<s> - lambda__PRODUCTION_OF_GOODS_2<s> - lambda__PRODUCTION_OF_GOODS_3<s> = 0    (Y_VA<s>)
+    lambda__PRODUCTION_OF_GOODS_2<s> + SUM<si::SEC> beta_x<si,s> * lambda__PRODUCTION_OF_GOODS_4<s,si> = 0    (Y_INT<s>)
+    <si::SEC> -lambda__PRODUCTION_OF_GOODS_4<s,si> - p_int<si> * (1 + tax_rate<s>) = 0    (<si::SEC> X<si,s>)
+ First order conditions after reduction:
+    -p_k * (1 + k_tax) * (1 + tax_rate<s>) + beta_k<s> * gamma_yva<s> * (p<s> + SUM<si::SEC> beta_x<si,s> * lambda__PRODUCTION_OF_GOODS_4<s,si>) * K<s>^(-1 + beta_k<s>) * L<s>^beta_l<s> = 0    (K<s>)
+    -p_l * (1 + l_tax) * (1 + tax_rate<s>) + beta_l<s> * gamma_yva<s> * (p<s> + SUM<si::SEC> beta_x<si,s> * lambda__PRODUCTION_OF_GOODS_4<s,si>) * K<s>^beta_k<s> * L<s>^(-1 + beta_l<s>) = 0    (L<s>)
+    <si::SEC> -lambda__PRODUCTION_OF_GOODS_4<s,si> - p_int<si> * (1 + tax_rate<s>) = 0    (<si::SEC> X<si,s>)
+
+Block: TAXES_PRODUCER
+ Identities:
+    <s::SEC> -TAX_s<s> + tax_rate<s> * (p_k * K<s> * (1 + k_tax) + p_l * L<s> * (1 + l_tax) + SUM<si::SEC> p_int<si> * X<si,s>) = 0
+    -L_TAX + l_tax * p_l * (SUM<s::SEC> L<s>) = 0
+    -K_TAX + k_tax * p_k * (SUM<s::SEC> K<s>) = 0
+
+Block: <s::SEC> EXPORT_COMPOSITE
+ Controls:
+    EXPORT<s>, EXP<s>
+ Objective:
+    PI_EXP<s> = p_exp<s> * EXPORT<s> - p_for * EXP<s>
+ Constraints:
+    -EXPORT<s> + theta_exp<s> * EXP<s> = 0    (lambda__EXPORT_COMPOSITE_1<s>)
+ First order conditions:
+    -lambda__EXPORT_COMPOSITE_1<s> + p_exp<s> = 0    (EXPORT<s>)
+    -p_for + theta_exp<s> * lambda__EXPORT_COMPOSITE_1<s> = 0    (EXP<s>)
+ First order conditions after reduction:
+    -p_for + theta_exp<s> * p_exp<s> = 0    (EXP<s>)
+
+Block: <s::SEC> FINAL_PRODUCT_COMPOSITE
+ Controls:
+    Y_f<s>, Y_HOME<s>, EXPORT_f<s>
+ Objective:
+    PI_Y<s> = p<s> * Y_f<s> - p_home<s> * Y_HOME<s> - p_exp<s> * EXPORT_f<s>
+ Constraints:
+    -Y_f<s> + theta_y<s> * (alpha_prod_h<s> * Y_HOME<s>^(sigma_f_prod<s>^-1 * (1 + sigma_f_prod<s>)) + alpha_prod_e<s> * EXPORT_f<s>^(sigma_f_prod<s>^-1 * (1 + sigma_f_prod<s>)))^(sigma_f_prod<s> * (1 + sigma_f_prod<s>)^-1) = 0    (lambda__FINAL_PRODUCT_COMPOSITE_1<s>)
+ First order conditions:
+    -lambda__FINAL_PRODUCT_COMPOSITE_1<s> + p<s> = 0    (Y_f<s>)
+    -p_home<s> + alpha_prod_h<s> * theta_y<s> * lambda__FINAL_PRODUCT_COMPOSITE_1<s> * Y_HOME<s>^(-1 + sigma_f_prod<s>^-1 * (1 + sigma_f_prod<s>)) * (alpha_prod_h<s> * Y_HOME<s>^(sigma_f_prod<s>^-1 * (1 + sigma_f_prod<s>)) + alpha_prod_e<s> * EXPORT_f<s>^(sigma_f_prod<s>^-1 * (1 + sigma_f_prod<s>)))^(-1 + sigma_f_prod<s> * (1 + sigma_f_prod<s>)^-1) = 0    (Y_HOME<s>)
+    -p_exp<s> + alpha_prod_e<s> * theta_y<s> * lambda__FINAL_PRODUCT_COMPOSITE_1<s> * EXPORT_f<s>^(-1 + sigma_f_prod<s>^-1 * (1 + sigma_f_prod<s>)) * (alpha_prod_h<s> * Y_HOME<s>^(sigma_f_prod<s>^-1 * (1 + sigma_f_prod<s>)) + alpha_prod_e<s> * EXPORT_f<s>^(sigma_f_prod<s>^-1 * (1 + sigma_f_prod<s>)))^(-1 + sigma_f_prod<s> * (1 + sigma_f_prod<s>)^-1) = 0    (EXPORT_f<s>)
+ First order conditions after reduction:
+    -p_home<s> + alpha_prod_h<s> * theta_y<s> * p<s> * Y_HOME<s>^(-1 + sigma_f_prod<s>^-1 * (1 + sigma_f_prod<s>)) * (alpha_prod_h<s> * Y_HOME<s>^(sigma_f_prod<s>^-1 * (1 + sigma_f_prod<s>)) + alpha_prod_e<s> * EXPORT_f<s>^(sigma_f_prod<s>^-1 * (1 + sigma_f_prod<s>)))^(-1 + sigma_f_prod<s> * (1 + sigma_f_prod<s>)^-1) = 0    (Y_HOME<s>)
+    -p_exp<s> + alpha_prod_e<s> * theta_y<s> * p<s> * EXPORT_f<s>^(-1 + sigma_f_prod<s>^-1 * (1 + sigma_f_prod<s>)) * (alpha_prod_h<s> * Y_HOME<s>^(sigma_f_prod<s>^-1 * (1 + sigma_f_prod<s>)) + alpha_prod_e<s> * EXPORT_f<s>^(sigma_f_prod<s>^-1 * (1 + sigma_f_prod<s>)))^(-1 + sigma_f_prod<s> * (1 + sigma_f_prod<s>)^-1) = 0    (EXPORT_f<s>)
+
+Block: <s::SEC> IMPORT_COMPOSITE
+ Controls:
+    IMPORT<s>, IMP<s>
+ Objective:
+    PI_IMP<s> = p_imp<s> * IMPORT<s> - p_for * ex_rate * IMP<s> * (1 + im_tax<s>)
+ Constraints:
+    -IMPORT<s> + theta_imp<s> * IMP<s> = 0    (lambda__IMPORT_COMPOSITE_1<s>)
+ First order conditions:
+    -lambda__IMPORT_COMPOSITE_1<s> + p_imp<s> = 0    (IMPORT<s>)
+    theta_imp<s> * lambda__IMPORT_COMPOSITE_1<s> - p_for * ex_rate * (1 + im_tax<s>) = 0    (IMP<s>)
+ First order conditions after reduction:
+    theta_imp<s> * p_imp<s> - p_for * ex_rate * (1 + im_tax<s>) = 0    (IMP<s>)
+
+Block: <s::SEC> ARMINGTON_COMPOSITE
+ Controls:
+    ARM<s>, Y_HOME_a<s>, IMPORT_a<s>
+ Objective:
+    PI_ARM<s> = -p_home<s> * Y_HOME_a<s> + p_arm<s> * ARM<s> - p_imp<s> * IMPORT_a<s>
+ Constraints:
+    -ARM<s> + theta_arm<s> * (alpha_arm_h<s> * Y_HOME_a<s>^(sigma_arm<s>^-1 * (-1 + sigma_arm<s>)) + alpha_arm_i<s> * IMPORT_a<s>^(sigma_arm<s>^-1 * (-1 + sigma_arm<s>)))^(sigma_arm<s> * (-1 + sigma_arm<s>)^-1) = 0    (lambda__ARMINGTON_COMPOSITE_1<s>)
+ First order conditions:
+    -lambda__ARMINGTON_COMPOSITE_1<s> + p_arm<s> = 0    (ARM<s>)
+    -p_home<s> + alpha_arm_h<s> * theta_arm<s> * lambda__ARMINGTON_COMPOSITE_1<s> * Y_HOME_a<s>^(-1 + sigma_arm<s>^-1 * (-1 + sigma_arm<s>)) * (alpha_arm_h<s> * Y_HOME_a<s>^(sigma_arm<s>^-1 * (-1 + sigma_arm<s>)) + alpha_arm_i<s> * IMPORT_a<s>^(sigma_arm<s>^-1 * (-1 + sigma_arm<s>)))^(-1 + sigma_arm<s> * (-1 + sigma_arm<s>)^-1) = 0    (Y_HOME_a<s>)
+    -p_imp<s> + alpha_arm_i<s> * theta_arm<s> * lambda__ARMINGTON_COMPOSITE_1<s> * IMPORT_a<s>^(-1 + sigma_arm<s>^-1 * (-1 + sigma_arm<s>)) * (alpha_arm_h<s> * Y_HOME_a<s>^(sigma_arm<s>^-1 * (-1 + sigma_arm<s>)) + alpha_arm_i<s> * IMPORT_a<s>^(sigma_arm<s>^-1 * (-1 + sigma_arm<s>)))^(-1 + sigma_arm<s> * (-1 + sigma_arm<s>)^-1) = 0    (IMPORT_a<s>)
+ First order conditions after reduction:
+    -p_home<s> + alpha_arm_h<s> * theta_arm<s> * p_arm<s> * Y_HOME_a<s>^(-1 + sigma_arm<s>^-1 * (-1 + sigma_arm<s>)) * (alpha_arm_h<s> * Y_HOME_a<s>^(sigma_arm<s>^-1 * (-1 + sigma_arm<s>)) + alpha_arm_i<s> * IMPORT_a<s>^(sigma_arm<s>^-1 * (-1 + sigma_arm<s>)))^(-1 + sigma_arm<s> * (-1 + sigma_arm<s>)^-1) = 0    (Y_HOME_a<s>)
+    -p_imp<s> + alpha_arm_i<s> * theta_arm<s> * p_arm<s> * IMPORT_a<s>^(-1 + sigma_arm<s>^-1 * (-1 + sigma_arm<s>)) * (alpha_arm_h<s> * Y_HOME_a<s>^(sigma_arm<s>^-1 * (-1 + sigma_arm<s>)) + alpha_arm_i<s> * IMPORT_a<s>^(sigma_arm<s>^-1 * (-1 + sigma_arm<s>)))^(-1 + sigma_arm<s> * (-1 + sigma_arm<s>)^-1) = 0    (IMPORT_a<s>)
+
+Block: <s::SEC> SALES
+ Identities:
+    EXCISE<s> - TAX_p<s> + VAT<s> = 0
+    -VAT<s> + vat<s> * p_market<s> * (1 + excise<s>) * (D<s> + D_GOV<s> + INV<s>) = 0
+    -EXCISE<s> + excise<s> * p_market<s> * (D<s> + D_GOV<s> + INV<s> + SUM<si::SEC> X<s,si>) = 0
+
+Block: FIRM
+ Identities:
+    -INC_FIRM + BTINC_FIRM * (1 - firm_tax) = 0
+    -BTINC_FIRM + PROFIT = 0
+    -PROFIT + SUM<s::SEC> pi<s> = 0
+    INC_FIRM - SAV_FIRM = 0
+
+Block: GOVERNMENT
+ Identities:
+    CIT + EXCISE + IMTAX - INC_GOV + PIT + SOCTAX + STAX + VAT = 0
+    -VAT + SUM<s::SEC> VAT<s> = 0
+    -EXCISE + SUM<s::SEC> EXCISE<s> = 0
+    -STAX + SUM<s::SEC> TAX_s<s> = 0
+    K_TAX + L_TAX - SOCTAX = 0
+    -IMTAX + p_for * ex_rate * (SUM<s::SEC> im_tax<s> * IMP<s>) = 0
+    -PIT + pit_tax * PIT_base = 0
+    -CIT + FIRMTAX = 0
+    -FIRMTAX + firm_tax * BTINC_FIRM = 0
+    DEM_GOV - EXP_GOV = 0
+    -DEM_GOV + SUM<s::SEC> p_cons<s> * D_GOV<s> = 0
+    <s::SEC> dgov_data<s> - p_cons<s> * D_GOV<s> = 0
+    EXP_GOV - INC_GOV + SAV_GOV = 0
+
+Block: REST_OF_THE_WORLD
+ Identities:
+    IMPORT_ROW - INC_ROW = 0
+    -IMPORT_ROW + p_for * ex_rate * (SUM<s::SEC> IMP<s>) = 0
+    -EXP_ROW + EXPORT_ROW = 0
+    -EXPORT_ROW + p_for * (SUM<s::SEC> EXP<s>) = 0
+    EXP_ROW - INC_ROW + SAV_R = 0
+
+Block: CAPITAL
+ Identities:
+    SAV_FIRM + SAV_GOV + SAV_R = 0
+    <s::SEC> inv<s> * INV - p_cons<s> * INV<s> = 0
+
+Block: MARKET_CLEARING
+ Identities:
+    <s::SEC> -ARM<s> + D<s> + D_GOV<s> + INV<s> + SUM<si::SEC> X<s,si> = 0
+    <s::SEC> EXPORT<s> - EXPORT_f<s> = 0
+    <s::SEC> IMPORT<s> - IMPORT_a<s> = 0
+    <s::SEC> Y_HOME<s> - Y_HOME_a<s> = 0
+    <s::SEC> Y<s> - Y_f<s> = 0
+    1 - (SUM<s::SEC> p<s> * ARM<s>) * (SUM<si::SEC> ARM<si>)^-1 = 0
+    -K + SUM<s::SEC> K<s> = 0
+    L - SUM<s::SEC> L<s> = 0
+    1 - ex_rate = 0
+    <s::SEC> -p_int<s> + p_market<s> * (1 + excise<s>) = 0
+    <s::SEC> -p_cons<s> + p_market<s> * (1 + excise<s>) * (1 + vat<s>) = 0
+    <s::SEC> p_arm<s> - p_market<s> = 0
+
+Variables (150):
+    ex_rate, lambda__CONSUMER_5, p_k, p_l, BTINC, BTINC_FIRM, CIT, DEM, DEM_GOV, EXCISE, EXP_GOV, EXP_ROW, EXPORT_ROW, FIRMTAX, IMTAX, IMPORT_ROW, INC, INV, INC_FIRM, INC_GOV, INC_ROW, K, K_TAX, L, L_TAX, PIT_base, PIT, PROFIT, SAV, SAV_FIRM, SAV_GOV, SAV_R, SOCTAX, STAX, U, VAT, p<'a_Agri'>, p<'a_Mnfc'>, p<'a_Services'>, p_cons<'a_Agri'>, p_cons<'a_Mnfc'>, p_cons<'a_Services'>, p_int<'a_Agri'>, p_int<'a_Mnfc'>, p_int<'a_Services'>, p_exp<'a_Agri'>, p_exp<'a_Mnfc'>, p_exp<'a_Services'>, p_home<'a_Agri'>, p_home<'a_Mnfc'>, p_home<'a_Services'>, p_imp<'a_Agri'>, p_imp<'a_Mnfc'>, p_imp<'a_Services'>, p_arm<'a_Agri'>, p_arm<'a_Mnfc'>, p_arm<'a_Services'>, p_market<'a_Agri'>, p_market<'a_Mnfc'>, p_market<'a_Services'>, pi<'a_Agri'>, pi<'a_Mnfc'>, pi<'a_Services'>, ARM<'a_Agri'>, ARM<'a_Mnfc'>, ARM<'a_Services'>, D<'a_Agri'>, D<'a_Mnfc'>, D<'a_Services'>, D_GOV<'a_Agri'>, D_GOV<'a_Mnfc'>, D_GOV<'a_Services'>, EXPORT<'a_Agri'>, EXPORT<'a_Mnfc'>, EXPORT<'a_Services'>, EXP<'a_Agri'>, EXP<'a_Mnfc'>, EXP<'a_Services'>, EXPORT_f<'a_Agri'>, EXPORT_f<'a_Mnfc'>, EXPORT_f<'a_Services'>, EXCISE<'a_Agri'>, EXCISE<'a_Mnfc'>, EXCISE<'a_Services'>, IMPORT<'a_Agri'>, IMPORT<'a_Mnfc'>, IMPORT<'a_Services'>, IMP<'a_Agri'>, IMP<'a_Mnfc'>, IMP<'a_Services'>, IMPORT_a<'a_Agri'>, IMPORT_a<'a_Mnfc'>, IMPORT_a<'a_Services'>, INV<'a_Agri'>, INV<'a_Mnfc'>, INV<'a_Services'>, K<'a_Agri'>, K<'a_Mnfc'>, K<'a_Services'>, L<'a_Agri'>, L<'a_Mnfc'>, L<'a_Services'>, PI_EXP<'a_Agri'>, PI_EXP<'a_Mnfc'>, PI_EXP<'a_Services'>, PI_Y<'a_Agri'>, PI_Y<'a_Mnfc'>, PI_Y<'a_Services'>, PI_IMP<'a_Agri'>, PI_IMP<'a_Mnfc'>, PI_IMP<'a_Services'>, PI_ARM<'a_Agri'>, PI_ARM<'a_Mnfc'>, PI_ARM<'a_Services'>, TAX_s<'a_Agri'>, TAX_s<'a_Mnfc'>, TAX_s<'a_Services'>, TAX_p<'a_Agri'>, TAX_p<'a_Mnfc'>, TAX_p<'a_Services'>, VAT<'a_Agri'>, VAT<'a_Mnfc'>, VAT<'a_Services'>, X<'a_Agri','a_Agri'>, X<'a_Agri','a_Mnfc'>, X<'a_Agri','a_Services'>, X<'a_Mnfc','a_Agri'>, X<'a_Mnfc','a_Mnfc'>, X<'a_Mnfc','a_Services'>, X<'a_Services','a_Agri'>, X<'a_Services','a_Mnfc'>, X<'a_Services','a_Services'>, Y<'a_Agri'>, Y<'a_Mnfc'>, Y<'a_Services'>, Y_VA<'a_Agri'>, Y_VA<'a_Mnfc'>, Y_VA<'a_Services'>, Y_INT<'a_Agri'>, Y_INT<'a_Mnfc'>, Y_INT<'a_Services'>, Y_f<'a_Agri'>, Y_f<'a_Mnfc'>, Y_f<'a_Services'>, Y_HOME<'a_Agri'>, Y_HOME<'a_Mnfc'>, Y_HOME<'a_Services'>, Y_HOME_a<'a_Agri'>, Y_HOME_a<'a_Mnfc'>, Y_HOME_a<'a_Services'>
+
+Parameters (112):
+    firm_tax, k_tax, l_tax, omega, p_for, pit_tax, sav, alpha<'a_Agri'>, alpha<'a_Mnfc'>, alpha<'a_Services'>, alpha_prod_h<'a_Agri'>, alpha_prod_h<'a_Mnfc'>, alpha_prod_h<'a_Services'>, alpha_prod_e<'a_Agri'>, alpha_prod_e<'a_Mnfc'>, alpha_prod_e<'a_Services'>, alpha_arm_h<'a_Agri'>, alpha_arm_h<'a_Mnfc'>, alpha_arm_h<'a_Services'>, alpha_arm_i<'a_Agri'>, alpha_arm_i<'a_Mnfc'>, alpha_arm_i<'a_Services'>, beta_k<'a_Agri'>, beta_k<'a_Mnfc'>, beta_k<'a_Services'>, beta_l<'a_Agri'>, beta_l<'a_Mnfc'>, beta_l<'a_Services'>, beta_x<'a_Agri','a_Agri'>, beta_x<'a_Agri','a_Mnfc'>, beta_x<'a_Agri','a_Services'>, beta_x<'a_Mnfc','a_Agri'>, beta_x<'a_Mnfc','a_Mnfc'>, beta_x<'a_Mnfc','a_Services'>, beta_x<'a_Services','a_Agri'>, beta_x<'a_Services','a_Mnfc'>, beta_x<'a_Services','a_Services'>, d_data<'a_Agri'>, d_data<'a_Mnfc'>, d_data<'a_Services'>, dgov_data<'a_Agri'>, dgov_data<'a_Mnfc'>, dgov_data<'a_Services'>, export_data<'a_Agri'>, export_data<'a_Mnfc'>, export_data<'a_Services'>, excise<'a_Agri'>, excise<'a_Mnfc'>, excise<'a_Services'>, gamma_yva<'a_Agri'>, gamma_yva<'a_Mnfc'>, gamma_yva<'a_Services'>, im_tax<'a_Agri'>, im_tax<'a_Mnfc'>, im_tax<'a_Services'>, import_data<'a_Agri'>, import_data<'a_Mnfc'>, import_data<'a_Services'>, import_tot<'a_Agri'>, import_tot<'a_Mnfc'>, import_tot<'a_Services'>, inv<'a_Agri'>, inv<'a_Mnfc'>, inv<'a_Services'>, l_data<'a_Agri'>, l_data<'a_Mnfc'>, l_data<'a_Services'>, sigma_f_prod<'a_Agri'>, sigma_f_prod<'a_Mnfc'>, sigma_f_prod<'a_Services'>, sigma_arm<'a_Agri'>, sigma_arm<'a_Mnfc'>, sigma_arm<'a_Services'>, tax_rate<'a_Agri'>, tax_rate<'a_Mnfc'>, tax_rate<'a_Services'>, theta_exp<'a_Agri'>, theta_exp<'a_Mnfc'>, theta_exp<'a_Services'>, theta_y<'a_Agri'>, theta_y<'a_Mnfc'>, theta_y<'a_Services'>, theta_imp<'a_Agri'>, theta_imp<'a_Mnfc'>, theta_imp<'a_Services'>, theta_arm<'a_Agri'>, theta_arm<'a_Mnfc'>, theta_arm<'a_Services'>, vat<'a_Agri'>, vat<'a_Mnfc'>, vat<'a_Services'>, x_data<'a_Agri','a_Agri'>, x_data<'a_Agri','a_Mnfc'>, x_data<'a_Agri','a_Services'>, x_data<'a_Mnfc','a_Agri'>, x_data<'a_Mnfc','a_Mnfc'>, x_data<'a_Mnfc','a_Services'>, x_data<'a_Services','a_Agri'>, x_data<'a_Services','a_Mnfc'>, x_data<'a_Services','a_Services'>, y_data<'a_Agri'>, y_data<'a_Mnfc'>, y_data<'a_Services'>, y_f_data<'a_Agri'>, y_f_data<'a_Mnfc'>, y_f_data<'a_Services'>, y_home_data<'a_Agri'>, y_home_data<'a_Mnfc'>, y_home_data<'a_Services'>, y_dom_data<'a_Agri'>, y_dom_data<'a_Mnfc'>, y_dom_data<'a_Services'>
+
+Free parameters (73):
+    firm_tax, k_tax, l_tax, omega, p_for, pit_tax, sav, alpha_prod_h<'a_Agri'>, alpha_prod_h<'a_Mnfc'>, alpha_prod_h<'a_Services'>, alpha_prod_e<'a_Agri'>, alpha_prod_e<'a_Mnfc'>, alpha_prod_e<'a_Services'>, alpha_arm_h<'a_Agri'>, alpha_arm_h<'a_Mnfc'>, alpha_arm_h<'a_Services'>, alpha_arm_i<'a_Agri'>, alpha_arm_i<'a_Mnfc'>, alpha_arm_i<'a_Services'>, d_data<'a_Agri'>, d_data<'a_Mnfc'>, d_data<'a_Services'>, dgov_data<'a_Agri'>, dgov_data<'a_Mnfc'>, dgov_data<'a_Services'>, export_data<'a_Agri'>, export_data<'a_Mnfc'>, export_data<'a_Services'>, excise<'a_Agri'>, excise<'a_Mnfc'>, excise<'a_Services'>, im_tax<'a_Agri'>, im_tax<'a_Mnfc'>, im_tax<'a_Services'>, import_data<'a_Agri'>, import_data<'a_Mnfc'>, import_data<'a_Services'>, import_tot<'a_Agri'>, import_tot<'a_Mnfc'>, import_tot<'a_Services'>, inv<'a_Agri'>, inv<'a_Mnfc'>, inv<'a_Services'>, l_data<'a_Agri'>, l_data<'a_Mnfc'>, l_data<'a_Services'>, tax_rate<'a_Agri'>, tax_rate<'a_Mnfc'>, tax_rate<'a_Services'>, vat<'a_Agri'>, vat<'a_Mnfc'>, vat<'a_Services'>, x_data<'a_Agri','a_Agri'>, x_data<'a_Agri','a_Mnfc'>, x_data<'a_Agri','a_Services'>, x_data<'a_Mnfc','a_Agri'>, x_data<'a_Mnfc','a_Mnfc'>, x_data<'a_Mnfc','a_Services'>, x_data<'a_Services','a_Agri'>, x_data<'a_Services','a_Mnfc'>, x_data<'a_Services','a_Services'>, y_data<'a_Agri'>, y_data<'a_Mnfc'>, y_data<'a_Services'>, y_f_data<'a_Agri'>, y_f_data<'a_Mnfc'>, y_f_data<'a_Services'>, y_home_data<'a_Agri'>, y_home_data<'a_Mnfc'>, y_home_data<'a_Services'>, y_dom_data<'a_Agri'>, y_dom_data<'a_Mnfc'>, y_dom_data<'a_Services'>
+
+Calibrated parameters (39):
+    alpha<'a_Agri'>, alpha<'a_Mnfc'>, alpha<'a_Services'>, beta_k<'a_Agri'>, beta_k<'a_Mnfc'>, beta_k<'a_Services'>, beta_l<'a_Agri'>, beta_l<'a_Mnfc'>, beta_l<'a_Services'>, beta_x<'a_Agri','a_Agri'>, beta_x<'a_Agri','a_Mnfc'>, beta_x<'a_Agri','a_Services'>, beta_x<'a_Mnfc','a_Agri'>, beta_x<'a_Mnfc','a_Mnfc'>, beta_x<'a_Mnfc','a_Services'>, beta_x<'a_Services','a_Agri'>, beta_x<'a_Services','a_Mnfc'>, beta_x<'a_Services','a_Services'>, gamma_yva<'a_Agri'>, gamma_yva<'a_Mnfc'>, gamma_yva<'a_Services'>, sigma_f_prod<'a_Agri'>, sigma_f_prod<'a_Mnfc'>, sigma_f_prod<'a_Services'>, sigma_arm<'a_Agri'>, sigma_arm<'a_Mnfc'>, sigma_arm<'a_Services'>, theta_exp<'a_Agri'>, theta_exp<'a_Mnfc'>, theta_exp<'a_Services'>, theta_y<'a_Agri'>, theta_y<'a_Mnfc'>, theta_y<'a_Services'>, theta_imp<'a_Agri'>, theta_imp<'a_Mnfc'>, theta_imp<'a_Services'>, theta_arm<'a_Agri'>, theta_arm<'a_Mnfc'>, theta_arm<'a_Services'>
+
+Equations (150):
+ (1)  1 - ex_rate = 0
+ (2)  1 - (ARM<'a_Agri'> + ARM<'a_Mnfc'> + ARM<'a_Services'>)^-1 * (p<'a_Agri'> * ARM<'a_Agri'> + p<'a_Mnfc'> * ARM<'a_Mnfc'> + p<'a_Services'> * ARM<'a_Services'>) = 0
+ (3)  -p_for + theta_exp<'a_Agri'> * p_exp<'a_Agri'> = 0
+ (4)  -p_for + theta_exp<'a_Mnfc'> * p_exp<'a_Mnfc'> = 0
+ (5)  -p_for + theta_exp<'a_Services'> * p_exp<'a_Services'> = 0
+ (6)  dgov_data<'a_Agri'> - p_cons<'a_Agri'> * D_GOV<'a_Agri'> = 0
+ (7)  dgov_data<'a_Mnfc'> - p_cons<'a_Mnfc'> * D_GOV<'a_Mnfc'> = 0
+ (8)  dgov_data<'a_Services'> - p_cons<'a_Services'> * D_GOV<'a_Services'> = 0
+ (9)  BTINC - PIT_base = 0
+ (10)  -BTINC_FIRM + PROFIT = 0
+ (11)  -CIT + FIRMTAX = 0
+ (12)  -DEM + (alpha<'a_Agri'> * D<'a_Agri'>^(omega^-1 * (-1 + omega)) + alpha<'a_Mnfc'> * D<'a_Mnfc'>^(omega^-1 * (-1 + omega)) + alpha<'a_Services'> * D<'a_Services'>^(omega^-1 * (-1 + omega)))^(omega * (-1 + omega)^-1) = 0
+ (13)  DEM_GOV - EXP_GOV = 0
+ (14)  -EXP_ROW + EXPORT_ROW = 0
+ (15)  -EXPORT_ROW + p_for * (EXP<'a_Agri'> + EXP<'a_Mnfc'> + EXP<'a_Services'>) = 0
+ (16)  -FIRMTAX + firm_tax * BTINC_FIRM = 0
+ (17)  -IMTAX + p_for * ex_rate * (im_tax<'a_Agri'> * IMP<'a_Agri'> + im_tax<'a_Mnfc'> * IMP<'a_Mnfc'> + im_tax<'a_Services'> * IMP<'a_Services'>) = 0
+ (18)  -IMPORT_ROW + p_for * ex_rate * (IMP<'a_Agri'> + IMP<'a_Mnfc'> + IMP<'a_Services'>) = 0
+ (19)  IMPORT_ROW - INC_ROW = 0
+ (20)  -INC_FIRM + BTINC_FIRM * (1 - firm_tax) = 0
+ (21)  INC_FIRM - SAV_FIRM = 0
+ (22)  -K_TAX + k_tax * p_k * (K<'a_Agri'> + K<'a_Mnfc'> + K<'a_Services'>) = 0
+ (23)  -L_TAX + l_tax * p_l * (L<'a_Agri'> + L<'a_Mnfc'> + L<'a_Services'>) = 0
+ (24)  -PIT + pit_tax * PIT_base = 0
+ (25)  -SAV + sav * INC = 0
+ (26)  U - (alpha<'a_Agri'> * D<'a_Agri'>^(omega^-1 * (-1 + omega)) + alpha<'a_Mnfc'> * D<'a_Mnfc'>^(omega^-1 * (-1 + omega)) + alpha<'a_Services'> * D<'a_Services'>^(omega^-1 * (-1 + omega)))^(omega * (-1 + omega)^-1) = 0
+ (27)  -p_cons<'a_Agri'> + p_market<'a_Agri'> * (1 + excise<'a_Agri'>) * (1 + vat<'a_Agri'>) = 0
+ (28)  -p_cons<'a_Mnfc'> + p_market<'a_Mnfc'> * (1 + excise<'a_Mnfc'>) * (1 + vat<'a_Mnfc'>) = 0
+ (29)  -p_cons<'a_Services'> + p_market<'a_Services'> * (1 + excise<'a_Services'>) * (1 + vat<'a_Services'>) = 0
+ (30)  -p_int<'a_Agri'> + p_market<'a_Agri'> * (1 + excise<'a_Agri'>) = 0
+ (31)  -p_int<'a_Mnfc'> + p_market<'a_Mnfc'> * (1 + excise<'a_Mnfc'>) = 0
+ (32)  -p_int<'a_Services'> + p_market<'a_Services'> * (1 + excise<'a_Services'>) = 0
+ (33)  -p_exp<'a_Agri'> + alpha_prod_e<'a_Agri'> * theta_y<'a_Agri'> * p<'a_Agri'> * EXPORT_f<'a_Agri'>^(-1 + sigma_f_prod<'a_Agri'>^-1 * (1 + sigma_f_prod<'a_Agri'>)) * (alpha_prod_h<'a_Agri'> * Y_HOME<'a_Agri'>^(sigma_f_prod<'a_Agri'>^-1 * (1 + sigma_f_prod<'a_Agri'>)) + alpha_prod_e<'a_Agri'> * EXPORT_f<'a_Agri'>^(sigma_f_prod<'a_Agri'>^-1 * (1 + sigma_f_prod<'a_Agri'>)))^(-1 + sigma_f_prod<'a_Agri'> * (1 + sigma_f_prod<'a_Agri'>)^-1) = 0
+ (34)  -p_exp<'a_Mnfc'> + alpha_prod_e<'a_Mnfc'> * theta_y<'a_Mnfc'> * p<'a_Mnfc'> * EXPORT_f<'a_Mnfc'>^(-1 + sigma_f_prod<'a_Mnfc'>^-1 * (1 + sigma_f_prod<'a_Mnfc'>)) * (alpha_prod_h<'a_Mnfc'> * Y_HOME<'a_Mnfc'>^(sigma_f_prod<'a_Mnfc'>^-1 * (1 + sigma_f_prod<'a_Mnfc'>)) + alpha_prod_e<'a_Mnfc'> * EXPORT_f<'a_Mnfc'>^(sigma_f_prod<'a_Mnfc'>^-1 * (1 + sigma_f_prod<'a_Mnfc'>)))^(-1 + sigma_f_prod<'a_Mnfc'> * (1 + sigma_f_prod<'a_Mnfc'>)^-1) = 0
+ (35)  -p_exp<'a_Services'> + alpha_prod_e<'a_Services'> * theta_y<'a_Services'> * p<'a_Services'> * EXPORT_f<'a_Services'>^(-1 + sigma_f_prod<'a_Services'>^-1 * (1 + sigma_f_prod<'a_Services'>)) * (alpha_prod_h<'a_Services'> * Y_HOME<'a_Services'>^(sigma_f_prod<'a_Services'>^-1 * (1 + sigma_f_prod<'a_Services'>)) + alpha_prod_e<'a_Services'> * EXPORT_f<'a_Services'>^(sigma_f_prod<'a_Services'>^-1 * (1 + sigma_f_prod<'a_Services'>)))^(-1 + sigma_f_prod<'a_Services'> * (1 + sigma_f_prod<'a_Services'>)^-1) = 0
+ (36)  -p_home<'a_Agri'> + alpha_prod_h<'a_Agri'> * theta_y<'a_Agri'> * p<'a_Agri'> * Y_HOME<'a_Agri'>^(-1 + sigma_f_prod<'a_Agri'>^-1 * (1 + sigma_f_prod<'a_Agri'>)) * (alpha_prod_h<'a_Agri'> * Y_HOME<'a_Agri'>^(sigma_f_prod<'a_Agri'>^-1 * (1 + sigma_f_prod<'a_Agri'>)) + alpha_prod_e<'a_Agri'> * EXPORT_f<'a_Agri'>^(sigma_f_prod<'a_Agri'>^-1 * (1 + sigma_f_prod<'a_Agri'>)))^(-1 + sigma_f_prod<'a_Agri'> * (1 + sigma_f_prod<'a_Agri'>)^-1) = 0
+ (37)  -p_home<'a_Agri'> + alpha_arm_h<'a_Agri'> * theta_arm<'a_Agri'> * p_arm<'a_Agri'> * Y_HOME_a<'a_Agri'>^(-1 + sigma_arm<'a_Agri'>^-1 * (-1 + sigma_arm<'a_Agri'>)) * (alpha_arm_h<'a_Agri'> * Y_HOME_a<'a_Agri'>^(sigma_arm<'a_Agri'>^-1 * (-1 + sigma_arm<'a_Agri'>)) + alpha_arm_i<'a_Agri'> * IMPORT_a<'a_Agri'>^(sigma_arm<'a_Agri'>^-1 * (-1 + sigma_arm<'a_Agri'>)))^(-1 + sigma_arm<'a_Agri'> * (-1 + sigma_arm<'a_Agri'>)^-1) = 0
+ (38)  -p_home<'a_Mnfc'> + alpha_prod_h<'a_Mnfc'> * theta_y<'a_Mnfc'> * p<'a_Mnfc'> * Y_HOME<'a_Mnfc'>^(-1 + sigma_f_prod<'a_Mnfc'>^-1 * (1 + sigma_f_prod<'a_Mnfc'>)) * (alpha_prod_h<'a_Mnfc'> * Y_HOME<'a_Mnfc'>^(sigma_f_prod<'a_Mnfc'>^-1 * (1 + sigma_f_prod<'a_Mnfc'>)) + alpha_prod_e<'a_Mnfc'> * EXPORT_f<'a_Mnfc'>^(sigma_f_prod<'a_Mnfc'>^-1 * (1 + sigma_f_prod<'a_Mnfc'>)))^(-1 + sigma_f_prod<'a_Mnfc'> * (1 + sigma_f_prod<'a_Mnfc'>)^-1) = 0
+ (39)  -p_home<'a_Mnfc'> + alpha_arm_h<'a_Mnfc'> * theta_arm<'a_Mnfc'> * p_arm<'a_Mnfc'> * Y_HOME_a<'a_Mnfc'>^(-1 + sigma_arm<'a_Mnfc'>^-1 * (-1 + sigma_arm<'a_Mnfc'>)) * (alpha_arm_h<'a_Mnfc'> * Y_HOME_a<'a_Mnfc'>^(sigma_arm<'a_Mnfc'>^-1 * (-1 + sigma_arm<'a_Mnfc'>)) + alpha_arm_i<'a_Mnfc'> * IMPORT_a<'a_Mnfc'>^(sigma_arm<'a_Mnfc'>^-1 * (-1 + sigma_arm<'a_Mnfc'>)))^(-1 + sigma_arm<'a_Mnfc'> * (-1 + sigma_arm<'a_Mnfc'>)^-1) = 0
+ (40)  -p_home<'a_Services'> + alpha_prod_h<'a_Services'> * theta_y<'a_Services'> * p<'a_Services'> * Y_HOME<'a_Services'>^(-1 + sigma_f_prod<'a_Services'>^-1 * (1 + sigma_f_prod<'a_Services'>)) * (alpha_prod_h<'a_Services'> * Y_HOME<'a_Services'>^(sigma_f_prod<'a_Services'>^-1 * (1 + sigma_f_prod<'a_Services'>)) + alpha_prod_e<'a_Services'> * EXPORT_f<'a_Services'>^(sigma_f_prod<'a_Services'>^-1 * (1 + sigma_f_prod<'a_Services'>)))^(-1 + sigma_f_prod<'a_Services'> * (1 + sigma_f_prod<'a_Services'>)^-1) = 0
+ (41)  -p_home<'a_Services'> + alpha_arm_h<'a_Services'> * theta_arm<'a_Services'> * p_arm<'a_Services'> * Y_HOME_a<'a_Services'>^(-1 + sigma_arm<'a_Services'>^-1 * (-1 + sigma_arm<'a_Services'>)) * (alpha_arm_h<'a_Services'> * Y_HOME_a<'a_Services'>^(sigma_arm<'a_Services'>^-1 * (-1 + sigma_arm<'a_Services'>)) + alpha_arm_i<'a_Services'> * IMPORT_a<'a_Services'>^(sigma_arm<'a_Services'>^-1 * (-1 + sigma_arm<'a_Services'>)))^(-1 + sigma_arm<'a_Services'> * (-1 + sigma_arm<'a_Services'>)^-1) = 0
+ (42)  -p_imp<'a_Agri'> + alpha_arm_i<'a_Agri'> * theta_arm<'a_Agri'> * p_arm<'a_Agri'> * IMPORT_a<'a_Agri'>^(-1 + sigma_arm<'a_Agri'>^-1 * (-1 + sigma_arm<'a_Agri'>)) * (alpha_arm_h<'a_Agri'> * Y_HOME_a<'a_Agri'>^(sigma_arm<'a_Agri'>^-1 * (-1 + sigma_arm<'a_Agri'>)) + alpha_arm_i<'a_Agri'> * IMPORT_a<'a_Agri'>^(sigma_arm<'a_Agri'>^-1 * (-1 + sigma_arm<'a_Agri'>)))^(-1 + sigma_arm<'a_Agri'> * (-1 + sigma_arm<'a_Agri'>)^-1) = 0
+ (43)  -p_imp<'a_Mnfc'> + alpha_arm_i<'a_Mnfc'> * theta_arm<'a_Mnfc'> * p_arm<'a_Mnfc'> * IMPORT_a<'a_Mnfc'>^(-1 + sigma_arm<'a_Mnfc'>^-1 * (-1 + sigma_arm<'a_Mnfc'>)) * (alpha_arm_h<'a_Mnfc'> * Y_HOME_a<'a_Mnfc'>^(sigma_arm<'a_Mnfc'>^-1 * (-1 + sigma_arm<'a_Mnfc'>)) + alpha_arm_i<'a_Mnfc'> * IMPORT_a<'a_Mnfc'>^(sigma_arm<'a_Mnfc'>^-1 * (-1 + sigma_arm<'a_Mnfc'>)))^(-1 + sigma_arm<'a_Mnfc'> * (-1 + sigma_arm<'a_Mnfc'>)^-1) = 0
+ (44)  -p_imp<'a_Services'> + alpha_arm_i<'a_Services'> * theta_arm<'a_Services'> * p_arm<'a_Services'> * IMPORT_a<'a_Services'>^(-1 + sigma_arm<'a_Services'>^-1 * (-1 + sigma_arm<'a_Services'>)) * (alpha_arm_h<'a_Services'> * Y_HOME_a<'a_Services'>^(sigma_arm<'a_Services'>^-1 * (-1 + sigma_arm<'a_Services'>)) + alpha_arm_i<'a_Services'> * IMPORT_a<'a_Services'>^(sigma_arm<'a_Services'>^-1 * (-1 + sigma_arm<'a_Services'>)))^(-1 + sigma_arm<'a_Services'> * (-1 + sigma_arm<'a_Services'>)^-1) = 0
+ (45)  p_arm<'a_Agri'> - p_market<'a_Agri'> = 0
+ (46)  p_arm<'a_Mnfc'> - p_market<'a_Mnfc'> = 0
+ (47)  p_arm<'a_Services'> - p_market<'a_Services'> = 0
+ (48)  -ARM<'a_Agri'> + theta_arm<'a_Agri'> * (alpha_arm_h<'a_Agri'> * Y_HOME_a<'a_Agri'>^(sigma_arm<'a_Agri'>^-1 * (-1 + sigma_arm<'a_Agri'>)) + alpha_arm_i<'a_Agri'> * IMPORT_a<'a_Agri'>^(sigma_arm<'a_Agri'>^-1 * (-1 + sigma_arm<'a_Agri'>)))^(sigma_arm<'a_Agri'> * (-1 + sigma_arm<'a_Agri'>)^-1) = 0
+ (49)  -ARM<'a_Mnfc'> + theta_arm<'a_Mnfc'> * (alpha_arm_h<'a_Mnfc'> * Y_HOME_a<'a_Mnfc'>^(sigma_arm<'a_Mnfc'>^-1 * (-1 + sigma_arm<'a_Mnfc'>)) + alpha_arm_i<'a_Mnfc'> * IMPORT_a<'a_Mnfc'>^(sigma_arm<'a_Mnfc'>^-1 * (-1 + sigma_arm<'a_Mnfc'>)))^(sigma_arm<'a_Mnfc'> * (-1 + sigma_arm<'a_Mnfc'>)^-1) = 0
+ (50)  -ARM<'a_Services'> + theta_arm<'a_Services'> * (alpha_arm_h<'a_Services'> * Y_HOME_a<'a_Services'>^(sigma_arm<'a_Services'>^-1 * (-1 + sigma_arm<'a_Services'>)) + alpha_arm_i<'a_Services'> * IMPORT_a<'a_Services'>^(sigma_arm<'a_Services'>^-1 * (-1 + sigma_arm<'a_Services'>)))^(sigma_arm<'a_Services'> * (-1 + sigma_arm<'a_Services'>)^-1) = 0
+ (51)  -EXPORT<'a_Agri'> + theta_exp<'a_Agri'> * EXP<'a_Agri'> = 0
+ (52)  EXPORT<'a_Agri'> - EXPORT_f<'a_Agri'> = 0
+ (53)  -EXPORT<'a_Mnfc'> + theta_exp<'a_Mnfc'> * EXP<'a_Mnfc'> = 0
+ (54)  EXPORT<'a_Mnfc'> - EXPORT_f<'a_Mnfc'> = 0
+ (55)  -EXPORT<'a_Services'> + theta_exp<'a_Services'> * EXP<'a_Services'> = 0
+ (56)  EXPORT<'a_Services'> - EXPORT_f<'a_Services'> = 0
+ (57)  -EXCISE<'a_Agri'> + excise<'a_Agri'> * p_market<'a_Agri'> * (D<'a_Agri'> + D_GOV<'a_Agri'> + INV<'a_Agri'> + X<'a_Agri','a_Agri'> + X<'a_Agri','a_Mnfc'> + X<'a_Agri','a_Services'>) = 0
+ (58)  -EXCISE<'a_Mnfc'> + excise<'a_Mnfc'> * p_market<'a_Mnfc'> * (D<'a_Mnfc'> + D_GOV<'a_Mnfc'> + INV<'a_Mnfc'> + X<'a_Mnfc','a_Agri'> + X<'a_Mnfc','a_Mnfc'> + X<'a_Mnfc','a_Services'>) = 0
+ (59)  -EXCISE<'a_Services'> + excise<'a_Services'> * p_market<'a_Services'> * (D<'a_Services'> + D_GOV<'a_Services'> + INV<'a_Services'> + X<'a_Services','a_Agri'> + X<'a_Services','a_Mnfc'> + X<'a_Services','a_Services'>) = 0
+ (60)  -IMPORT<'a_Agri'> + theta_imp<'a_Agri'> * IMP<'a_Agri'> = 0
+ (61)  IMPORT<'a_Agri'> - IMPORT_a<'a_Agri'> = 0
+ (62)  -IMPORT<'a_Mnfc'> + theta_imp<'a_Mnfc'> * IMP<'a_Mnfc'> = 0
+ (63)  IMPORT<'a_Mnfc'> - IMPORT_a<'a_Mnfc'> = 0
+ (64)  -IMPORT<'a_Services'> + theta_imp<'a_Services'> * IMP<'a_Services'> = 0
+ (65)  IMPORT<'a_Services'> - IMPORT_a<'a_Services'> = 0
+ (66)  -TAX_s<'a_Agri'> + tax_rate<'a_Agri'> * (p_int<'a_Agri'> * X<'a_Agri','a_Agri'> + p_int<'a_Mnfc'> * X<'a_Mnfc','a_Agri'> + p_int<'a_Services'> * X<'a_Services','a_Agri'> + p_k * K<'a_Agri'> * (1 + k_tax) + p_l * L<'a_Agri'> * (1 + l_tax)) = 0
+ (67)  -TAX_s<'a_Mnfc'> + tax_rate<'a_Mnfc'> * (p_int<'a_Agri'> * X<'a_Agri','a_Mnfc'> + p_int<'a_Mnfc'> * X<'a_Mnfc','a_Mnfc'> + p_int<'a_Services'> * X<'a_Services','a_Mnfc'> + p_k * K<'a_Mnfc'> * (1 + k_tax) + p_l * L<'a_Mnfc'> * (1 + l_tax)) = 0
+ (68)  -TAX_s<'a_Services'> + tax_rate<'a_Services'> * (p_int<'a_Agri'> * X<'a_Agri','a_Services'> + p_int<'a_Mnfc'> * X<'a_Mnfc','a_Services'> + p_int<'a_Services'> * X<'a_Services','a_Services'> + p_k * K<'a_Services'> * (1 + k_tax) + p_l * L<'a_Services'> * (1 + l_tax)) = 0
+ (69)  -VAT<'a_Agri'> + vat<'a_Agri'> * p_market<'a_Agri'> * (1 + excise<'a_Agri'>) * (D<'a_Agri'> + D_GOV<'a_Agri'> + INV<'a_Agri'>) = 0
+ (70)  -VAT<'a_Mnfc'> + vat<'a_Mnfc'> * p_market<'a_Mnfc'> * (1 + excise<'a_Mnfc'>) * (D<'a_Mnfc'> + D_GOV<'a_Mnfc'> + INV<'a_Mnfc'>) = 0
+ (71)  -VAT<'a_Services'> + vat<'a_Services'> * p_market<'a_Services'> * (1 + excise<'a_Services'>) * (D<'a_Services'> + D_GOV<'a_Services'> + INV<'a_Services'>) = 0
+ (72)  -X<'a_Agri','a_Agri'> + beta_x<'a_Agri','a_Agri'> * Y_INT<'a_Agri'> = 0
+ (73)  -X<'a_Agri','a_Mnfc'> + beta_x<'a_Agri','a_Mnfc'> * Y_INT<'a_Mnfc'> = 0
+ (74)  -X<'a_Agri','a_Services'> + beta_x<'a_Agri','a_Services'> * Y_INT<'a_Services'> = 0
+ (75)  -X<'a_Mnfc','a_Agri'> + beta_x<'a_Mnfc','a_Agri'> * Y_INT<'a_Agri'> = 0
+ (76)  -X<'a_Mnfc','a_Mnfc'> + beta_x<'a_Mnfc','a_Mnfc'> * Y_INT<'a_Mnfc'> = 0
+ (77)  -X<'a_Mnfc','a_Services'> + beta_x<'a_Mnfc','a_Services'> * Y_INT<'a_Services'> = 0
+ (78)  -X<'a_Services','a_Agri'> + beta_x<'a_Services','a_Agri'> * Y_INT<'a_Agri'> = 0
+ (79)  -X<'a_Services','a_Mnfc'> + beta_x<'a_Services','a_Mnfc'> * Y_INT<'a_Mnfc'> = 0
+ (80)  -X<'a_Services','a_Services'> + beta_x<'a_Services','a_Services'> * Y_INT<'a_Services'> = 0
+ (81)  -Y<'a_Agri'> + Y_VA<'a_Agri'> = 0
+ (82)  Y<'a_Agri'> - Y_f<'a_Agri'> = 0
+ (83)  -Y<'a_Mnfc'> + Y_VA<'a_Mnfc'> = 0
+ (84)  Y<'a_Mnfc'> - Y_f<'a_Mnfc'> = 0
+ (85)  -Y<'a_Services'> + Y_VA<'a_Services'> = 0
+ (86)  Y<'a_Services'> - Y_f<'a_Services'> = 0
+ (87)  -Y_VA<'a_Agri'> + Y_INT<'a_Agri'> = 0
+ (88)  -Y_VA<'a_Agri'> + gamma_yva<'a_Agri'> * K<'a_Agri'>^beta_k<'a_Agri'> * L<'a_Agri'>^beta_l<'a_Agri'> = 0
+ (89)  -Y_VA<'a_Mnfc'> + Y_INT<'a_Mnfc'> = 0
+ (90)  -Y_VA<'a_Mnfc'> + gamma_yva<'a_Mnfc'> * K<'a_Mnfc'>^beta_k<'a_Mnfc'> * L<'a_Mnfc'>^beta_l<'a_Mnfc'> = 0
+ (91)  -Y_VA<'a_Services'> + Y_INT<'a_Services'> = 0
+ (92)  -Y_VA<'a_Services'> + gamma_yva<'a_Services'> * K<'a_Services'>^beta_k<'a_Services'> * L<'a_Services'>^beta_l<'a_Services'> = 0
+ (93)  -Y_f<'a_Agri'> + theta_y<'a_Agri'> * (alpha_prod_h<'a_Agri'> * Y_HOME<'a_Agri'>^(sigma_f_prod<'a_Agri'>^-1 * (1 + sigma_f_prod<'a_Agri'>)) + alpha_prod_e<'a_Agri'> * EXPORT_f<'a_Agri'>^(sigma_f_prod<'a_Agri'>^-1 * (1 + sigma_f_prod<'a_Agri'>)))^(sigma_f_prod<'a_Agri'> * (1 + sigma_f_prod<'a_Agri'>)^-1) = 0
+ (94)  -Y_f<'a_Mnfc'> + theta_y<'a_Mnfc'> * (alpha_prod_h<'a_Mnfc'> * Y_HOME<'a_Mnfc'>^(sigma_f_prod<'a_Mnfc'>^-1 * (1 + sigma_f_prod<'a_Mnfc'>)) + alpha_prod_e<'a_Mnfc'> * EXPORT_f<'a_Mnfc'>^(sigma_f_prod<'a_Mnfc'>^-1 * (1 + sigma_f_prod<'a_Mnfc'>)))^(sigma_f_prod<'a_Mnfc'> * (1 + sigma_f_prod<'a_Mnfc'>)^-1) = 0
+ (95)  -Y_f<'a_Services'> + theta_y<'a_Services'> * (alpha_prod_h<'a_Services'> * Y_HOME<'a_Services'>^(sigma_f_prod<'a_Services'>^-1 * (1 + sigma_f_prod<'a_Services'>)) + alpha_prod_e<'a_Services'> * EXPORT_f<'a_Services'>^(sigma_f_prod<'a_Services'>^-1 * (1 + sigma_f_prod<'a_Services'>)))^(sigma_f_prod<'a_Services'> * (1 + sigma_f_prod<'a_Services'>)^-1) = 0
+ (96)  Y_HOME<'a_Agri'> - Y_HOME_a<'a_Agri'> = 0
+ (97)  Y_HOME<'a_Mnfc'> - Y_HOME_a<'a_Mnfc'> = 0
+ (98)  Y_HOME<'a_Services'> - Y_HOME_a<'a_Services'> = 0
+ (99)  inv<'a_Agri'> * INV - p_cons<'a_Agri'> * INV<'a_Agri'> = 0
+ (100)  inv<'a_Mnfc'> * INV - p_cons<'a_Mnfc'> * INV<'a_Mnfc'> = 0
+ (101)  inv<'a_Services'> * INV - p_cons<'a_Services'> * INV<'a_Services'> = 0
+ (102)  theta_imp<'a_Agri'> * p_imp<'a_Agri'> - p_for * ex_rate * (1 + im_tax<'a_Agri'>) = 0
+ (103)  theta_imp<'a_Mnfc'> * p_imp<'a_Mnfc'> - p_for * ex_rate * (1 + im_tax<'a_Mnfc'>) = 0
+ (104)  theta_imp<'a_Services'> * p_imp<'a_Services'> - p_for * ex_rate * (1 + im_tax<'a_Services'>) = 0
+ (105)  lambda__CONSUMER_5 * p_cons<'a_Agri'> + alpha<'a_Agri'> * D<'a_Agri'>^(-1 + omega^-1 * (-1 + omega)) * (alpha<'a_Agri'> * D<'a_Agri'>^(omega^-1 * (-1 + omega)) + alpha<'a_Mnfc'> * D<'a_Mnfc'>^(omega^-1 * (-1 + omega)) + alpha<'a_Services'> * D<'a_Services'>^(omega^-1 * (-1 + omega)))^(-1 + omega * (-1 + omega)^-1) = 0
+ (106)  lambda__CONSUMER_5 * p_cons<'a_Mnfc'> + alpha<'a_Mnfc'> * D<'a_Mnfc'>^(-1 + omega^-1 * (-1 + omega)) * (alpha<'a_Agri'> * D<'a_Agri'>^(omega^-1 * (-1 + omega)) + alpha<'a_Mnfc'> * D<'a_Mnfc'>^(omega^-1 * (-1 + omega)) + alpha<'a_Services'> * D<'a_Services'>^(omega^-1 * (-1 + omega)))^(-1 + omega * (-1 + omega)^-1) = 0
+ (107)  lambda__CONSUMER_5 * p_cons<'a_Services'> + alpha<'a_Services'> * D<'a_Services'>^(-1 + omega^-1 * (-1 + omega)) * (alpha<'a_Agri'> * D<'a_Agri'>^(omega^-1 * (-1 + omega)) + alpha<'a_Mnfc'> * D<'a_Mnfc'>^(omega^-1 * (-1 + omega)) + alpha<'a_Services'> * D<'a_Services'>^(omega^-1 * (-1 + omega)))^(-1 + omega * (-1 + omega)^-1) = 0
+ (108)  -p_k * (1 + k_tax) * (1 + tax_rate<'a_Agri'>) + beta_k<'a_Agri'> * gamma_yva<'a_Agri'> * (p<'a_Agri'> - beta_x<'a_Agri','a_Agri'> * p_int<'a_Agri'> * (1 + tax_rate<'a_Agri'>) - beta_x<'a_Mnfc','a_Agri'> * p_int<'a_Mnfc'> * (1 + tax_rate<'a_Agri'>) - beta_x<'a_Services','a_Agri'> * p_int<'a_Services'> * (1 + tax_rate<'a_Agri'>)) * K<'a_Agri'>^(-1 + beta_k<'a_Agri'>) * L<'a_Agri'>^beta_l<'a_Agri'> = 0
+ (109)  -p_k * (1 + k_tax) * (1 + tax_rate<'a_Mnfc'>) + beta_k<'a_Mnfc'> * gamma_yva<'a_Mnfc'> * (p<'a_Mnfc'> - beta_x<'a_Agri','a_Mnfc'> * p_int<'a_Agri'> * (1 + tax_rate<'a_Mnfc'>) - beta_x<'a_Mnfc','a_Mnfc'> * p_int<'a_Mnfc'> * (1 + tax_rate<'a_Mnfc'>) - beta_x<'a_Services','a_Mnfc'> * p_int<'a_Services'> * (1 + tax_rate<'a_Mnfc'>)) * K<'a_Mnfc'>^(-1 + beta_k<'a_Mnfc'>) * L<'a_Mnfc'>^beta_l<'a_Mnfc'> = 0
+ (110)  -p_k * (1 + k_tax) * (1 + tax_rate<'a_Services'>) + beta_k<'a_Services'> * gamma_yva<'a_Services'> * (p<'a_Services'> - beta_x<'a_Agri','a_Services'> * p_int<'a_Agri'> * (1 + tax_rate<'a_Services'>) - beta_x<'a_Mnfc','a_Services'> * p_int<'a_Mnfc'> * (1 + tax_rate<'a_Services'>) - beta_x<'a_Services','a_Services'> * p_int<'a_Services'> * (1 + tax_rate<'a_Services'>)) * K<'a_Services'>^(-1 + beta_k<'a_Services'>) * L<'a_Services'>^beta_l<'a_Services'> = 0
+ (111)  -p_l * (1 + l_tax) * (1 + tax_rate<'a_Agri'>) + beta_l<'a_Agri'> * gamma_yva<'a_Agri'> * (p<'a_Agri'> - beta_x<'a_Agri','a_Agri'> * p_int<'a_Agri'> * (1 + tax_rate<'a_Agri'>) - beta_x<'a_Mnfc','a_Agri'> * p_int<'a_Mnfc'> * (1 + tax_rate<'a_Agri'>) - beta_x<'a_Services','a_Agri'> * p_int<'a_Services'> * (1 + tax_rate<'a_Agri'>)) * K<'a_Agri'>^beta_k<'a_Agri'> * L<'a_Agri'>^(-1 + beta_l<'a_Agri'>) = 0
+ (112)  -p_l * (1 + l_tax) * (1 + tax_rate<'a_Mnfc'>) + beta_l<'a_Mnfc'> * gamma_yva<'a_Mnfc'> * (p<'a_Mnfc'> - beta_x<'a_Agri','a_Mnfc'> * p_int<'a_Agri'> * (1 + tax_rate<'a_Mnfc'>) - beta_x<'a_Mnfc','a_Mnfc'> * p_int<'a_Mnfc'> * (1 + tax_rate<'a_Mnfc'>) - beta_x<'a_Services','a_Mnfc'> * p_int<'a_Services'> * (1 + tax_rate<'a_Mnfc'>)) * K<'a_Mnfc'>^beta_k<'a_Mnfc'> * L<'a_Mnfc'>^(-1 + beta_l<'a_Mnfc'>) = 0
+ (113)  -p_l * (1 + l_tax) * (1 + tax_rate<'a_Services'>) + beta_l<'a_Services'> * gamma_yva<'a_Services'> * (p<'a_Services'> - beta_x<'a_Agri','a_Services'> * p_int<'a_Agri'> * (1 + tax_rate<'a_Services'>) - beta_x<'a_Mnfc','a_Services'> * p_int<'a_Mnfc'> * (1 + tax_rate<'a_Services'>) - beta_x<'a_Services','a_Services'> * p_int<'a_Services'> * (1 + tax_rate<'a_Services'>)) * K<'a_Services'>^beta_k<'a_Services'> * L<'a_Services'>^(-1 + beta_l<'a_Services'>) = 0
+ (114)  -BTINC + p_k * K + p_l * L = 0
+ (115)  BTINC - INC - pit_tax * PIT_base = 0
+ (116)  EXP_GOV - INC_GOV + SAV_GOV = 0
+ (117)  EXP_ROW - INC_ROW + SAV_R = 0
+ (118)  K_TAX + L_TAX - SOCTAX = 0
+ (119)  SAV_FIRM + SAV_GOV + SAV_R = 0
+ (120)  pi<'a_Agri'> - p<'a_Agri'> * Y<'a_Agri'> + (1 + tax_rate<'a_Agri'>) * (p_int<'a_Agri'> * X<'a_Agri','a_Agri'> + p_int<'a_Mnfc'> * X<'a_Mnfc','a_Agri'> + p_int<'a_Services'> * X<'a_Services','a_Agri'> + p_k * K<'a_Agri'> * (1 + k_tax) + p_l * L<'a_Agri'> * (1 + l_tax)) = 0
+ (121)  pi<'a_Mnfc'> - p<'a_Mnfc'> * Y<'a_Mnfc'> + (1 + tax_rate<'a_Mnfc'>) * (p_int<'a_Agri'> * X<'a_Agri','a_Mnfc'> + p_int<'a_Mnfc'> * X<'a_Mnfc','a_Mnfc'> + p_int<'a_Services'> * X<'a_Services','a_Mnfc'> + p_k * K<'a_Mnfc'> * (1 + k_tax) + p_l * L<'a_Mnfc'> * (1 + l_tax)) = 0
+ (122)  pi<'a_Services'> - p<'a_Services'> * Y<'a_Services'> + (1 + tax_rate<'a_Services'>) * (p_int<'a_Agri'> * X<'a_Agri','a_Services'> + p_int<'a_Mnfc'> * X<'a_Mnfc','a_Services'> + p_int<'a_Services'> * X<'a_Services','a_Services'> + p_k * K<'a_Services'> * (1 + k_tax) + p_l * L<'a_Services'> * (1 + l_tax)) = 0
+ (123)  EXCISE<'a_Agri'> - TAX_p<'a_Agri'> + VAT<'a_Agri'> = 0
+ (124)  EXCISE<'a_Mnfc'> - TAX_p<'a_Mnfc'> + VAT<'a_Mnfc'> = 0
+ (125)  EXCISE<'a_Services'> - TAX_p<'a_Services'> + VAT<'a_Services'> = 0
+ (126)  PI_EXP<'a_Agri'> + p_for * EXP<'a_Agri'> - p_exp<'a_Agri'> * EXPORT<'a_Agri'> = 0
+ (127)  PI_EXP<'a_Mnfc'> + p_for * EXP<'a_Mnfc'> - p_exp<'a_Mnfc'> * EXPORT<'a_Mnfc'> = 0
+ (128)  PI_EXP<'a_Services'> + p_for * EXP<'a_Services'> - p_exp<'a_Services'> * EXPORT<'a_Services'> = 0
+ (129)  PI_IMP<'a_Agri'> - p_imp<'a_Agri'> * IMPORT<'a_Agri'> + p_for * ex_rate * IMP<'a_Agri'> * (1 + im_tax<'a_Agri'>) = 0
+ (130)  PI_IMP<'a_Mnfc'> - p_imp<'a_Mnfc'> * IMPORT<'a_Mnfc'> + p_for * ex_rate * IMP<'a_Mnfc'> * (1 + im_tax<'a_Mnfc'>) = 0
+ (131)  PI_IMP<'a_Services'> - p_imp<'a_Services'> * IMPORT<'a_Services'> + p_for * ex_rate * IMP<'a_Services'> * (1 + im_tax<'a_Services'>) = 0
+ (132)  -DEM_GOV + p_cons<'a_Agri'> * D_GOV<'a_Agri'> + p_cons<'a_Mnfc'> * D_GOV<'a_Mnfc'> + p_cons<'a_Services'> * D_GOV<'a_Services'> = 0
+ (133)  -EXCISE + EXCISE<'a_Agri'> + EXCISE<'a_Mnfc'> + EXCISE<'a_Services'> = 0
+ (134)  -K + K<'a_Agri'> + K<'a_Mnfc'> + K<'a_Services'> = 0
+ (135)  L - L<'a_Agri'> - L<'a_Mnfc'> - L<'a_Services'> = 0
+ (136)  -PROFIT + pi<'a_Agri'> + pi<'a_Mnfc'> + pi<'a_Services'> = 0
+ (137)  -STAX + TAX_s<'a_Agri'> + TAX_s<'a_Mnfc'> + TAX_s<'a_Services'> = 0
+ (138)  -VAT + VAT<'a_Agri'> + VAT<'a_Mnfc'> + VAT<'a_Services'> = 0
+ (139)  PI_Y<'a_Agri'> - p<'a_Agri'> * Y_f<'a_Agri'> + p_exp<'a_Agri'> * EXPORT_f<'a_Agri'> + p_home<'a_Agri'> * Y_HOME<'a_Agri'> = 0
+ (140)  PI_Y<'a_Mnfc'> - p<'a_Mnfc'> * Y_f<'a_Mnfc'> + p_exp<'a_Mnfc'> * EXPORT_f<'a_Mnfc'> + p_home<'a_Mnfc'> * Y_HOME<'a_Mnfc'> = 0
+ (141)  PI_Y<'a_Services'> - p<'a_Services'> * Y_f<'a_Services'> + p_exp<'a_Services'> * EXPORT_f<'a_Services'> + p_home<'a_Services'> * Y_HOME<'a_Services'> = 0
+ (142)  PI_ARM<'a_Agri'> + p_home<'a_Agri'> * Y_HOME_a<'a_Agri'> + p_imp<'a_Agri'> * IMPORT_a<'a_Agri'> - p_arm<'a_Agri'> * ARM<'a_Agri'> = 0
+ (143)  PI_ARM<'a_Mnfc'> + p_home<'a_Mnfc'> * Y_HOME_a<'a_Mnfc'> + p_imp<'a_Mnfc'> * IMPORT_a<'a_Mnfc'> - p_arm<'a_Mnfc'> * ARM<'a_Mnfc'> = 0
+ (144)  PI_ARM<'a_Services'> + p_home<'a_Services'> * Y_HOME_a<'a_Services'> + p_imp<'a_Services'> * IMPORT_a<'a_Services'> - p_arm<'a_Services'> * ARM<'a_Services'> = 0
+ (145)  -INC + SAV + p_cons<'a_Agri'> * D<'a_Agri'> + p_cons<'a_Mnfc'> * D<'a_Mnfc'> + p_cons<'a_Services'> * D<'a_Services'> = 0
+ (146)  -ARM<'a_Agri'> + D<'a_Agri'> + D_GOV<'a_Agri'> + INV<'a_Agri'> + X<'a_Agri','a_Agri'> + X<'a_Agri','a_Mnfc'> + X<'a_Agri','a_Services'> = 0
+ (147)  -ARM<'a_Mnfc'> + D<'a_Mnfc'> + D_GOV<'a_Mnfc'> + INV<'a_Mnfc'> + X<'a_Mnfc','a_Agri'> + X<'a_Mnfc','a_Mnfc'> + X<'a_Mnfc','a_Services'> = 0
+ (148)  -ARM<'a_Services'> + D<'a_Services'> + D_GOV<'a_Services'> + INV<'a_Services'> + X<'a_Services','a_Agri'> + X<'a_Services','a_Mnfc'> + X<'a_Services','a_Services'> = 0
+ (149)  CIT + EXCISE + IMTAX - INC_GOV + PIT + SOCTAX + STAX + VAT = 0
+ (150)  -pit_tax * (-lambda__CONSUMER_5 + sav * lambda__CONSUMER_5) = 0
+
+Calibrating equations (39):
+ (1)  -d_data<'a_Agri'> + D<'a_Agri'> = 0
+ (2)  -d_data<'a_Mnfc'> + D<'a_Mnfc'> = 0
+ (3)  -d_data<'a_Services'> + D<'a_Services'> = 0
+ (4)  -export_data<'a_Agri'> + EXPORT<'a_Agri'> = 0
+ (5)  -export_data<'a_Mnfc'> + EXPORT<'a_Mnfc'> = 0
+ (6)  -export_data<'a_Services'> + EXPORT<'a_Services'> = 0
+ (7)  -import_data<'a_Agri'> + IMPORT<'a_Agri'> = 0
+ (8)  -import_data<'a_Mnfc'> + IMPORT<'a_Mnfc'> = 0
+ (9)  -import_data<'a_Services'> + IMPORT<'a_Services'> = 0
+ (10)  -import_tot<'a_Agri'> + IMPORT_a<'a_Agri'> = 0
+ (11)  -import_tot<'a_Mnfc'> + IMPORT_a<'a_Mnfc'> = 0
+ (12)  -import_tot<'a_Services'> + IMPORT_a<'a_Services'> = 0
+ (13)  -l_data<'a_Agri'> + L<'a_Agri'> = 0
+ (14)  -l_data<'a_Mnfc'> + L<'a_Mnfc'> = 0
+ (15)  -l_data<'a_Services'> + L<'a_Services'> = 0
+ (16)  -x_data<'a_Agri','a_Agri'> + X<'a_Agri','a_Agri'> = 0
+ (17)  -x_data<'a_Agri','a_Mnfc'> + X<'a_Agri','a_Mnfc'> = 0
+ (18)  -x_data<'a_Agri','a_Services'> + X<'a_Agri','a_Services'> = 0
+ (19)  -x_data<'a_Mnfc','a_Agri'> + X<'a_Mnfc','a_Agri'> = 0
+ (20)  -x_data<'a_Mnfc','a_Mnfc'> + X<'a_Mnfc','a_Mnfc'> = 0
+ (21)  -x_data<'a_Mnfc','a_Services'> + X<'a_Mnfc','a_Services'> = 0
+ (22)  -x_data<'a_Services','a_Agri'> + X<'a_Services','a_Agri'> = 0
+ (23)  -x_data<'a_Services','a_Mnfc'> + X<'a_Services','a_Mnfc'> = 0
+ (24)  -x_data<'a_Services','a_Services'> + X<'a_Services','a_Services'> = 0
+ (25)  -y_data<'a_Agri'> + Y_VA<'a_Agri'> = 0
+ (26)  -y_data<'a_Mnfc'> + Y_VA<'a_Mnfc'> = 0
+ (27)  -y_data<'a_Services'> + Y_VA<'a_Services'> = 0
+ (28)  -y_f_data<'a_Agri'> + Y_f<'a_Agri'> = 0
+ (29)  -y_f_data<'a_Mnfc'> + Y_f<'a_Mnfc'> = 0
+ (30)  -y_f_data<'a_Services'> + Y_f<'a_Services'> = 0
+ (31)  -y_home_data<'a_Agri'> + Y_HOME<'a_Agri'> = 0
+ (32)  -y_home_data<'a_Mnfc'> + Y_HOME<'a_Mnfc'> = 0
+ (33)  -y_home_data<'a_Services'> + Y_HOME<'a_Services'> = 0
+ (34)  -y_dom_data<'a_Agri'> + Y_HOME_a<'a_Agri'> = 0
+ (35)  -y_dom_data<'a_Mnfc'> + Y_HOME_a<'a_Mnfc'> = 0
+ (36)  -y_dom_data<'a_Services'> + Y_HOME_a<'a_Services'> = 0
+ (37)  -1 + beta_k<'a_Agri'> + beta_l<'a_Agri'> = 0
+ (38)  -1 + beta_k<'a_Mnfc'> + beta_l<'a_Mnfc'> = 0
+ (39)  -1 + beta_k<'a_Services'> + beta_l<'a_Services'> = 0
+

@@ -1,0 +1,274 @@
+% Generated on 2023-11-14 13:56:49 by gEcon ver. 1.2.2 (2023-07-10)
+% http://gecon.r-forge.r-project.org/
+
+% Model name: cge_templ
+
+\section*{Index sets}
+
+$${H\!H} = \{ \mathrm{1}, \mathrm{2} \}$$
+$${S\!E\!C} = \{ \mathrm{A}, \mathrm{B}, \mathrm{C} \}$$
+
+\section{HOUSEHOLD $h\in {H\!H}$}
+
+\subsection{Optimisation problem}
+
+\begin{align}
+&\max_{\left({D}^{\langle h,s\rangle}\right)_{s\in {S\!E\!C}}
+} {U}^{\langle h\rangle} = \left(\sum_{s\in {S\!E\!C}} {{\alpha}^{\langle h,s\rangle}} {{{D}^{\langle h,s\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{{\omega} \left(-1 + \omega\right)^{-1}}\\
+&\mathrm{s.t.:}\nonumber\\
+& \sum_{s\in {S\!E\!C}} {{p}^{\langle s\rangle}} {{D}^{\langle h,s\rangle}} = {L}^{\langle h\rangle} + {{\phi}^{\langle h\rangle}} \left(\sum_{s\in {S\!E\!C}} {\pi}^{\langle s\rangle}\right) + {p^{\mathrm{k}}} {{K}^{\langle h\rangle}} \quad \left({\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle h\rangle}\right)
+\end{align}
+
+
+\subsection{Identities}
+
+\begin{equation}
+{h\!i}\in {H\!H}\colon\quad {K}^{\langle {h\!i}\rangle} = {{p\!a\!r}^{\mathrm{k}}}^{\langle {h\!i}\rangle}
+\end{equation}
+\begin{equation}
+{h\!i}\in {H\!H}\colon\quad {L}^{\langle {h\!i}\rangle} = {{p\!a\!r}^{\mathrm{l}}}^{\langle {h\!i}\rangle}
+\end{equation}
+
+
+\subsection{First order conditions}
+
+\begin{equation}
+s\in {S\!E\!C}\colon\quad -{{\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle h\rangle}} {{p}^{\langle s\rangle}} + {{\alpha}^{\langle h,s\rangle}} {{{D}^{\langle h,s\rangle}}^{-1 + {\omega}^{-1} \left(-1 + \omega\right)}} {\left(\sum_{s\in {S\!E\!C}} {{\alpha}^{\langle h,s\rangle}} {{{D}^{\langle h,s\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{-1 + {\omega} \left(-1 + \omega\right)^{-1}}} = 0
+ \quad \left({D}^{\langle h,s\rangle}\right)
+\end{equation}
+
+
+
+
+\section{FIRM $s\in {S\!E\!C}$}
+
+\subsection{Optimisation problem}
+
+\begin{align}
+&\max_{{Y}^{\langle s\rangle}, {K}^{\langle s\rangle}, {L}^{\langle s\rangle}, \left({X}^{\langle s,{s\!i}\rangle}\right)_{{s\!i}\in {S\!E\!C}}
+} {\pi}^{\langle s\rangle} = -{L}^{\langle s\rangle} - {p^{\mathrm{k}}} {{K}^{\langle s\rangle}} + {{p}^{\langle s\rangle}} {{Y}^{\langle s\rangle}} - \sum_{{s\!i}\in {S\!E\!C}} {{p}^{\langle {s\!i}\rangle}} {{X}^{\langle s,{s\!i}\rangle}}\\
+&\mathrm{s.t.:}\nonumber\\
+& {Y}^{\langle s\rangle} = {{\gamma}^{\langle s\rangle}} {{{K}^{\langle s\rangle}}^{{\beta^{\mathrm{k}}}^{\langle s\rangle}}} {{{L}^{\langle s\rangle}}^{{\beta^{\mathrm{l}}}^{\langle s\rangle}}} \left(\prod_{{s\!i}\in {S\!E\!C}} {{X}^{\langle s,{s\!i}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle s,{s\!i}\rangle}}\right) \quad \left({\lambda^{\mathrm{FIRM}^{\mathrm{1}}}}^{\langle s\rangle}\right)
+\end{align}
+
+
+\subsection{First order conditions}
+
+\begin{equation}
+-{\lambda^{\mathrm{FIRM}^{\mathrm{1}}}}^{\langle s\rangle} + {p}^{\langle s\rangle} = 0
+ \quad \left({Y}^{\langle s\rangle}\right)
+\end{equation}
+\begin{equation}
+-p^{\mathrm{k}} + {{\beta^{\mathrm{k}}}^{\langle s\rangle}} {{\gamma}^{\langle s\rangle}} {{\lambda^{\mathrm{FIRM}^{\mathrm{1}}}}^{\langle s\rangle}} {{{K}^{\langle s\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle s\rangle}}} {{{L}^{\langle s\rangle}}^{{\beta^{\mathrm{l}}}^{\langle s\rangle}}} \left(\prod_{{s\!i}\in {S\!E\!C}} {{X}^{\langle s,{s\!i}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle s,{s\!i}\rangle}}\right) = 0
+ \quad \left({K}^{\langle s\rangle}\right)
+\end{equation}
+\begin{equation}
+-1 + {{\beta^{\mathrm{l}}}^{\langle s\rangle}} {{\gamma}^{\langle s\rangle}} {{\lambda^{\mathrm{FIRM}^{\mathrm{1}}}}^{\langle s\rangle}} {{{K}^{\langle s\rangle}}^{{\beta^{\mathrm{k}}}^{\langle s\rangle}}} {{{L}^{\langle s\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle s\rangle}}} \left(\prod_{{s\!i}\in {S\!E\!C}} {{X}^{\langle s,{s\!i}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle s,{s\!i}\rangle}}\right) = 0
+ \quad \left({L}^{\langle s\rangle}\right)
+\end{equation}
+\begin{equation}
+{s\!i}\in {S\!E\!C}\colon\quad -{p}^{\langle {s\!i}\rangle} + {{\beta^{\mathrm{x}}}^{\langle s,{s\!i}\rangle}} {{\gamma}^{\langle s\rangle}} {{\lambda^{\mathrm{FIRM}^{\mathrm{1}}}}^{\langle s\rangle}} {{X}^{\langle s,{s\!i}\rangle}}^{-1} {{{K}^{\langle s\rangle}}^{{\beta^{\mathrm{k}}}^{\langle s\rangle}}} {{{L}^{\langle s\rangle}}^{{\beta^{\mathrm{l}}}^{\langle s\rangle}}} \left(\prod_{{s\!i}^{\prime}\in {S\!E\!C}} {{X}^{\langle s,{s\!i}^{\prime}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle s,{s\!i}^{\prime}\rangle}}\right) = 0
+ \quad \left({X}^{\langle s,{s\!i}\rangle}\right)
+\end{equation}
+
+
+\subsection{First order conditions after reduction}
+
+\begin{equation}
+-p^{\mathrm{k}} + {{\beta^{\mathrm{k}}}^{\langle s\rangle}} {{\gamma}^{\langle s\rangle}} {{p}^{\langle s\rangle}} {{{K}^{\langle s\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle s\rangle}}} {{{L}^{\langle s\rangle}}^{{\beta^{\mathrm{l}}}^{\langle s\rangle}}} \left(\prod_{{s\!i}\in {S\!E\!C}} {{X}^{\langle s,{s\!i}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle s,{s\!i}\rangle}}\right) = 0
+ \quad \left({K}^{\langle s\rangle}\right)
+\end{equation}
+\begin{equation}
+-1 + {{\beta^{\mathrm{l}}}^{\langle s\rangle}} {{\gamma}^{\langle s\rangle}} {{p}^{\langle s\rangle}} {{{K}^{\langle s\rangle}}^{{\beta^{\mathrm{k}}}^{\langle s\rangle}}} {{{L}^{\langle s\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle s\rangle}}} \left(\prod_{{s\!i}\in {S\!E\!C}} {{X}^{\langle s,{s\!i}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle s,{s\!i}\rangle}}\right) = 0
+ \quad \left({L}^{\langle s\rangle}\right)
+\end{equation}
+\begin{equation}
+{s\!i}\in {S\!E\!C}\colon\quad -{p}^{\langle {s\!i}\rangle} + {{\beta^{\mathrm{x}}}^{\langle s,{s\!i}\rangle}} {{\gamma}^{\langle s\rangle}} {{p}^{\langle s\rangle}} {{X}^{\langle s,{s\!i}\rangle}}^{-1} {{{K}^{\langle s\rangle}}^{{\beta^{\mathrm{k}}}^{\langle s\rangle}}} {{{L}^{\langle s\rangle}}^{{\beta^{\mathrm{l}}}^{\langle s\rangle}}} \left(\prod_{{s\!i}^{\prime}\in {S\!E\!C}} {{X}^{\langle s,{s\!i}^{\prime}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle s,{s\!i}^{\prime}\rangle}}\right) = 0
+ \quad \left(\left({X}^{\langle s,{s\!i}\rangle}\right)_{{s\!i}\in {S\!E\!C}}\right)
+\end{equation}
+
+
+
+
+\section{EQUILIBRIUM}
+
+\subsection{Identities}
+
+\begin{equation}
+s\in {S\!E\!C}\colon\quad {Y}^{\langle s\rangle} = \sum_{h\in {H\!H}} {D}^{\langle h,s\rangle} + \sum_{{s\!i}\in {S\!E\!C}} {X}^{\langle {s\!i},s\rangle}
+\end{equation}
+\begin{equation}
+\sum_{h\in {H\!H}} {L}^{\langle h\rangle} = \sum_{s\in {S\!E\!C}} {L}^{\langle s\rangle}
+\end{equation}
+
+
+
+
+\section{Equilibrium relationships (before expansion and reduction)}
+
+\begin{equation}
+-\sum_{h\in {H\!H}} {L}^{\langle h\rangle} + \sum_{s\in {S\!E\!C}} {L}^{\langle s\rangle} = 0
+\end{equation}
+\begin{equation}
+{h\!i}\in {H\!H}\colon\quad {{p\!a\!r}^{\mathrm{k}}}^{\langle {h\!i}\rangle} - {K}^{\langle {h\!i}\rangle} = 0
+\end{equation}
+\begin{equation}
+{h\!i}\in {H\!H}\colon\quad {{p\!a\!r}^{\mathrm{l}}}^{\langle {h\!i}\rangle} - {L}^{\langle {h\!i}\rangle} = 0
+\end{equation}
+\begin{equation}
+h\in {H\!H}\colon\quad {U}^{\langle h\rangle} - \left(\sum_{s\in {S\!E\!C}} {{\alpha}^{\langle h,s\rangle}} {{{D}^{\langle h,s\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{{\omega} \left(-1 + \omega\right)^{-1}} = 0
+\end{equation}
+\begin{equation}
+h\in {H\!H}\colon\quad {L}^{\langle h\rangle} + {{\phi}^{\langle h\rangle}} \left(\sum_{s\in {S\!E\!C}} {\pi}^{\langle s\rangle}\right) + {p^{\mathrm{k}}} {{K}^{\langle h\rangle}} - \sum_{s\in {S\!E\!C}} {{p}^{\langle s\rangle}} {{D}^{\langle h,s\rangle}} = 0
+\end{equation}
+\begin{equation}
+h\in {H\!H}\colon\quad s\in {S\!E\!C}\colon\quad -{{\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle h\rangle}} {{p}^{\langle s\rangle}} + {{\alpha}^{\langle h,s\rangle}} {{{D}^{\langle h,s\rangle}}^{-1 + {\omega}^{-1} \left(-1 + \omega\right)}} {\left(\sum_{s\in {S\!E\!C}} {{\alpha}^{\langle h,s\rangle}} {{{D}^{\langle h,s\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{-1 + {\omega} \left(-1 + \omega\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad -1 + {{\beta^{\mathrm{l}}}^{\langle s\rangle}} {{\gamma}^{\langle s\rangle}} {{p}^{\langle s\rangle}} {{{K}^{\langle s\rangle}}^{{\beta^{\mathrm{k}}}^{\langle s\rangle}}} {{{L}^{\langle s\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle s\rangle}}} \left(\prod_{{s\!i}\in {S\!E\!C}} {{X}^{\langle s,{s\!i}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle s,{s\!i}\rangle}}\right) = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad -p^{\mathrm{k}} + {{\beta^{\mathrm{k}}}^{\langle s\rangle}} {{\gamma}^{\langle s\rangle}} {{p}^{\langle s\rangle}} {{{K}^{\langle s\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle s\rangle}}} {{{L}^{\langle s\rangle}}^{{\beta^{\mathrm{l}}}^{\langle s\rangle}}} \left(\prod_{{s\!i}\in {S\!E\!C}} {{X}^{\langle s,{s\!i}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle s,{s\!i}\rangle}}\right) = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad -{Y}^{\langle s\rangle} + {{\gamma}^{\langle s\rangle}} {{{K}^{\langle s\rangle}}^{{\beta^{\mathrm{k}}}^{\langle s\rangle}}} {{{L}^{\langle s\rangle}}^{{\beta^{\mathrm{l}}}^{\langle s\rangle}}} \left(\prod_{{s\!i}\in {S\!E\!C}} {{X}^{\langle s,{s\!i}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle s,{s\!i}\rangle}}\right) = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad -{Y}^{\langle s\rangle} + \sum_{h\in {H\!H}} {D}^{\langle h,s\rangle} + \sum_{{s\!i}\in {S\!E\!C}} {X}^{\langle {s\!i},s\rangle} = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad {\pi}^{\langle s\rangle} + {L}^{\langle s\rangle} + {p^{\mathrm{k}}} {{K}^{\langle s\rangle}} - {{p}^{\langle s\rangle}} {{Y}^{\langle s\rangle}} + \sum_{{s\!i}\in {S\!E\!C}} {{p}^{\langle {s\!i}\rangle}} {{X}^{\langle s,{s\!i}\rangle}} = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad {s\!i}\in {S\!E\!C}\colon\quad -{p}^{\langle {s\!i}\rangle} + {{\beta^{\mathrm{x}}}^{\langle s,{s\!i}\rangle}} {{\gamma}^{\langle s\rangle}} {{p}^{\langle s\rangle}} {{X}^{\langle s,{s\!i}\rangle}}^{-1} {{{K}^{\langle s\rangle}}^{{\beta^{\mathrm{k}}}^{\langle s\rangle}}} {{{L}^{\langle s\rangle}}^{{\beta^{\mathrm{l}}}^{\langle s\rangle}}} \left(\prod_{{s\!i}^{\prime}\in {S\!E\!C}} {{X}^{\langle s,{s\!i}^{\prime}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle s,{s\!i}^{\prime}\rangle}}\right) = 0
+\end{equation}
+
+
+
+\section{Equilibrium relationships (after expansion and reduction)}
+
+\begin{equation}
+-1 + {{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{A}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{A}}\rangle}} {{p}^{\langle \mathrm{A}\rangle}} {{{K}^{\langle \mathrm{A}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{A}}\rangle}}} {{{L}^{\langle \mathrm{A}\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-1 + {{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{B}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{B}}\rangle}} {{p}^{\langle \mathrm{B}\rangle}} {{{K}^{\langle \mathrm{B}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{B}}\rangle}}} {{{L}^{\langle \mathrm{B}\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-1 + {{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{C}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{C}}\rangle}} {{p}^{\langle \mathrm{C}\rangle}} {{{K}^{\langle \mathrm{C}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{C}}\rangle}}} {{{L}^{\langle \mathrm{C}\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{C}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{p\!a\!r}^{\mathrm{k}}}^{\langle \mathrm{\mathrm{1}}\rangle} - {K}^{\langle \mathrm{1}\rangle} = 0
+\end{equation}
+\begin{equation}
+{{p\!a\!r}^{\mathrm{k}}}^{\langle \mathrm{\mathrm{2}}\rangle} - {K}^{\langle \mathrm{2}\rangle} = 0
+\end{equation}
+\begin{equation}
+{{p\!a\!r}^{\mathrm{l}}}^{\langle \mathrm{\mathrm{1}}\rangle} - {L}^{\langle \mathrm{1}\rangle} = 0
+\end{equation}
+\begin{equation}
+{{p\!a\!r}^{\mathrm{l}}}^{\langle \mathrm{\mathrm{2}}\rangle} - {L}^{\langle \mathrm{2}\rangle} = 0
+\end{equation}
+\begin{equation}
+-p^{\mathrm{k}} + {{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{A}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{A}}\rangle}} {{p}^{\langle \mathrm{A}\rangle}} {{{K}^{\langle \mathrm{A}\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{A}}\rangle}}} {{{L}^{\langle \mathrm{A}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-p^{\mathrm{k}} + {{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{B}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{B}}\rangle}} {{p}^{\langle \mathrm{B}\rangle}} {{{K}^{\langle \mathrm{B}\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{B}}\rangle}}} {{{L}^{\langle \mathrm{B}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-p^{\mathrm{k}} + {{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{C}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{C}}\rangle}} {{p}^{\langle \mathrm{C}\rangle}} {{{K}^{\langle \mathrm{C}\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{C}}\rangle}}} {{{L}^{\langle \mathrm{C}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{C}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{p}^{\langle \mathrm{A}\rangle} + {{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{A}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{A}}\rangle}} {{p}^{\langle \mathrm{A}\rangle}} {{X}^{\langle \mathrm{A},\mathrm{A}\rangle}}^{-1} {{{K}^{\langle \mathrm{A}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{A}}\rangle}}} {{{L}^{\langle \mathrm{A}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{p}^{\langle \mathrm{A}\rangle} + {{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{A}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{B}}\rangle}} {{p}^{\langle \mathrm{B}\rangle}} {{X}^{\langle \mathrm{B},\mathrm{A}\rangle}}^{-1} {{{K}^{\langle \mathrm{B}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{B}}\rangle}}} {{{L}^{\langle \mathrm{B}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{p}^{\langle \mathrm{A}\rangle} + {{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{A}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{C}}\rangle}} {{p}^{\langle \mathrm{C}\rangle}} {{X}^{\langle \mathrm{C},\mathrm{A}\rangle}}^{-1} {{{K}^{\langle \mathrm{C}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{C}}\rangle}}} {{{L}^{\langle \mathrm{C}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{C}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{p}^{\langle \mathrm{B}\rangle} + {{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{B}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{A}}\rangle}} {{p}^{\langle \mathrm{A}\rangle}} {{X}^{\langle \mathrm{A},\mathrm{B}\rangle}}^{-1} {{{K}^{\langle \mathrm{A}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{A}}\rangle}}} {{{L}^{\langle \mathrm{A}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{p}^{\langle \mathrm{B}\rangle} + {{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{B}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{B}}\rangle}} {{p}^{\langle \mathrm{B}\rangle}} {{X}^{\langle \mathrm{B},\mathrm{B}\rangle}}^{-1} {{{K}^{\langle \mathrm{B}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{B}}\rangle}}} {{{L}^{\langle \mathrm{B}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{p}^{\langle \mathrm{B}\rangle} + {{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{B}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{C}}\rangle}} {{p}^{\langle \mathrm{C}\rangle}} {{X}^{\langle \mathrm{C},\mathrm{B}\rangle}}^{-1} {{{K}^{\langle \mathrm{C}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{C}}\rangle}}} {{{L}^{\langle \mathrm{C}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{C}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{p}^{\langle \mathrm{C}\rangle} + {{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{C}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{A}}\rangle}} {{p}^{\langle \mathrm{A}\rangle}} {{X}^{\langle \mathrm{A},\mathrm{C}\rangle}}^{-1} {{{K}^{\langle \mathrm{A}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{A}}\rangle}}} {{{L}^{\langle \mathrm{A}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{p}^{\langle \mathrm{C}\rangle} + {{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{C}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{B}}\rangle}} {{p}^{\langle \mathrm{B}\rangle}} {{X}^{\langle \mathrm{B},\mathrm{C}\rangle}}^{-1} {{{K}^{\langle \mathrm{B}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{B}}\rangle}}} {{{L}^{\langle \mathrm{B}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{p}^{\langle \mathrm{C}\rangle} + {{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{C}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{C}}\rangle}} {{p}^{\langle \mathrm{C}\rangle}} {{X}^{\langle \mathrm{C},\mathrm{C}\rangle}}^{-1} {{{K}^{\langle \mathrm{C}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{C}}\rangle}}} {{{L}^{\langle \mathrm{C}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{C}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{U}^{\langle \mathrm{1}\rangle} - \left({{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{A}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{A}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{B}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{B}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{C}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{C}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{{\omega} \left(-1 + \omega\right)^{-1}} = 0
+\end{equation}
+\begin{equation}
+{U}^{\langle \mathrm{2}\rangle} - \left({{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{A}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{A}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{B}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{B}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{C}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{C}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{{\omega} \left(-1 + \omega\right)^{-1}} = 0
+\end{equation}
+\begin{equation}
+-{Y}^{\langle \mathrm{A}\rangle} + {{\gamma}^{\langle \mathrm{\mathrm{A}}\rangle}} {{{K}^{\langle \mathrm{A}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{A}}\rangle}}} {{{L}^{\langle \mathrm{A}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{A},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{A}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{Y}^{\langle \mathrm{B}\rangle} + {{\gamma}^{\langle \mathrm{\mathrm{B}}\rangle}} {{{K}^{\langle \mathrm{B}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{B}}\rangle}}} {{{L}^{\langle \mathrm{B}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{B},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{B}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{Y}^{\langle \mathrm{C}\rangle} + {{\gamma}^{\langle \mathrm{\mathrm{C}}\rangle}} {{{K}^{\langle \mathrm{C}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{C}}\rangle}}} {{{L}^{\langle \mathrm{C}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{C}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{A}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{A}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{B}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{B}}\rangle}}} {{{X}^{\langle \mathrm{C},\mathrm{C}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{C}},\mathrm{\mathrm{C}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{{\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle \mathrm{1}\rangle}} {{p}^{\langle \mathrm{A}\rangle}} + {{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{A}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{A}\rangle}}^{-1 + {\omega}^{-1} \left(-1 + \omega\right)}} {\left({{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{A}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{A}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{B}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{B}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{C}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{C}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{-1 + {\omega} \left(-1 + \omega\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+-{{\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle \mathrm{1}\rangle}} {{p}^{\langle \mathrm{B}\rangle}} + {{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{B}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{B}\rangle}}^{-1 + {\omega}^{-1} \left(-1 + \omega\right)}} {\left({{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{A}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{A}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{B}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{B}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{C}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{C}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{-1 + {\omega} \left(-1 + \omega\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+-{{\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle \mathrm{1}\rangle}} {{p}^{\langle \mathrm{C}\rangle}} + {{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{C}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{C}\rangle}}^{-1 + {\omega}^{-1} \left(-1 + \omega\right)}} {\left({{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{A}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{A}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{B}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{B}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{1}},\mathrm{\mathrm{C}}\rangle}} {{{D}^{\langle \mathrm{1},\mathrm{C}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{-1 + {\omega} \left(-1 + \omega\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+-{{\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle \mathrm{2}\rangle}} {{p}^{\langle \mathrm{A}\rangle}} + {{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{A}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{A}\rangle}}^{-1 + {\omega}^{-1} \left(-1 + \omega\right)}} {\left({{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{A}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{A}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{B}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{B}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{C}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{C}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{-1 + {\omega} \left(-1 + \omega\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+-{{\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle \mathrm{2}\rangle}} {{p}^{\langle \mathrm{B}\rangle}} + {{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{B}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{B}\rangle}}^{-1 + {\omega}^{-1} \left(-1 + \omega\right)}} {\left({{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{A}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{A}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{B}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{B}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{C}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{C}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{-1 + {\omega} \left(-1 + \omega\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+-{{\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle \mathrm{2}\rangle}} {{p}^{\langle \mathrm{C}\rangle}} + {{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{C}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{C}\rangle}}^{-1 + {\omega}^{-1} \left(-1 + \omega\right)}} {\left({{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{A}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{A}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{B}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{B}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{2}},\mathrm{\mathrm{C}}\rangle}} {{{D}^{\langle \mathrm{2},\mathrm{C}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{-1 + {\omega} \left(-1 + \omega\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+-{L}^{\langle \mathrm{1}\rangle} - {L}^{\langle \mathrm{2}\rangle} + {L}^{\langle \mathrm{A}\rangle} + {L}^{\langle \mathrm{B}\rangle} + {L}^{\langle \mathrm{C}\rangle} = 0
+\end{equation}
+\begin{equation}
+{D}^{\langle \mathrm{1},\mathrm{A}\rangle} + {D}^{\langle \mathrm{2},\mathrm{A}\rangle} + {X}^{\langle \mathrm{A},\mathrm{A}\rangle} + {X}^{\langle \mathrm{B},\mathrm{A}\rangle} + {X}^{\langle \mathrm{C},\mathrm{A}\rangle} - {Y}^{\langle \mathrm{A}\rangle} = 0
+\end{equation}
+\begin{equation}
+{D}^{\langle \mathrm{1},\mathrm{B}\rangle} + {D}^{\langle \mathrm{2},\mathrm{B}\rangle} + {X}^{\langle \mathrm{A},\mathrm{B}\rangle} + {X}^{\langle \mathrm{B},\mathrm{B}\rangle} + {X}^{\langle \mathrm{C},\mathrm{B}\rangle} - {Y}^{\langle \mathrm{B}\rangle} = 0
+\end{equation}
+\begin{equation}
+{D}^{\langle \mathrm{1},\mathrm{C}\rangle} + {D}^{\langle \mathrm{2},\mathrm{C}\rangle} + {X}^{\langle \mathrm{A},\mathrm{C}\rangle} + {X}^{\langle \mathrm{B},\mathrm{C}\rangle} + {X}^{\langle \mathrm{C},\mathrm{C}\rangle} - {Y}^{\langle \mathrm{C}\rangle} = 0
+\end{equation}
+\begin{equation}
+{L}^{\langle \mathrm{1}\rangle} + {{\phi}^{\langle \mathrm{\mathrm{1}}\rangle}} \left({\pi}^{\langle \mathrm{A}\rangle} + {\pi}^{\langle \mathrm{B}\rangle} + {\pi}^{\langle \mathrm{C}\rangle}\right) + {p^{\mathrm{k}}} {{K}^{\langle \mathrm{1}\rangle}} - {{p}^{\langle \mathrm{A}\rangle}} {{D}^{\langle \mathrm{1},\mathrm{A}\rangle}} - {{p}^{\langle \mathrm{B}\rangle}} {{D}^{\langle \mathrm{1},\mathrm{B}\rangle}} - {{p}^{\langle \mathrm{C}\rangle}} {{D}^{\langle \mathrm{1},\mathrm{C}\rangle}} = 0
+\end{equation}
+\begin{equation}
+{L}^{\langle \mathrm{2}\rangle} + {{\phi}^{\langle \mathrm{\mathrm{2}}\rangle}} \left({\pi}^{\langle \mathrm{A}\rangle} + {\pi}^{\langle \mathrm{B}\rangle} + {\pi}^{\langle \mathrm{C}\rangle}\right) + {p^{\mathrm{k}}} {{K}^{\langle \mathrm{2}\rangle}} - {{p}^{\langle \mathrm{A}\rangle}} {{D}^{\langle \mathrm{2},\mathrm{A}\rangle}} - {{p}^{\langle \mathrm{B}\rangle}} {{D}^{\langle \mathrm{2},\mathrm{B}\rangle}} - {{p}^{\langle \mathrm{C}\rangle}} {{D}^{\langle \mathrm{2},\mathrm{C}\rangle}} = 0
+\end{equation}
+\begin{equation}
+{\pi}^{\langle \mathrm{A}\rangle} + {L}^{\langle \mathrm{A}\rangle} + {p^{\mathrm{k}}} {{K}^{\langle \mathrm{A}\rangle}} + {{p}^{\langle \mathrm{A}\rangle}} {{X}^{\langle \mathrm{A},\mathrm{A}\rangle}} - {{p}^{\langle \mathrm{A}\rangle}} {{Y}^{\langle \mathrm{A}\rangle}} + {{p}^{\langle \mathrm{B}\rangle}} {{X}^{\langle \mathrm{A},\mathrm{B}\rangle}} + {{p}^{\langle \mathrm{C}\rangle}} {{X}^{\langle \mathrm{A},\mathrm{C}\rangle}} = 0
+\end{equation}
+\begin{equation}
+{\pi}^{\langle \mathrm{B}\rangle} + {L}^{\langle \mathrm{B}\rangle} + {p^{\mathrm{k}}} {{K}^{\langle \mathrm{B}\rangle}} + {{p}^{\langle \mathrm{A}\rangle}} {{X}^{\langle \mathrm{B},\mathrm{A}\rangle}} + {{p}^{\langle \mathrm{B}\rangle}} {{X}^{\langle \mathrm{B},\mathrm{B}\rangle}} - {{p}^{\langle \mathrm{B}\rangle}} {{Y}^{\langle \mathrm{B}\rangle}} + {{p}^{\langle \mathrm{C}\rangle}} {{X}^{\langle \mathrm{B},\mathrm{C}\rangle}} = 0
+\end{equation}
+\begin{equation}
+{\pi}^{\langle \mathrm{C}\rangle} + {L}^{\langle \mathrm{C}\rangle} + {p^{\mathrm{k}}} {{K}^{\langle \mathrm{C}\rangle}} + {{p}^{\langle \mathrm{A}\rangle}} {{X}^{\langle \mathrm{C},\mathrm{A}\rangle}} + {{p}^{\langle \mathrm{B}\rangle}} {{X}^{\langle \mathrm{C},\mathrm{B}\rangle}} + {{p}^{\langle \mathrm{C}\rangle}} {{X}^{\langle \mathrm{C},\mathrm{C}\rangle}} - {{p}^{\langle \mathrm{C}\rangle}} {{Y}^{\langle \mathrm{C}\rangle}} = 0
+\end{equation}
+
+
+
+
+
+
+
+

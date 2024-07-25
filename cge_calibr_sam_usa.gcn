@@ -1,0 +1,516 @@
+# ############################################################################
+# This file is a part of gEcon.iosam.                                        #
+#                                                                            #
+# (c) Chancellery of the Prime Minister of the Republic of Poland 2014-2015  #
+# (c) Marta Retkiewicz 2015-2016                                             #
+# Licence terms can be found in the file:                                    #
+# http://gecon.r-forge.r-project.org/files/gEcon.iosam_licence.txt           #
+#                                                                            #
+# Author: Marta Retkiewicz                                                   #
+# ############################################################################
+# Example for gEcon.iosam package: calibration of a CGE model para SAM EEUU 2008
+# ############################################################################
+
+
+options
+{
+    output LaTeX = TRUE;
+    output LaTeX landscape = TRUE;
+    output logfile = TRUE;
+};
+
+
+indexsets
+{
+    SEC = { 'a_Agri', 'a_Mnfc', 'a_Services' };
+    #DEM={"m_Agri", "m_Mnfc", "m_Services", "d_Agri", "d_Mnfc", "d_Services"}
+    #HH = { 's', 'l' };
+};
+
+
+# ###################################################################
+#                       CONSUMER h PROBLEM                          #
+# ###################################################################
+
+block CONSUMER
+{
+    definitions
+    {
+        u[] = (SUM<s::SEC>(alpha<s> * D<s>[]^((omega - 1)/omega)))^(omega/(omega - 1));
+    };
+    controls
+    {
+        <s::SEC>D<s>[], DEM[], INC[], SAV[], BTINC[], PIT_base[];
+    };
+    objective
+    {
+        U[] = u[];
+    };
+    constraints
+    {
+           ### consumption composite ###
+        DEM[] = ( SUM<s::SEC>(alpha<s>* D<s>[] ^ ((omega - 1) / omega))) ^ (omega / (omega - 1));
+
+        ### budget constraint ###
+        INC[] = SUM<s::SEC>(D<s>[] * p_cons<s>[]) + SAV[] ;
+        INC[] = BTINC[] - pit_tax * PIT_base[];
+        
+        BTINC[] = K[] * p_k[] + L[] * p_l[] ;
+
+
+        ### fixed savings & transfers share in expenditures ###
+        SAV[] = sav * INC[];
+        
+    };
+    identities
+    {
+       PIT_base[] = BTINC[] ;
+    };
+    
+    calibration
+    {
+        <s::SEC>D<s>[] = d_data<s>  -> alpha<s>;
+        #SUM<s::SEC>(alpha<s>^omega) = 1 -> alpha<'A', h>;
+        #Busca los alfas para que se demande lo que tiene la SAM y que div por omega sumen 1
+    };
+};
+
+# ###################################################################
+#                       PRODUCER s PROBLEM                          #
+# ###################################################################
+
+
+
+block <s::SEC>PRODUCTION_OF_GOODS
+{
+
+
+    controls
+    {
+        Y<s>[], K<s>[], L<s>[], Y_VA<s>[], Y_INT<s>[], <si::SEC>X<si, s>[];
+    };
+    objective
+    {
+        pi<s>[] = (Y<s>[] * p<s>[]) - ((K<s>[] * p_k[] * (1 + k_tax) + L<s>[] * p_l[] * (1 + l_tax)) + SUM<si::SEC>(X<si, s>[] * p_int<si>[])) * (1 + tax_rate<s>);
+    };
+    constraints
+    {
+        # A two-level Leontief production function
+        Y<s>[] = Y_VA<s>[];
+        Y_VA<s>[] = Y_INT<s>[];
+        Y_VA<s>[] = gamma_yva<s> * K<s>[]^beta_k<s> * L<s>[]^beta_l<s>;
+        <si::SEC>X<si, s>[] = Y_INT<s>[] * beta_x<si, s>;
+    };
+    
+    calibration
+    {
+        beta_k<s> + beta_l<s> = 1 -> beta_k<s>;
+        L<s>[] = l_data<s> -> beta_l<s>;
+        Y_VA<s>[] = y_data<s> -> gamma_yva<s>;
+        #Genera los betas para igualar la demanda de factores de la SAM y teneer rend constantes  y el gamma para igualar la produccion
+        <si::SEC>X<si, s>[] = x_data<si, s> -> beta_x<si, s>;
+        # Genera los betas intermedios para igualar la demanda intermedia de la SAM
+    };
+
+};
+
+block TAXES_PRODUCER
+{
+
+
+    identities
+    {
+        <s::SEC>TAX_s<s>[] = ((K<s>[] * p_k[] * (1 + k_tax) + L<s>[] * p_l[] * (1 + l_tax)) + SUM<si::SEC>(X<si, s>[] * p_int<si>[])) * (tax_rate<s>);
+        L_TAX[] = p_l[] * l_tax * (SUM<s::SEC>(L<s>[]));
+        K_TAX[] = p_k[] * k_tax * (SUM<s::SEC>(K<s>[]));
+    };
+};
+
+
+# ###################################################################
+#                           PRODUCT                                 #
+# ###################################################################
+
+block <s::SEC>EXPORT_COMPOSITE
+{
+    ### VARIABLES
+
+    # EXPORT<s>[]               Aggregated export of good s
+    # EXP<r,s>[]                Export of the good s to rest of the world r (ROW)
+    # PI_EXP<s>[]               Profit of export good s
+    # p_exp<s>[]                World price of exported good s
+
+    ### CALIBRATED PARAMETERS
+
+    # p_for<r>                  Price index for region r (=1)
+    # theta_exp<s>              Scaling parameter in the export CET function of the good s
+    # alpha_exp<r,s>            Share of export to region r in the total export of the good s
+    # am_exp<r>                 Iceberg cost index of export (=1)
+    # sigma_exp<s>              CET function's elasticity of transformation (between regions)
+
+    controls
+    {
+        EXPORT<s>[], EXP<s>[];
+    };
+    objective
+    {
+        PI_EXP<s>[]= p_exp<s>[] * EXPORT<s>[] - (p_for * EXP<s>[]);
+    };
+    constraints
+    {
+        EXPORT<s>[] = theta_exp<s> * (   EXP<s>[] );
+    };
+    
+        calibration
+    {
+      EXPORT<s>[] = export_data<s> -> theta_exp<s>;
+      
+    };
+    
+};
+
+block <s::SEC>FINAL_PRODUCT_COMPOSITE
+{
+    ### VARIABLES
+
+    # EXPORT_f<s>[]             Total value export of the good s (equals the export composite)
+    # Y_HOME<s>[]               Domestic production of the good s
+    # Y_f<s>[]                  Aggregated final production of the good s (product composite)
+    # PI_Y<s>[]                 Profit of the product s
+    # p_home<s>[]               Price of domestic good s
+
+    ### CALIBRATED PARAMETERS
+
+    # theta_y<s>                Scaling parameter in the CET function for the good s
+    # alpha_prod_h<s>           Share of domestic in the total production composite of good s
+    # alpha_prod_e<s>           Share of export in the total production  composite of good s
+    # sigma_f_prod<s>           CET function's elasticity of transformation (between domestic sale and export)
+
+    controls
+    {
+        Y_f<s>[], Y_HOME<s>[], EXPORT_f<s>[];
+    };
+    objective
+    {
+        PI_Y<s>[] = p<s>[] * Y_f<s>[] - p_home<s>[] * Y_HOME<s>[] - p_exp<s>[] * EXPORT_f<s>[];
+    };
+    constraints
+    {
+        Y_f<s>[] = theta_y<s> * ( alpha_prod_h<s> * Y_HOME<s>[] ^ ((sigma_f_prod<s>+1)/sigma_f_prod<s>) + (alpha_prod_e<s>) * EXPORT_f<s>[] ^ ((sigma_f_prod<s>+1)/sigma_f_prod<s>) ) ^ (sigma_f_prod<s>/(sigma_f_prod<s>+1));
+    };
+    
+            calibration
+    {
+      
+      Y_f<s>[] = y_f_data<s> -> theta_y<s>;
+      Y_HOME<s>[]=y_home_data<s> ->sigma_f_prod<s>;
+      
+    };
+};
+
+
+block <s::SEC>IMPORT_COMPOSITE
+{
+    ### VARIABLES
+
+    # IMPORT<s>[]               Total import composite of good s
+    # IMP<r,s>[]                Import of good s from region r (ROW)
+    # PI_IMP<s>[]               Profit of import good s
+    # p_imp<s>[]                Price of imported good s
+
+    ### CALIBRATED PARAMETERS
+
+    # theta_imp<s>              Scaling parameter in the import aggregate of good s
+    # alpha_imp<r,s>            Share of import from region r in the total import of good s
+    # am_imp<r>                 Iceberg cost index of import (=1)
+    # sigma_imp<s>              CES function's elasticity of substitution (between regions)
+
+    controls
+    {
+        IMPORT<s>[], IMP<s>[];
+    };
+    objective
+    {
+        PI_IMP<s>[]= p_imp<s>[] * IMPORT<s>[] - ( (1+im_tax<s>) * ex_rate[] * p_for * IMP<s>[]);
+    };
+    constraints
+    {
+        IMPORT<s>[] = theta_imp<s> * (IMP<s>[]);
+    };
+    
+    calibration
+    {
+      IMPORT<s>[] = import_data<s> -> theta_imp<s>;
+      
+    };
+};
+
+
+block <s::SEC>ARMINGTON_COMPOSITE
+{
+    ### VARIABLES
+
+    # IMPORT_a<s>[]             Total import of the good s
+    # ARM<s>[]                  Final good s sold on the domestic market (Armington good)
+    # Y_HOME_a                  Domestic production of the good s
+    # PI_ARM<s>[]               Profit of aggregated good s - Armington's composite
+    # p_arm<s>[]                Price of aggregated good s - Armington's composite
+
+    ### CALIBRATED PARAMETERS
+
+    # theta_arm<s>              Scaling parameter in Armington's composite
+    # alpha_arm_h<s>            Share of domestic good s in the total good s
+    # alpha_arm_i<s>            Share of imported good s in the total good s
+    # sigma_arm<s>              CES function's elasticity of substitution (between import and domestic production)
+
+    controls
+    {
+        ARM<s>[], Y_HOME_a<s>[], IMPORT_a<s>[];
+    };
+    objective
+    {
+        PI_ARM<s>[] = p_arm<s>[] * ARM<s>[] - p_home<s>[] * Y_HOME_a<s>[] - p_imp<s>[] * IMPORT_a<s>[];
+    };
+    constraints
+    {
+        ARM<s>[] = theta_arm<s> * ( alpha_arm_h<s> * Y_HOME_a<s>[] ^ ((sigma_arm<s>-1)/sigma_arm<s>) + (alpha_arm_i<s>) * IMPORT_a<s>[] ^ ((sigma_arm<s>-1)/sigma_arm<s>) ) ^ (sigma_arm<s>/(sigma_arm<s>-1));
+    };
+   calibration
+    {
+      Y_HOME_a<s>[] = y_dom_data<s> -> theta_arm<s>;
+      IMPORT_a<s>[]=import_tot<s>->sigma_arm<s>;
+      
+    };
+};
+
+block <s::SEC>SALES
+{
+    identities
+    {
+        TAX_p<s>[] = VAT<s>[] + EXCISE<s>[];
+        VAT<s>[] =  p_market<s>[] * (vat<s>) * (1 + excise<s>) * (D<s>[] + D_GOV<s>[] + INV<s>[]);
+        EXCISE<s>[] = p_market<s>[] * excise<s> * (D<s>[] + D_GOV<s>[] + INV<s>[] + SUM<si::SEC>X<s, si>[]);
+    };
+};
+
+
+# ###################################################################
+#                       FIRMS SECTOR                                #
+# ###################################################################
+
+block FIRM
+{
+    ### VARIABLES
+
+    # INC_FIRM[]                All income of the sector of firms
+    # TGOVFIRM[]                Transfers from the government to the sector of firms
+    # BTINC_FIRM[]              Before-tax income of the sector of firms
+    # PROFIT[]                  Sum of profits of the sector of firms from all sectors of producers
+    # K_FIRM[]                  Units of the capital owned by the sector of firms
+    # TBANKFIRM[]               Transfers from bank to the sector of firms
+    # TROWFIRM<r>[]             Transfers from the rest of the world r to the sector of firms
+    # KS[]                      Capital supply
+    # SAV_FIRM[]                Savings of the sector of firms
+    # TRAN_FIRM[]               All transfers from the sector of firms to ROW and bank
+    # TFIRMROW<r>[]             Transfers from the sector of firms to the rest of the world r
+    # TFIRMBANK[]               Transfers from firms to the bank
+
+    ### CALIBRATED PARAMETERS
+
+    # firm_tax                  rate (%) of CIT on the sector of firms (there are 2 different CIT rates, one on firms and one on banks)
+    # owc_f                     % of capital owned by the sector of firms
+    # owf<h>                    % of sector of firms owned by household h
+    # owf<r>                    % of sector of firms owned by rest of the world r
+    # owf_b                     % of sector of firms owned by banks
+
+    identities
+    {
+        # Firm's income = producers' profit + capital + transfers - tax
+        INC_FIRM[] = (1 - firm_tax) * BTINC_FIRM[];
+        BTINC_FIRM[] = PROFIT[];
+        PROFIT[] = SUM<s::SEC>(pi<s>[]);
+        
+
+        # Firm's expenditures = savings + dividends + transfers
+        SAV_FIRM[]  = INC_FIRM[];
+        
+    };
+};
+
+
+
+# ###################################################################
+#                       GOVERNMENT SECTOR                           #
+# ###################################################################
+
+block GOVERNMENT
+{
+    ### VARIABLES
+
+    # INC_GOV[]                 Income of the government
+    # EXP_GOV[]                 Expenditures of the government
+    # STAX[]                    Sum of taxes from production of goods s (sum of TAX_s<s>[])
+    # SOCTAX[]                  Sum of taxes from value of labour and value of capital
+    # VAT[]                     Sum of VATs from products s
+    # EXCISE[]                  Sum of excises from products s
+    # IMTAX[]                   Sum of import taxes from imported products
+    # PIT[]                     Sum of PIT from households h (taxes on their incomes)
+    # CIT[]                     Sum of CIT from firms sector and bank sector
+    # FIRMTAX[]                 CIT from firms sector
+    # BANKTAX[]                 CIT from bank sector
+    # L_TAX[]                   Total value of tax on labour
+    # K_TAX[]                   Total value of tax on capital
+    # LS[]                      Total supply of labour in the economy (units)
+    # KS[]                      Total supply of capital in the economy (units)
+    # TROWGOV[]                 Transfers from the ROW (aggregate) to the government
+    # TGOVFIRM                  Transfers from the government to firms
+    # TROWGOV<r>[]              Transfers from the ROW r to the government
+    # DEM_GOV[]                 Government demand for goods (value)
+    # D_GOV<s>[]                Government demand for good s
+    # SAV_GOV[]                 Savings of the government - will go to the investment used by firms
+    # TRAN_GOV[]                Transfers from the government (sum of all transfers from gov, but not subsidies or savings)
+    # SUB[]                     Sum of all subsidies from the government (value)
+    # TGOVROW<r>[]              Transfers from the government to the ROW r
+
+    ### CALIBRATED PARAMETERS
+
+    # sub_p<s>                  % of subsidies for product s in total government's income
+    # k_tax                     The rate of taxation on capital
+    # l_tax                     The rate of taxation on labour
+
+    ### FIXED PARAMETERS
+    # dgov_data<s>              % of the government's demand for good s in total government's demand
+    # pit_tax_data<h>           PIT tax from household h
+    # tgovh_data_extra<h>       Extra transfers from government to household h (=0)
+    # tgovbank_data             Transfers from the government to the bank  SAM
+    # tgovfirm_data             Transfers from the government to firms in SAM
+    # tgovrow_data<r>           Transfers from the government to the ROW r in SAM
+    # tgovh_data<h>             Transfers from the government to the household h in SAM
+
+    identities
+    {
+        # Gov's income = taxes (social contribution, VAT, import duties, PIT and CIT) + transfers from RoW
+        INC_GOV[] = STAX[] + SOCTAX[] + VAT[] + EXCISE[] + IMTAX[] + PIT[] + CIT[] ;
+        VAT[] = SUM<s::SEC>(VAT<s>[]);
+        EXCISE[] = SUM<s::SEC>(EXCISE<s>[]);
+        STAX[] = SUM<s::SEC>(TAX_s<s>[]);
+        SOCTAX[] = K_TAX[] + L_TAX[];
+        IMTAX[] = SUM<s::SEC>(IMP<s>[] * ex_rate[] * p_for * im_tax<s>);
+        PIT[] = (pit_tax * PIT_base[] );
+        CIT[] = FIRMTAX[];
+        FIRMTAX[] = firm_tax * BTINC_FIRM[];
+        
+        # Gov's demand for domestic goods = gov income - savings - transfers and subsidies
+        EXP_GOV[] = DEM_GOV[];
+        DEM_GOV[] = SUM<s::SEC>(D_GOV<s>[] * p_cons<s>[]);
+        <s::SEC>D_GOV<s>[] * p_cons<s>[] = dgov_data<s>;
+        
+        # Gov's deficit
+        INC_GOV[] = EXP_GOV[] + SAV_GOV[];
+    };
+};
+
+
+# ###################################################################
+#                       REST OF THE WORLD                           #
+# ###################################################################
+
+block REST_OF_THE_WORLD
+{
+    ### VARIABLES
+
+    # INC_ROW<r>[]              Income of the rest of the world r
+    # IMPORT_ROW<r>[]           Value of imported goods from the rest of the world r
+    # EXPORT_ROW<r>[]           Value of exported goods to the rest of the world r
+    # TRAN<r>[]                 Sum of all transfers from the rest of the world r
+    # EXP_ROW<s, r>[]           Expenditures of the rest of the world r
+
+    ### CALIBRATED PARAMETERS
+
+    # t_rf<r>                   % of ROW r income used for transfers to firms' sector
+    # t_rg<r>                   % of ROW r income used for transfers to the government
+    # t_rh<r, h>                % of ROW r income used for transfers to household h (scaled)
+    # t_rb<r>                   % of ROW r income used for transfers to the bank
+
+    identities
+    {
+        INC_ROW[] = IMPORT_ROW[];
+        IMPORT_ROW[] = SUM<s::SEC>(ex_rate[] * p_for * IMP<s>[]);
+
+        EXP_ROW[] = EXPORT_ROW[] ;
+        EXPORT_ROW[] = SUM<s::SEC>(p_for * EXP<s>[]);
+        
+        INC_ROW[] = EXP_ROW[] + SAV_R[];
+    };
+};
+
+
+
+# ###################################################################
+#                            INVESTMENT                             #
+# ###################################################################
+
+block CAPITAL
+{
+    ### VARIABLES
+
+    # SAV<r>[]                  Savings of the rest of the world r
+    # SAV_GOV[]                 Savings of the government
+    # SAV_BANK[]                Savings of the bank
+    # SAV_FIRM[]                Savings of the firm
+    # SAV[]                     Total savings
+    # INV<s>[]                  Investments of the sector s
+    # INV[]                     Total investments
+
+    ### CALIBRATED PARAMETERS
+
+    # inv<s>                    Share of investments in sector s in total investments
+
+    identities
+    {
+        # Savings and investments
+        SAV[] = SAV_FIRM[] + SAV[] + SAV_GOV[] + SAV_R[];
+        #SAV[] = INV[];
+        <s::SEC>p_cons<s>[] * INV<s>[] = inv<s> * INV[];
+    };
+};
+
+
+# ###################################################################
+#                         MARKET CLEARING                           #
+# ###################################################################
+
+block MARKET_CLEARING
+{
+    identities
+    {
+        # Goods markets clear
+        <s::SEC>ARM<s>[] = D<s>[] + D_GOV<s>[] + INV<s>[] + SUM<si::SEC>X<s, si>[];
+        <s::SEC>EXPORT_f<s>[] = EXPORT<s>[];
+        <s::SEC>IMPORT_a<s>[] = IMPORT<s>[];
+        <s::SEC>Y_HOME_a<s>[] = Y_HOME<s>[];
+        <s::SEC>Y_f<s>[] = Y<s>[];
+
+        # Numeraire
+        SUM<s::SEC>(p<s>[] * ARM<s>[]/(SUM<si::SEC>ARM<si>[]))= 1;
+
+        # Capital market clears
+        K[] = SUM<s::SEC>K<s>[];
+        #K[] = k_total_data;
+
+        # Labour market clears - neoclassical closure
+        SUM<s::SEC>L<s>[] = L[];
+        #L[]= l_total_data;
+        
+        
+        # Foreign trade closure
+        ex_rate[] = 1;
+
+        # Definition of final and intermediate good prices
+        <s::SEC>p_int<s>[] = (p_market<s>[]) * (1 + excise<s>);
+        <s::SEC>p_cons<s>[] = p_market<s>[] * (1 + vat<s>) * (1 + excise<s>);
+        <s::SEC>p_market<s>[] = p_arm<s>[] ;
+    };
+};
+
+

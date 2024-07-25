@@ -1,0 +1,128 @@
+# ############################################################################
+# This file is a part of gEcon.iosam.                                        #
+#                                                                            #
+# (c) Chancellery of the Prime Minister of the Republic of Poland 2014-2015  #
+# (c) Marta Retkiewicz 2015-2016                                             #
+# Licence terms can be found in the file:                                    #
+# http://gecon.r-forge.r-project.org/files/gEcon.iosam_licence.txt           #
+#                                                                            #
+# Author: Marta Retkiewicz                                                   #
+# ############################################################################
+# Example for gEcon.iosam package: calibration of a CGE model
+# ############################################################################
+
+
+options
+{
+    output LaTeX = TRUE;
+    output LaTeX landscape = TRUE;
+    output logfile = TRUE;
+};
+
+indexsets
+{
+    SEC = { 'A' .. 'C' };
+    HH = { 's', 'l' };
+};
+
+block <h::HH> CONSUMER
+{
+    definitions
+    {
+        u<h>[] = (SUM<s::SEC>(alpha<s, h> * D<s, h>[]^((omega - 1)/omega)))^(omega/(omega - 1));
+    };
+    controls
+    {
+        <s::SEC>D<s, h>[]; # Household h demand for good s
+    };
+    objective
+    {
+        U<h>[] = u<h>[];
+    };
+    constraints
+    {
+        INC<h>[] = SUM<s::SEC>(D<s, h>[] * p<s>[]);
+    };
+    identities
+    {
+        INC<h>[] = K<h>[] * p_k[] + L<h>[] * p_l[] + CAP<h>[];
+    };
+    calibration
+    {
+        <s::SEC\'A'>D<s, h>[] = d_data<s, h>  -> alpha<s, h>;
+        SUM<s::SEC>(alpha<s, h>^omega) = 1 -> alpha<'A', h>;
+        #Busca los alfas para que se demande lo que tiene la SAM y que div por omega sumen 1
+    };
+};
+
+block <s::SEC>SECTOR
+{
+    controls
+    {
+        Y<s>[], K<s>[], L<s>[], Y_VA<s>[], Y_INT<s>[];
+    };
+    objective
+    {
+        pi<s>[] = Y<s>[] * p<s>[] - (K<s>[] * p_kc[] + L<s>[] * p_lc[]) - SUM<si::SEC>(Y_INT<s>[] * p<si>[] / beta_x<si, s>);
+    };
+    constraints
+    {
+        # A two-level Leontief production function
+        Y<s>[] = Y_VA<s>[];
+        Y<s>[] = Y_INT<s>[];
+        Y_VA<s>[] = gamma_yva<s> * K<s>[]^beta_k<s> * L<s>[]^beta_l<s>;
+    };
+    identities
+    {
+        <si::SEC>X<si, s>[] = Y_INT<s>[] / beta_x<si, s>;
+    };
+    calibration
+    {
+        beta_k<s> + beta_l<s> = 1 -> beta_k<s>;
+        L<s>[] = l_data<s> -> beta_l<s>;
+        Y_VA<s>[] = y_data<s> -> gamma_yva<s>;
+        #Genera los betas para igualar la demanda de factores de la SAM y teneer rend constantes  y el gamma para igualar la produccion
+        <si::SEC>X<si, s>[] = x_data<si, s> -> beta_x<si, s>;
+        # Genera los betas intermedios para igualar la demanda intermedia de la SAM
+    };
+};
+
+block EQUILIBRIUM
+{
+    identities
+    {
+        p_l[] = 1;  # Numeraire
+        <s::SEC>p<s>[] = 1;  #fijan todos los precios de los bienes en 1
+        KS[] = SUM<s::SEC>(K<s>[]); #la suma de los capitales en cada industria debe ser igual al total
+
+        KS[] = ks_data; #Capital total
+        <h::HH>K<h>[] = KS[] * owc<h> ; 
+        LS[] = ls_data; #trabajo total
+        <h::HH>L<h>[] = LS[] * oww<h> ;
+
+        p_kc[] = p_k[];
+        p_lc[] = p_l[];
+        PI[] = SUM<s::SEC>(pi<s>[]);
+
+        # Firm
+        K_f[] = PI[] + KS[] * owc_f;
+        <h::HH>CAP<h>[] = K_f[] * owf<h>;
+    };
+    calibration
+    {
+        <h::HH\'s'>CAP<h>[] = cap_data<h>  -> owf<h>;
+        SUM<h::HH>(owf<h>) = 1 -> owf<'s'>;
+        #los montos de pago del trabajo deben ser los de la SAM 
+        
+        <h::HH\'s'>L<h>[] = l_data<h>  -> oww<h>;
+        #el trabajo utilizado en cada actividad debe ser el de la SAM
+        SUM<h::HH>(oww<h>) = 1 -> oww<'s'>;
+        
+        <h::HH>K<h>[] = k_data<h>  -> owc<h>;
+        #el pago por el capital a los hogares debe ser el de la SAM
+        
+        K_f[] = k_f_data -> owc_f;
+        #El capital de la firma debe ser el de la SAM
+        
+    }
+};

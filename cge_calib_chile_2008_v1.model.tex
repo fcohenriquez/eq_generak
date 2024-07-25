@@ -1,0 +1,976 @@
+% Generated on 2024-05-31 14:11:35 by gEcon ver. 1.2.2 (2023-07-10)
+% http://gecon.r-forge.r-project.org/
+
+% Model name: cge_calib_chile_2008_v1
+
+\section*{Index sets}
+
+$${P\!R\!O\!D\!S} = \{ \mathrm{Prodprim}, \mathrm{Prodmanu}, \mathrm{Prodserv} \}$$
+$${S\!E\!C} = \{ \mathrm{Actprim}, \mathrm{Actmanu}, \mathrm{Actserv} \}$$
+
+\section{CONSUMER}
+
+\subsection{Optimisation problem}
+
+\begin{align}
+&\max_{\left({D}^{\langle p\rangle}\right)_{p\in {P\!R\!O\!D\!S}}
+} U = \left(\sum_{p\in {P\!R\!O\!D\!S}} {{\alpha}^{\langle p\rangle}} {{{D}^{\langle p\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{{\omega} \left(-1 + \omega\right)^{-1}}\\
+&\mathrm{s.t.:}\nonumber\\
+& {I\!N\!C} = {C\!O\!N\!T}^{\mathrm{SOC}} + {S\!A\!V} + \sum_{p\in {P\!R\!O\!D\!S}} {{p}^{\langle p\rangle}} {{D}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) \quad \left(\lambda^{\mathrm{CONSUMER}^{\mathrm{1}}}\right)\\
+& {I\!N\!C} = {B\!T\!I\!N\!C} - {{p\!i\!t}} {{P\!I\!T}^{\mathrm{base}}} + \sum_{s\in {S\!E\!C}} {\pi}^{\langle s\rangle} \quad \left(\lambda^{\mathrm{CONSUMER}^{\mathrm{2}}}\right)\\
+& {B\!T\!I\!N\!C} = L^{\mathrm{h}} + {P\!R\!E\!S\!T}^{\mathrm{SOC}} + {T\!R}^{\mathrm{EMP}} + {T\!R}^{\mathrm{GOV}} + {p^{\mathrm{k}}} {K^{\mathrm{h}}} \quad \left(\lambda^{\mathrm{CONSUMER}^{\mathrm{3}}}\right)\\
+& {P\!I\!T}^{\mathrm{base}} = L^{\mathrm{h}} + {p^{\mathrm{k}}} {K^{\mathrm{h}}} \quad \left(\lambda^{\mathrm{CONSUMER}^{\mathrm{4}}}\right)
+\end{align}
+
+
+\subsection{Identities}
+
+\begin{equation}
+K^{\mathrm{h}} = {k^{\mathrm{total}^{\mathrm{data}}}} {{p\!a\!r}^{\mathrm{k}^{\mathrm{h}}}}
+\end{equation}
+\begin{equation}
+L^{\mathrm{h}} = {l^{\mathrm{total}^{\mathrm{data}}}} {{p\!o\!r}^{\mathrm{l}^{\mathrm{h}}}}
+\end{equation}
+\begin{equation}
+{S\!A\!V} = {{p\!o\!r}^{\mathrm{sav}}} {{I\!N\!C}}
+\end{equation}
+\begin{equation}
+{C\!O\!N\!T}^{\mathrm{SOC}} = {{p\!o\!r}^{\mathrm{cont}}} {{I\!N\!C}}
+\end{equation}
+\begin{equation}
+{T\!R}^{\mathrm{EMP}} = {{p\!o\!r}^{\mathrm{tremp}}} {{I\!N\!G}^{\mathrm{F}}}
+\end{equation}
+\begin{equation}
+{T\!R}^{\mathrm{GOV}} = {{p\!o\!r}^{\mathrm{trgov}}} {{I\!N\!G}^{\mathrm{GOB}}}
+\end{equation}
+\begin{equation}
+{P\!R\!E\!S\!T}^{\mathrm{SOC}} = {P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{F}}} + {P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{G}}}
+\end{equation}
+
+
+\subsection{First order conditions}
+
+\begin{equation}
+p\in {P\!R\!O\!D\!S}\colon\quad {{\alpha}^{\langle p\rangle}} {{{D}^{\langle p\rangle}}^{-1 + {\omega}^{-1} \left(-1 + \omega\right)}} {\left(\sum_{p\in {P\!R\!O\!D\!S}} {{\alpha}^{\langle p\rangle}} {{{D}^{\langle p\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{-1 + {\omega} \left(-1 + \omega\right)^{-1}}} + {\lambda^{\mathrm{CONSUMER}^{\mathrm{1}}}} {{p}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) = 0
+ \quad \left({D}^{\langle p\rangle}\right)
+\end{equation}
+
+
+
+
+\section{SECTOR $s\in {S\!E\!C}$}
+
+\subsection{Optimisation problem}
+
+\begin{align}
+&\max_{\left({Y}^{\langle p,s\rangle}\right)_{p\in {P\!R\!O\!D\!S}}, \left({K}^{\langle p,s\rangle}\right)_{p\in {P\!R\!O\!D\!S}}, \left({L}^{\langle p,s\rangle}\right)_{p\in {P\!R\!O\!D\!S}}, \left(\left({X}^{\langle \pi,{p\!e},s\rangle}\right)_{{p\!e}\in {P\!R\!O\!D\!S}}\right)_{\pi\in {P\!R\!O\!D\!S}}
+} {\pi}^{\langle s\rangle} = \left(1 - {t^{\mathrm{prod}}}^{\langle s\rangle}\right) \left(-{L}^{\langle s\rangle} - {p^{\mathrm{k}}} {{K}^{\langle s\rangle}} + \sum_{p\in {P\!R\!O\!D\!S}} {{p}^{\langle p\rangle}} {{Y}^{\langle p,s\rangle}} - \sum_{\pi\in {P\!R\!O\!D\!S}} {{p}^{\langle \pi\rangle}} {{X}^{\langle \pi,s\rangle}} \left(1 + {{v\!a\!t}}^{\langle \pi\rangle}\right)\right)\\
+&\mathrm{s.t.:}\nonumber\\
+& p\in {P\!R\!O\!D\!S}\colon\quad {Y}^{\langle p,s\rangle} = {{\gamma}^{\langle p,s\rangle}} {{{K}^{\langle p,s\rangle}}^{{\beta^{\mathrm{k}}}^{\langle p,s\rangle}}} {{{L}^{\langle p,s\rangle}}^{{\beta^{\mathrm{l}}}^{\langle p,s\rangle}}} \left(\prod_{\pi\in {P\!R\!O\!D\!S}} {{X}^{\langle \pi,p,s\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \pi,p,s\rangle}}\right) \quad \left({\lambda^{\mathrm{SECTOR}^{\mathrm{1}}}}^{\langle s,p\rangle}\right)
+\end{align}
+
+
+\subsection{Identities}
+
+\begin{equation}
+{K}^{\langle s\rangle} = \sum_{p\in {P\!R\!O\!D\!S}} {K}^{\langle p,s\rangle}
+\end{equation}
+\begin{equation}
+{L}^{\langle s\rangle} = \sum_{p\in {P\!R\!O\!D\!S}} {L}^{\langle p,s\rangle}
+\end{equation}
+\begin{equation}
+\pi\in {P\!R\!O\!D\!S}\colon\quad {X}^{\langle \pi,s\rangle} = \sum_{p\in {P\!R\!O\!D\!S}} {X}^{\langle \pi,p,s\rangle}
+\end{equation}
+
+
+\subsection{First order conditions}
+
+\begin{equation}
+p\in {P\!R\!O\!D\!S}\colon\quad -{\lambda^{\mathrm{SECTOR}^{\mathrm{1}}}}^{\langle s,p\rangle} + {{p}^{\langle p\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle s\rangle}\right) = 0
+ \quad \left({Y}^{\langle p,s\rangle}\right)
+\end{equation}
+\begin{equation}
+p\in {P\!R\!O\!D\!S}\colon\quad {{\beta^{\mathrm{k}}}^{\langle p,s\rangle}} {{\gamma}^{\langle p,s\rangle}} {{\lambda^{\mathrm{SECTOR}^{\mathrm{1}}}}^{\langle s,p\rangle}} {{{K}^{\langle p,s\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle p,s\rangle}}} {{{L}^{\langle p,s\rangle}}^{{\beta^{\mathrm{l}}}^{\langle p,s\rangle}}} \left(\prod_{\pi\in {P\!R\!O\!D\!S}} {{X}^{\langle \pi,p,s\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \pi,p,s\rangle}}\right) = 0
+ \quad \left({K}^{\langle p,s\rangle}\right)
+\end{equation}
+\begin{equation}
+p\in {P\!R\!O\!D\!S}\colon\quad {{\beta^{\mathrm{l}}}^{\langle p,s\rangle}} {{\gamma}^{\langle p,s\rangle}} {{\lambda^{\mathrm{SECTOR}^{\mathrm{1}}}}^{\langle s,p\rangle}} {{{K}^{\langle p,s\rangle}}^{{\beta^{\mathrm{k}}}^{\langle p,s\rangle}}} {{{L}^{\langle p,s\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle p,s\rangle}}} \left(\prod_{\pi\in {P\!R\!O\!D\!S}} {{X}^{\langle \pi,p,s\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \pi,p,s\rangle}}\right) = 0
+ \quad \left({L}^{\langle p,s\rangle}\right)
+\end{equation}
+\begin{equation}
+\pi\in {P\!R\!O\!D\!S}\colon\quad {p\!e}\in {P\!R\!O\!D\!S}\colon\quad {{\beta^{\mathrm{x}}}^{\langle \pi,{p\!e},s\rangle}} {{\gamma}^{\langle {p\!e},s\rangle}} {{\lambda^{\mathrm{SECTOR}^{\mathrm{1}}}}^{\langle s,{p\!e}\rangle}} {{X}^{\langle \pi,{p\!e},s\rangle}}^{-1} {{{K}^{\langle {p\!e},s\rangle}}^{{\beta^{\mathrm{k}}}^{\langle {p\!e},s\rangle}}} {{{L}^{\langle {p\!e},s\rangle}}^{{\beta^{\mathrm{l}}}^{\langle {p\!e},s\rangle}}} \left(\prod_{\pi^{\prime}\in {P\!R\!O\!D\!S}} {{X}^{\langle \pi^{\prime},{p\!e},s\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \pi^{\prime},{p\!e},s\rangle}}\right) = 0
+ \quad \left({X}^{\langle \pi,{p\!e},s\rangle}\right)
+\end{equation}
+
+
+
+
+\section{PRODUCTS $p\in {P\!R\!O\!D\!S}$}
+
+\subsection{Identities}
+
+\begin{equation}
+{{{O\!A}}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) = {{D\!A}}^{\langle p\rangle}
+\end{equation}
+\begin{equation}
+{{O\!A}}^{\langle p\rangle} = {{p}^{\langle p\rangle}} \left(\sum_{s\in {S\!E\!C}} {Y}^{\langle p,s\rangle}\right) + {{p}^{\langle p\rangle}} {{M}^{\langle p\rangle}} \left(1 + {{a\!r\!a\!n}}^{\langle p\rangle}\right)
+\end{equation}
+\begin{equation}
+{{p}^{\langle p\rangle}} {{M}^{\langle p\rangle}} \left(1 + {{a\!r\!a\!n}}^{\langle p\rangle}\right) = {{{p\!o\!r}^{\mathrm{m}}}^{\langle p\rangle}} {{{O\!A}}^{\langle p\rangle}}
+\end{equation}
+\begin{equation}
+{{D\!A}}^{\langle p\rangle} = {{p}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) \left({D}^{\langle p\rangle} + {{E\!X\!P\!O\!R\!T}}^{\langle p\rangle} + {{G\!G}}^{\langle p\rangle} + {I}^{\langle p\rangle} + \sum_{s\in {S\!E\!C}} {X}^{\langle p,s\rangle}\right)
+\end{equation}
+\begin{equation}
+{{p}^{\langle p\rangle}} {{{E\!X\!P\!O\!R\!T}}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) = {{{p\!o\!r}^{\mathrm{x}}}^{\langle p\rangle}} {{{D\!A}}^{\langle p\rangle}}
+\end{equation}
+
+
+
+
+\section{FIRM}
+
+\subsection{Identities}
+
+\begin{equation}
+{I\!N\!G}^{\mathrm{F}} = {P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{F}}} + {S\!A\!V}^{\mathrm{F}} + {T\!R}^{\mathrm{EMP}} + {{f\!i\!t}} {p^{\mathrm{k}}} {K^{\mathrm{f}}}
+\end{equation}
+\begin{equation}
+{I\!N\!G}^{\mathrm{F}} = {C\!O\!N\!T}^{\mathrm{SOC}^{\mathrm{F}}} + {p^{\mathrm{k}}} {K^{\mathrm{f}}}
+\end{equation}
+\begin{equation}
+{S\!A\!V}^{\mathrm{F}} = {{p\!o\!r}^{\mathrm{sav}^{\mathrm{f}}}} {{I\!N\!G}^{\mathrm{F}}}
+\end{equation}
+\begin{equation}
+K^{\mathrm{f}} = {k^{\mathrm{total}^{\mathrm{data}}}} {{p\!a\!r}^{\mathrm{k}^{\mathrm{f}}}}
+\end{equation}
+\begin{equation}
+{C\!O\!N\!T}^{\mathrm{SOC}^{\mathrm{F}}} = {{p\!o\!r}^{\mathrm{cont}^{\mathrm{soc}^{\mathrm{f}}}}} {{C\!O\!N\!T}^{\mathrm{SOC}}}
+\end{equation}
+\begin{equation}
+{P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{F}}} = {{p\!o\!r}^{\mathrm{pres}^{\mathrm{soc}^{\mathrm{f}}}}} {{I\!N\!G}^{\mathrm{F}}}
+\end{equation}
+
+
+
+
+\section{ROW}
+
+\subsection{Identities}
+
+\begin{equation}
+{I\!N\!G}^{\mathrm{ROW}} = {S\!A\!V}^{\mathrm{ROW}} + {p^{\mathrm{k}}} {K^{\mathrm{pago}^{\mathrm{ROW}}}} + \sum_{p\in {P\!R\!O\!D\!S}} {{p}^{\langle p\rangle}} {{{E\!X\!P\!O\!R\!T}}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right)
+\end{equation}
+\begin{equation}
+{I\!N\!G}^{\mathrm{ROW}} = L^{\mathrm{row}} + {p^{\mathrm{k}}} {K^{\mathrm{row}}} + \sum_{p\in {P\!R\!O\!D\!S}} {{p}^{\langle p\rangle}} {{M}^{\langle p\rangle}}
+\end{equation}
+\begin{equation}
+L^{\mathrm{row}} = {l^{\mathrm{total}^{\mathrm{data}}}} {{p\!o\!r}^{\mathrm{l}^{\mathrm{row}}}}
+\end{equation}
+\begin{equation}
+K^{\mathrm{row}} = {k^{\mathrm{total}^{\mathrm{data}}}} {{p\!a\!r}^{\mathrm{k}^{\mathrm{row}}}}
+\end{equation}
+
+
+
+
+\section{SI}
+
+\subsection{Identities}
+
+\begin{equation}
+{S\!A\!V}^{\mathrm{TOT}} = \sum_{p\in {P\!R\!O\!D\!S}} {{p}^{\langle p\rangle}} {{I}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right)
+\end{equation}
+\begin{equation}
+{S\!A\!V}^{\mathrm{TOT}} = {S\!A\!V} + {S\!A\!V}^{\mathrm{F}} + {S\!A\!V}^{\mathrm{ROW}} + {S\!A\!V}^{\mathrm{G}}
+\end{equation}
+
+
+
+
+\section{GOB}
+
+\subsection{Identities}
+
+\begin{equation}
+{I\!N\!G}^{\mathrm{GOB}} = {G\!T\!O}^{\mathrm{G}}
+\end{equation}
+\begin{equation}
+{I\!N\!G}^{\mathrm{GOB}} = {C\!O\!N\!T}^{\mathrm{SOC}^{\mathrm{G}}} + {T\!O\!T\!A\!L}^{\mathrm{TAX}} + {p^{\mathrm{k}}} {K^{\mathrm{g}}}
+\end{equation}
+\begin{equation}
+{G\!T\!O}^{\mathrm{G}} = {P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{G}}} + {S\!A\!V}^{\mathrm{G}} + {T\!R}^{\mathrm{GOV}} + \sum_{p\in {P\!R\!O\!D\!S}} {{p}^{\langle p\rangle}} {{{G\!G}}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right)
+\end{equation}
+\begin{equation}
+{P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{G}}} = {{p\!o\!r}^{\mathrm{pres}^{\mathrm{soc}^{\mathrm{g}}}}} {{I\!N\!G}^{\mathrm{GOB}}}
+\end{equation}
+\begin{equation}
+K^{\mathrm{g}} = {k^{\mathrm{total}^{\mathrm{data}}}} {{p\!a\!r}^{\mathrm{k}^{\mathrm{g}}}}
+\end{equation}
+\begin{equation}
+{C\!O\!N\!T}^{\mathrm{SOC}^{\mathrm{G}}} = {{p\!o\!r}^{\mathrm{cont}^{\mathrm{soc}^{\mathrm{g}}}}} {{C\!O\!N\!T}^{\mathrm{SOC}}}
+\end{equation}
+\begin{equation}
+{V\!A\!T} = \sum_{p\in {P\!R\!O\!D\!S}} {{{v\!a\!t}}^{\langle p\rangle}} {{p}^{\langle p\rangle}} \left({D}^{\langle p\rangle} + {{E\!X\!P\!O\!R\!T}}^{\langle p\rangle} + {{G\!G}}^{\langle p\rangle} + {I}^{\langle p\rangle} + \sum_{s\in {S\!E\!C}} {X}^{\langle p,s\rangle}\right)
+\end{equation}
+\begin{equation}
+{D\!I\!R}^{\mathrm{T}} = {{p\!i\!t}} {{P\!I\!T}^{\mathrm{base}}} + {{f\!i\!t}} {p^{\mathrm{k}}} {K^{\mathrm{f}}}
+\end{equation}
+\begin{equation}
+{P\!R\!O\!D}^{\mathrm{T}} = \sum_{s\in {S\!E\!C}} {{t^{\mathrm{prod}}}^{\langle s\rangle}} {{\pi}^{\langle s\rangle}}
+\end{equation}
+\begin{equation}
+{A\!R\!A\!N\!C} = \sum_{p\in {P\!R\!O\!D\!S}} {{{a\!r\!a\!n}}^{\langle p\rangle}} {{p}^{\langle p\rangle}} {{M}^{\langle p\rangle}}
+\end{equation}
+\begin{equation}
+{T\!O\!T\!A\!L}^{\mathrm{TAX}} = {A\!R\!A\!N\!C} + {D\!I\!R}^{\mathrm{T}} + {P\!R\!O\!D}^{\mathrm{T}} + {V\!A\!T}
+\end{equation}
+\begin{equation}
+{S\!A\!V}^{\mathrm{G}} = {{p\!o\!r}^{\mathrm{sav}^{\mathrm{g}}}} {{I\!N\!G}^{\mathrm{GOB}}}
+\end{equation}
+\begin{equation}
+p\in {P\!R\!O\!D\!S}\colon\quad {{p}^{\langle p\rangle}} {{{G\!G}}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) = {{d\!a\!t\!a}^{\mathrm{gg}^{\mathrm{p}}}}^{\langle p\rangle}
+\end{equation}
+
+
+
+
+\section{EQUILIBRIUM}
+
+\subsection{Identities}
+
+\begin{equation}
+\sum_{s\in {S\!E\!C}} {L}^{\langle s\rangle} = L^{\mathrm{h}} + L^{\mathrm{row}}
+\end{equation}
+\begin{equation}
+K^{\mathrm{pago}^{\mathrm{ROW}}} + \sum_{s\in {S\!E\!C}} {K}^{\langle s\rangle} = K^{\mathrm{h}} + K^{\mathrm{f}} + K^{\mathrm{row}} + K^{\mathrm{g}}
+\end{equation}
+
+
+
+
+\section{Equilibrium relationships (before expansion and reduction)}
+
+\begin{equation}
+-{A\!R\!A\!N\!C} + \sum_{p\in {P\!R\!O\!D\!S}} {{{a\!r\!a\!n}}^{\langle p\rangle}} {{p}^{\langle p\rangle}} {{M}^{\langle p\rangle}} = 0
+\end{equation}
+\begin{equation}
+-{C\!O\!N\!T}^{\mathrm{SOC}} + {{p\!o\!r}^{\mathrm{cont}}} {{I\!N\!C}} = 0
+\end{equation}
+\begin{equation}
+-{C\!O\!N\!T}^{\mathrm{SOC}^{\mathrm{F}}} + {{p\!o\!r}^{\mathrm{cont}^{\mathrm{soc}^{\mathrm{f}}}}} {{C\!O\!N\!T}^{\mathrm{SOC}}} = 0
+\end{equation}
+\begin{equation}
+-{C\!O\!N\!T}^{\mathrm{SOC}^{\mathrm{G}}} + {{p\!o\!r}^{\mathrm{cont}^{\mathrm{soc}^{\mathrm{g}}}}} {{C\!O\!N\!T}^{\mathrm{SOC}}} = 0
+\end{equation}
+\begin{equation}
+{G\!T\!O}^{\mathrm{G}} - {I\!N\!G}^{\mathrm{GOB}} = 0
+\end{equation}
+\begin{equation}
+-K^{\mathrm{h}} + {k^{\mathrm{total}^{\mathrm{data}}}} {{p\!a\!r}^{\mathrm{k}^{\mathrm{h}}}} = 0
+\end{equation}
+\begin{equation}
+-K^{\mathrm{f}} + {k^{\mathrm{total}^{\mathrm{data}}}} {{p\!a\!r}^{\mathrm{k}^{\mathrm{f}}}} = 0
+\end{equation}
+\begin{equation}
+-K^{\mathrm{row}} + {k^{\mathrm{total}^{\mathrm{data}}}} {{p\!a\!r}^{\mathrm{k}^{\mathrm{row}}}} = 0
+\end{equation}
+\begin{equation}
+-K^{\mathrm{g}} + {k^{\mathrm{total}^{\mathrm{data}}}} {{p\!a\!r}^{\mathrm{k}^{\mathrm{g}}}} = 0
+\end{equation}
+\begin{equation}
+-L^{\mathrm{h}} + {l^{\mathrm{total}^{\mathrm{data}}}} {{p\!o\!r}^{\mathrm{l}^{\mathrm{h}}}} = 0
+\end{equation}
+\begin{equation}
+-L^{\mathrm{row}} + {l^{\mathrm{total}^{\mathrm{data}}}} {{p\!o\!r}^{\mathrm{l}^{\mathrm{row}}}} = 0
+\end{equation}
+\begin{equation}
+-{P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{F}}} + {{p\!o\!r}^{\mathrm{pres}^{\mathrm{soc}^{\mathrm{f}}}}} {{I\!N\!G}^{\mathrm{F}}} = 0
+\end{equation}
+\begin{equation}
+-{P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{G}}} + {{p\!o\!r}^{\mathrm{pres}^{\mathrm{soc}^{\mathrm{g}}}}} {{I\!N\!G}^{\mathrm{GOB}}} = 0
+\end{equation}
+\begin{equation}
+-{P\!R\!O\!D}^{\mathrm{T}} + \sum_{s\in {S\!E\!C}} {{t^{\mathrm{prod}}}^{\langle s\rangle}} {{\pi}^{\langle s\rangle}} = 0
+\end{equation}
+\begin{equation}
+-{S\!A\!V} + {{p\!o\!r}^{\mathrm{sav}}} {{I\!N\!C}} = 0
+\end{equation}
+\begin{equation}
+-{S\!A\!V}^{\mathrm{F}} + {{p\!o\!r}^{\mathrm{sav}^{\mathrm{f}}}} {{I\!N\!G}^{\mathrm{F}}} = 0
+\end{equation}
+\begin{equation}
+-{S\!A\!V}^{\mathrm{TOT}} + \sum_{p\in {P\!R\!O\!D\!S}} {{p}^{\langle p\rangle}} {{I}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+-{S\!A\!V}^{\mathrm{G}} + {{p\!o\!r}^{\mathrm{sav}^{\mathrm{g}}}} {{I\!N\!G}^{\mathrm{GOB}}} = 0
+\end{equation}
+\begin{equation}
+-{T\!R}^{\mathrm{EMP}} + {{p\!o\!r}^{\mathrm{tremp}}} {{I\!N\!G}^{\mathrm{F}}} = 0
+\end{equation}
+\begin{equation}
+-{T\!R}^{\mathrm{GOV}} + {{p\!o\!r}^{\mathrm{trgov}}} {{I\!N\!G}^{\mathrm{GOB}}} = 0
+\end{equation}
+\begin{equation}
+U - \left(\sum_{p\in {P\!R\!O\!D\!S}} {{\alpha}^{\langle p\rangle}} {{{D}^{\langle p\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{{\omega} \left(-1 + \omega\right)^{-1}} = 0
+\end{equation}
+\begin{equation}
+-{V\!A\!T} + \sum_{p\in {P\!R\!O\!D\!S}} {{{v\!a\!t}}^{\langle p\rangle}} {{p}^{\langle p\rangle}} \left({D}^{\langle p\rangle} + {{E\!X\!P\!O\!R\!T}}^{\langle p\rangle} + {{G\!G}}^{\langle p\rangle} + {I}^{\langle p\rangle} + \sum_{s\in {S\!E\!C}} {X}^{\langle p,s\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{C\!O\!N\!T}^{\mathrm{SOC}^{\mathrm{F}}} - {I\!N\!G}^{\mathrm{F}} + {p^{\mathrm{k}}} {K^{\mathrm{f}}} = 0
+\end{equation}
+\begin{equation}
+-{D\!I\!R}^{\mathrm{T}} + {{p\!i\!t}} {{P\!I\!T}^{\mathrm{base}}} + {{f\!i\!t}} {p^{\mathrm{k}}} {K^{\mathrm{f}}} = 0
+\end{equation}
+\begin{equation}
+L^{\mathrm{h}} + L^{\mathrm{row}} - \sum_{s\in {S\!E\!C}} {L}^{\langle s\rangle} = 0
+\end{equation}
+\begin{equation}
+L^{\mathrm{h}} - {P\!I\!T}^{\mathrm{base}} + {p^{\mathrm{k}}} {K^{\mathrm{h}}} = 0
+\end{equation}
+\begin{equation}
+-{P\!R\!E\!S\!T}^{\mathrm{SOC}} + {P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{F}}} + {P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{G}}} = 0
+\end{equation}
+\begin{equation}
+{B\!T\!I\!N\!C} - {I\!N\!C} - {{p\!i\!t}} {{P\!I\!T}^{\mathrm{base}}} + \sum_{s\in {S\!E\!C}} {\pi}^{\langle s\rangle} = 0
+\end{equation}
+\begin{equation}
+{C\!O\!N\!T}^{\mathrm{SOC}} - {I\!N\!C} + {S\!A\!V} + \sum_{p\in {P\!R\!O\!D\!S}} {{p}^{\langle p\rangle}} {{D}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{C\!O\!N\!T}^{\mathrm{SOC}^{\mathrm{G}}} - {I\!N\!G}^{\mathrm{GOB}} + {T\!O\!T\!A\!L}^{\mathrm{TAX}} + {p^{\mathrm{k}}} {K^{\mathrm{g}}} = 0
+\end{equation}
+\begin{equation}
+-{I\!N\!G}^{\mathrm{ROW}} + L^{\mathrm{row}} + {p^{\mathrm{k}}} {K^{\mathrm{row}}} + \sum_{p\in {P\!R\!O\!D\!S}} {{p}^{\langle p\rangle}} {{M}^{\langle p\rangle}} = 0
+\end{equation}
+\begin{equation}
+-{I\!N\!G}^{\mathrm{ROW}} + {S\!A\!V}^{\mathrm{ROW}} + {p^{\mathrm{k}}} {K^{\mathrm{pago}^{\mathrm{ROW}}}} + \sum_{p\in {P\!R\!O\!D\!S}} {{p}^{\langle p\rangle}} {{{E\!X\!P\!O\!R\!T}}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{A\!R\!A\!N\!C} + {D\!I\!R}^{\mathrm{T}} + {P\!R\!O\!D}^{\mathrm{T}} - {T\!O\!T\!A\!L}^{\mathrm{TAX}} + {V\!A\!T} = 0
+\end{equation}
+\begin{equation}
+-{G\!T\!O}^{\mathrm{G}} + {P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{G}}} + {S\!A\!V}^{\mathrm{G}} + {T\!R}^{\mathrm{GOV}} + \sum_{p\in {P\!R\!O\!D\!S}} {{p}^{\langle p\rangle}} {{{G\!G}}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+-{I\!N\!G}^{\mathrm{F}} + {P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{F}}} + {S\!A\!V}^{\mathrm{F}} + {T\!R}^{\mathrm{EMP}} + {{f\!i\!t}} {p^{\mathrm{k}}} {K^{\mathrm{f}}} = 0
+\end{equation}
+\begin{equation}
+{S\!A\!V} + {S\!A\!V}^{\mathrm{F}} + {S\!A\!V}^{\mathrm{ROW}} - {S\!A\!V}^{\mathrm{TOT}} + {S\!A\!V}^{\mathrm{G}} = 0
+\end{equation}
+\begin{equation}
+-{B\!T\!I\!N\!C} + L^{\mathrm{h}} + {P\!R\!E\!S\!T}^{\mathrm{SOC}} + {T\!R}^{\mathrm{EMP}} + {T\!R}^{\mathrm{GOV}} + {p^{\mathrm{k}}} {K^{\mathrm{h}}} = 0
+\end{equation}
+\begin{equation}
+K^{\mathrm{h}} + K^{\mathrm{f}} - K^{\mathrm{pago}^{\mathrm{ROW}}} + K^{\mathrm{row}} + K^{\mathrm{g}} - \sum_{s\in {S\!E\!C}} {K}^{\langle s\rangle} = 0
+\end{equation}
+\begin{equation}
+p\in {P\!R\!O\!D\!S}\colon\quad {{d\!a\!t\!a}^{\mathrm{gg}^{\mathrm{p}}}}^{\langle p\rangle} - {{p}^{\langle p\rangle}} {{{G\!G}}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+p\in {P\!R\!O\!D\!S}\colon\quad -{{D\!A}}^{\langle p\rangle} + {{p}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) \left({D}^{\langle p\rangle} + {{E\!X\!P\!O\!R\!T}}^{\langle p\rangle} + {{G\!G}}^{\langle p\rangle} + {I}^{\langle p\rangle} + \sum_{s\in {S\!E\!C}} {X}^{\langle p,s\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+p\in {P\!R\!O\!D\!S}\colon\quad {{D\!A}}^{\langle p\rangle} - {{{O\!A}}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+p\in {P\!R\!O\!D\!S}\colon\quad {{{p\!o\!r}^{\mathrm{m}}}^{\langle p\rangle}} {{{O\!A}}^{\langle p\rangle}} - {{p}^{\langle p\rangle}} {{M}^{\langle p\rangle}} \left(1 + {{a\!r\!a\!n}}^{\langle p\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+p\in {P\!R\!O\!D\!S}\colon\quad {{{p\!o\!r}^{\mathrm{x}}}^{\langle p\rangle}} {{{D\!A}}^{\langle p\rangle}} - {{p}^{\langle p\rangle}} {{{E\!X\!P\!O\!R\!T}}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+p\in {P\!R\!O\!D\!S}\colon\quad {{\alpha}^{\langle p\rangle}} {{{D}^{\langle p\rangle}}^{-1 + {\omega}^{-1} \left(-1 + \omega\right)}} {\left(\sum_{p\in {P\!R\!O\!D\!S}} {{\alpha}^{\langle p\rangle}} {{{D}^{\langle p\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{-1 + {\omega} \left(-1 + \omega\right)^{-1}}} + {\lambda^{\mathrm{CONSUMER}^{\mathrm{1}}}} {{p}^{\langle p\rangle}} \left(1 + {{v\!a\!t}}^{\langle p\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+p\in {P\!R\!O\!D\!S}\colon\quad -{{O\!A}}^{\langle p\rangle} + {{p}^{\langle p\rangle}} \left(\sum_{s\in {S\!E\!C}} {Y}^{\langle p,s\rangle}\right) + {{p}^{\langle p\rangle}} {{M}^{\langle p\rangle}} \left(1 + {{a\!r\!a\!n}}^{\langle p\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad {\pi}^{\langle s\rangle} - \left(1 - {t^{\mathrm{prod}}}^{\langle s\rangle}\right) \left(-{L}^{\langle s\rangle} - {p^{\mathrm{k}}} {{K}^{\langle s\rangle}} + \sum_{p\in {P\!R\!O\!D\!S}} {{p}^{\langle p\rangle}} {{Y}^{\langle p,s\rangle}} - \sum_{\pi\in {P\!R\!O\!D\!S}} {{p}^{\langle \pi\rangle}} {{X}^{\langle \pi,s\rangle}} \left(1 + {{v\!a\!t}}^{\langle \pi\rangle}\right)\right) = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad -{K}^{\langle s\rangle} + \sum_{p\in {P\!R\!O\!D\!S}} {K}^{\langle p,s\rangle} = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad -{L}^{\langle s\rangle} + \sum_{p\in {P\!R\!O\!D\!S}} {L}^{\langle p,s\rangle} = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad p\in {P\!R\!O\!D\!S}\colon\quad -{\lambda^{\mathrm{SECTOR}^{\mathrm{1}}}}^{\langle s,p\rangle} + {{p}^{\langle p\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle s\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad \pi\in {P\!R\!O\!D\!S}\colon\quad -{X}^{\langle \pi,s\rangle} + \sum_{p\in {P\!R\!O\!D\!S}} {X}^{\langle \pi,p,s\rangle} = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad p\in {P\!R\!O\!D\!S}\colon\quad -{Y}^{\langle p,s\rangle} + {{\gamma}^{\langle p,s\rangle}} {{{K}^{\langle p,s\rangle}}^{{\beta^{\mathrm{k}}}^{\langle p,s\rangle}}} {{{L}^{\langle p,s\rangle}}^{{\beta^{\mathrm{l}}}^{\langle p,s\rangle}}} \left(\prod_{\pi\in {P\!R\!O\!D\!S}} {{X}^{\langle \pi,p,s\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \pi,p,s\rangle}}\right) = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad p\in {P\!R\!O\!D\!S}\colon\quad {{\beta^{\mathrm{k}}}^{\langle p,s\rangle}} {{\gamma}^{\langle p,s\rangle}} {{\lambda^{\mathrm{SECTOR}^{\mathrm{1}}}}^{\langle s,p\rangle}} {{{K}^{\langle p,s\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle p,s\rangle}}} {{{L}^{\langle p,s\rangle}}^{{\beta^{\mathrm{l}}}^{\langle p,s\rangle}}} \left(\prod_{\pi\in {P\!R\!O\!D\!S}} {{X}^{\langle \pi,p,s\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \pi,p,s\rangle}}\right) = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad p\in {P\!R\!O\!D\!S}\colon\quad {{\beta^{\mathrm{l}}}^{\langle p,s\rangle}} {{\gamma}^{\langle p,s\rangle}} {{\lambda^{\mathrm{SECTOR}^{\mathrm{1}}}}^{\langle s,p\rangle}} {{{K}^{\langle p,s\rangle}}^{{\beta^{\mathrm{k}}}^{\langle p,s\rangle}}} {{{L}^{\langle p,s\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle p,s\rangle}}} \left(\prod_{\pi\in {P\!R\!O\!D\!S}} {{X}^{\langle \pi,p,s\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \pi,p,s\rangle}}\right) = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad \pi\in {P\!R\!O\!D\!S}\colon\quad {p\!e}\in {P\!R\!O\!D\!S}\colon\quad {{\beta^{\mathrm{x}}}^{\langle \pi,{p\!e},s\rangle}} {{\gamma}^{\langle {p\!e},s\rangle}} {{\lambda^{\mathrm{SECTOR}^{\mathrm{1}}}}^{\langle s,{p\!e}\rangle}} {{X}^{\langle \pi,{p\!e},s\rangle}}^{-1} {{{K}^{\langle {p\!e},s\rangle}}^{{\beta^{\mathrm{k}}}^{\langle {p\!e},s\rangle}}} {{{L}^{\langle {p\!e},s\rangle}}^{{\beta^{\mathrm{l}}}^{\langle {p\!e},s\rangle}}} \left(\prod_{\pi^{\prime}\in {P\!R\!O\!D\!S}} {{X}^{\langle \pi^{\prime},{p\!e},s\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \pi^{\prime},{p\!e},s\rangle}}\right) = 0
+\end{equation}
+
+
+
+\section{Equilibrium relationships (after expansion and reduction)}
+
+\begin{equation}
+{{d\!a\!t\!a}^{\mathrm{gg}^{\mathrm{p}}}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle} - {{p}^{\langle \mathrm{Prodprim}\rangle}} {{{G\!G}}^{\langle \mathrm{Prodprim}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{{d\!a\!t\!a}^{\mathrm{gg}^{\mathrm{p}}}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle} - {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{{G\!G}}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{{d\!a\!t\!a}^{\mathrm{gg}^{\mathrm{p}}}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle} - {{p}^{\langle \mathrm{Prodserv}\rangle}} {{{G\!G}}^{\langle \mathrm{Prodserv}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+-{C\!O\!N\!T}^{\mathrm{SOC}} + {{p\!o\!r}^{\mathrm{cont}}} {{I\!N\!C}} = 0
+\end{equation}
+\begin{equation}
+-{C\!O\!N\!T}^{\mathrm{SOC}^{\mathrm{F}}} + {{p\!o\!r}^{\mathrm{cont}^{\mathrm{soc}^{\mathrm{f}}}}} {{C\!O\!N\!T}^{\mathrm{SOC}}} = 0
+\end{equation}
+\begin{equation}
+-{C\!O\!N\!T}^{\mathrm{SOC}^{\mathrm{G}}} + {{p\!o\!r}^{\mathrm{cont}^{\mathrm{soc}^{\mathrm{g}}}}} {{C\!O\!N\!T}^{\mathrm{SOC}}} = 0
+\end{equation}
+\begin{equation}
+{G\!T\!O}^{\mathrm{G}} - {I\!N\!G}^{\mathrm{GOB}} = 0
+\end{equation}
+\begin{equation}
+-K^{\mathrm{h}} + {k^{\mathrm{total}^{\mathrm{data}}}} {{p\!a\!r}^{\mathrm{k}^{\mathrm{h}}}} = 0
+\end{equation}
+\begin{equation}
+-K^{\mathrm{f}} + {k^{\mathrm{total}^{\mathrm{data}}}} {{p\!a\!r}^{\mathrm{k}^{\mathrm{f}}}} = 0
+\end{equation}
+\begin{equation}
+-K^{\mathrm{row}} + {k^{\mathrm{total}^{\mathrm{data}}}} {{p\!a\!r}^{\mathrm{k}^{\mathrm{row}}}} = 0
+\end{equation}
+\begin{equation}
+-K^{\mathrm{g}} + {k^{\mathrm{total}^{\mathrm{data}}}} {{p\!a\!r}^{\mathrm{k}^{\mathrm{g}}}} = 0
+\end{equation}
+\begin{equation}
+-L^{\mathrm{h}} + {l^{\mathrm{total}^{\mathrm{data}}}} {{p\!o\!r}^{\mathrm{l}^{\mathrm{h}}}} = 0
+\end{equation}
+\begin{equation}
+-L^{\mathrm{row}} + {l^{\mathrm{total}^{\mathrm{data}}}} {{p\!o\!r}^{\mathrm{l}^{\mathrm{row}}}} = 0
+\end{equation}
+\begin{equation}
+-{P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{F}}} + {{p\!o\!r}^{\mathrm{pres}^{\mathrm{soc}^{\mathrm{f}}}}} {{I\!N\!G}^{\mathrm{F}}} = 0
+\end{equation}
+\begin{equation}
+-{P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{G}}} + {{p\!o\!r}^{\mathrm{pres}^{\mathrm{soc}^{\mathrm{g}}}}} {{I\!N\!G}^{\mathrm{GOB}}} = 0
+\end{equation}
+\begin{equation}
+-{S\!A\!V} + {{p\!o\!r}^{\mathrm{sav}}} {{I\!N\!C}} = 0
+\end{equation}
+\begin{equation}
+-{S\!A\!V}^{\mathrm{F}} + {{p\!o\!r}^{\mathrm{sav}^{\mathrm{f}}}} {{I\!N\!G}^{\mathrm{F}}} = 0
+\end{equation}
+\begin{equation}
+-{S\!A\!V}^{\mathrm{G}} + {{p\!o\!r}^{\mathrm{sav}^{\mathrm{g}}}} {{I\!N\!G}^{\mathrm{GOB}}} = 0
+\end{equation}
+\begin{equation}
+-{T\!R}^{\mathrm{EMP}} + {{p\!o\!r}^{\mathrm{tremp}}} {{I\!N\!G}^{\mathrm{F}}} = 0
+\end{equation}
+\begin{equation}
+-{T\!R}^{\mathrm{GOV}} + {{p\!o\!r}^{\mathrm{trgov}}} {{I\!N\!G}^{\mathrm{GOB}}} = 0
+\end{equation}
+\begin{equation}
+U - \left({{\alpha}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}} {{{D}^{\langle \mathrm{Prodprim}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}} {{{D}^{\langle \mathrm{Prodmanu}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}} {{{D}^{\langle \mathrm{Prodserv}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{{\omega} \left(-1 + \omega\right)^{-1}} = 0
+\end{equation}
+\begin{equation}
+{\pi}^{\langle \mathrm{Actprim}\rangle} - \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) \left(-{L}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle} - {L}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle} - {L}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle} - {p^{\mathrm{k}}} \left({K}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle} + {K}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle} + {K}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}\right) + {{p}^{\langle \mathrm{Prodprim}\rangle}} {{Y}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle}} + {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{Y}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle}} + {{p}^{\langle \mathrm{Prodserv}\rangle}} {{Y}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}} - {{p}^{\langle \mathrm{Prodprim}\rangle}} {{X}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}\right) - {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{X}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right) - {{p}^{\langle \mathrm{Prodserv}\rangle}} {{X}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right)\right) = 0
+\end{equation}
+\begin{equation}
+{\pi}^{\langle \mathrm{Actmanu}\rangle} - \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) \left(-{L}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle} - {L}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle} - {L}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle} - {p^{\mathrm{k}}} \left({K}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle} + {K}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle} + {K}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}\right) + {{p}^{\langle \mathrm{Prodprim}\rangle}} {{Y}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle}} + {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{Y}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle}} + {{p}^{\langle \mathrm{Prodserv}\rangle}} {{Y}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}} - {{p}^{\langle \mathrm{Prodprim}\rangle}} {{X}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}\right) - {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{X}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right) - {{p}^{\langle \mathrm{Prodserv}\rangle}} {{X}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right)\right) = 0
+\end{equation}
+\begin{equation}
+{\pi}^{\langle \mathrm{Actserv}\rangle} - \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) \left(-{L}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle} - {L}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle} - {L}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle} - {p^{\mathrm{k}}} \left({K}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle} + {K}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle} + {K}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}\right) + {{p}^{\langle \mathrm{Prodprim}\rangle}} {{Y}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}} + {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{Y}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}} + {{p}^{\langle \mathrm{Prodserv}\rangle}} {{Y}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}} - {{p}^{\langle \mathrm{Prodprim}\rangle}} {{X}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}\right) - {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{X}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right) - {{p}^{\langle \mathrm{Prodserv}\rangle}} {{X}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right)\right) = 0
+\end{equation}
+\begin{equation}
+-{{D\!A}}^{\langle \mathrm{Prodprim}\rangle} + {{p}^{\langle \mathrm{Prodprim}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}\right) \left({D}^{\langle \mathrm{Prodprim}\rangle} + {{E\!X\!P\!O\!R\!T}}^{\langle \mathrm{Prodprim}\rangle} + {{G\!G}}^{\langle \mathrm{Prodprim}\rangle} + {I}^{\langle \mathrm{Prodprim}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{{D\!A}}^{\langle \mathrm{Prodprim}\rangle} - {{{O\!A}}^{\langle \mathrm{Prodprim}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+-{{D\!A}}^{\langle \mathrm{Prodmanu}\rangle} + {{p}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right) \left({D}^{\langle \mathrm{Prodmanu}\rangle} + {{E\!X\!P\!O\!R\!T}}^{\langle \mathrm{Prodmanu}\rangle} + {{G\!G}}^{\langle \mathrm{Prodmanu}\rangle} + {I}^{\langle \mathrm{Prodmanu}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{{D\!A}}^{\langle \mathrm{Prodmanu}\rangle} - {{{O\!A}}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+-{{D\!A}}^{\langle \mathrm{Prodserv}\rangle} + {{p}^{\langle \mathrm{Prodserv}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right) \left({D}^{\langle \mathrm{Prodserv}\rangle} + {{E\!X\!P\!O\!R\!T}}^{\langle \mathrm{Prodserv}\rangle} + {{G\!G}}^{\langle \mathrm{Prodserv}\rangle} + {I}^{\langle \mathrm{Prodserv}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{{D\!A}}^{\langle \mathrm{Prodserv}\rangle} - {{{O\!A}}^{\langle \mathrm{Prodserv}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+-{Y}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle} + {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}} {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{Y}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle} + {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}} {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{Y}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle} + {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}} {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{Y}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle} + {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}} {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{Y}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle} + {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}} {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{Y}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle} + {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}} {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{Y}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle} + {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}} {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{Y}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle} + {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}} {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+-{Y}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle} + {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}} {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{{p\!o\!r}^{\mathrm{m}}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}} {{{O\!A}}^{\langle \mathrm{Prodprim}\rangle}} - {{p}^{\langle \mathrm{Prodprim}\rangle}} {{M}^{\langle \mathrm{Prodprim}\rangle}} \left(1 + {{a\!r\!a\!n}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{{{p\!o\!r}^{\mathrm{m}}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}} {{{O\!A}}^{\langle \mathrm{Prodmanu}\rangle}} - {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{M}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 + {{a\!r\!a\!n}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{{{p\!o\!r}^{\mathrm{m}}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}} {{{O\!A}}^{\langle \mathrm{Prodserv}\rangle}} - {{p}^{\langle \mathrm{Prodserv}\rangle}} {{M}^{\langle \mathrm{Prodserv}\rangle}} \left(1 + {{a\!r\!a\!n}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{{{p\!o\!r}^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}} {{{D\!A}}^{\langle \mathrm{Prodprim}\rangle}} - {{p}^{\langle \mathrm{Prodprim}\rangle}} {{{E\!X\!P\!O\!R\!T}}^{\langle \mathrm{Prodprim}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{{{p\!o\!r}^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}} {{{D\!A}}^{\langle \mathrm{Prodmanu}\rangle}} - {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{{E\!X\!P\!O\!R\!T}}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{{{p\!o\!r}^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}} {{{D\!A}}^{\langle \mathrm{Prodserv}\rangle}} - {{p}^{\langle \mathrm{Prodserv}\rangle}} {{{E\!X\!P\!O\!R\!T}}^{\langle \mathrm{Prodserv}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{{\alpha}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}} {{{D}^{\langle \mathrm{Prodprim}\rangle}}^{-1 + {\omega}^{-1} \left(-1 + \omega\right)}} {\left({{\alpha}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}} {{{D}^{\langle \mathrm{Prodprim}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}} {{{D}^{\langle \mathrm{Prodmanu}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}} {{{D}^{\langle \mathrm{Prodserv}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{-1 + {\omega} \left(-1 + \omega\right)^{-1}}} + {\lambda^{\mathrm{CONSUMER}^{\mathrm{1}}}} {{p}^{\langle \mathrm{Prodprim}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{{\alpha}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}} {{{D}^{\langle \mathrm{Prodmanu}\rangle}}^{-1 + {\omega}^{-1} \left(-1 + \omega\right)}} {\left({{\alpha}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}} {{{D}^{\langle \mathrm{Prodprim}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}} {{{D}^{\langle \mathrm{Prodmanu}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}} {{{D}^{\langle \mathrm{Prodserv}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{-1 + {\omega} \left(-1 + \omega\right)^{-1}}} + {\lambda^{\mathrm{CONSUMER}^{\mathrm{1}}}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{{\alpha}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}} {{{D}^{\langle \mathrm{Prodserv}\rangle}}^{-1 + {\omega}^{-1} \left(-1 + \omega\right)}} {\left({{\alpha}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}} {{{D}^{\langle \mathrm{Prodprim}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}} {{{D}^{\langle \mathrm{Prodmanu}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}} + {{\alpha}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}} {{{D}^{\langle \mathrm{Prodserv}\rangle}}^{{\omega}^{-1} \left(-1 + \omega\right)}}\right)^{-1 + {\omega} \left(-1 + \omega\right)^{-1}}} + {\lambda^{\mathrm{CONSUMER}^{\mathrm{1}}}} {{p}^{\langle \mathrm{Prodserv}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+{C\!O\!N\!T}^{\mathrm{SOC}^{\mathrm{F}}} - {I\!N\!G}^{\mathrm{F}} + {p^{\mathrm{k}}} {K^{\mathrm{f}}} = 0
+\end{equation}
+\begin{equation}
+-{D\!I\!R}^{\mathrm{T}} + {{p\!i\!t}} {{P\!I\!T}^{\mathrm{base}}} + {{f\!i\!t}} {p^{\mathrm{k}}} {K^{\mathrm{f}}} = 0
+\end{equation}
+\begin{equation}
+L^{\mathrm{h}} - {P\!I\!T}^{\mathrm{base}} + {p^{\mathrm{k}}} {K^{\mathrm{h}}} = 0
+\end{equation}
+\begin{equation}
+-{P\!R\!E\!S\!T}^{\mathrm{SOC}} + {P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{F}}} + {P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{G}}} = 0
+\end{equation}
+\begin{equation}
+-{{O\!A}}^{\langle \mathrm{Prodprim}\rangle} + {{p}^{\langle \mathrm{Prodprim}\rangle}} \left({Y}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle} + {Y}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle} + {Y}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}\right) + {{p}^{\langle \mathrm{Prodprim}\rangle}} {{M}^{\langle \mathrm{Prodprim}\rangle}} \left(1 + {{a\!r\!a\!n}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+-{{O\!A}}^{\langle \mathrm{Prodmanu}\rangle} + {{p}^{\langle \mathrm{Prodmanu}\rangle}} \left({Y}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle} + {Y}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle} + {Y}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}\right) + {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{M}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 + {{a\!r\!a\!n}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+-{{O\!A}}^{\langle \mathrm{Prodserv}\rangle} + {{p}^{\langle \mathrm{Prodserv}\rangle}} \left({Y}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle} + {Y}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle} + {Y}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}\right) + {{p}^{\langle \mathrm{Prodserv}\rangle}} {{M}^{\langle \mathrm{Prodserv}\rangle}} \left(1 + {{a\!r\!a\!n}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+-{A\!R\!A\!N\!C} + {{{a\!r\!a\!n}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} {{M}^{\langle \mathrm{Prodprim}\rangle}} + {{{a\!r\!a\!n}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{M}^{\langle \mathrm{Prodmanu}\rangle}} + {{{a\!r\!a\!n}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} {{M}^{\langle \mathrm{Prodserv}\rangle}} = 0
+\end{equation}
+\begin{equation}
+{C\!O\!N\!T}^{\mathrm{SOC}^{\mathrm{G}}} - {I\!N\!G}^{\mathrm{GOB}} + {T\!O\!T\!A\!L}^{\mathrm{TAX}} + {p^{\mathrm{k}}} {K^{\mathrm{g}}} = 0
+\end{equation}
+\begin{equation}
+-{P\!R\!O\!D}^{\mathrm{T}} + {{t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}} {{\pi}^{\langle \mathrm{Actprim}\rangle}} + {{t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}} {{\pi}^{\langle \mathrm{Actmanu}\rangle}} + {{t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}} {{\pi}^{\langle \mathrm{Actserv}\rangle}} = 0
+\end{equation}
+\begin{equation}
+-{S\!A\!V}^{\mathrm{TOT}} + {{p}^{\langle \mathrm{Prodprim}\rangle}} {{I}^{\langle \mathrm{Prodprim}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}\right) + {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{I}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right) + {{p}^{\langle \mathrm{Prodserv}\rangle}} {{I}^{\langle \mathrm{Prodserv}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+-{V\!A\!T} + {{{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} \left({D}^{\langle \mathrm{Prodprim}\rangle} + {{E\!X\!P\!O\!R\!T}}^{\langle \mathrm{Prodprim}\rangle} + {{G\!G}}^{\langle \mathrm{Prodprim}\rangle} + {I}^{\langle \mathrm{Prodprim}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}\right) + {{{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} \left({D}^{\langle \mathrm{Prodmanu}\rangle} + {{E\!X\!P\!O\!R\!T}}^{\langle \mathrm{Prodmanu}\rangle} + {{G\!G}}^{\langle \mathrm{Prodmanu}\rangle} + {I}^{\langle \mathrm{Prodmanu}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}\right) + {{{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} \left({D}^{\langle \mathrm{Prodserv}\rangle} + {{E\!X\!P\!O\!R\!T}}^{\langle \mathrm{Prodserv}\rangle} + {{G\!G}}^{\langle \mathrm{Prodserv}\rangle} + {I}^{\langle \mathrm{Prodserv}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+-{X}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actprim}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{X}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actmanu}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{X}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actserv}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actserv}\rangle} + {X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actserv}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{X}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actprim}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{X}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actmanu}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{X}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actserv}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actserv}\rangle} + {X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actserv}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{X}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actprim}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actprim}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{X}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actmanu}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{X}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actserv}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actserv}\rangle} + {X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actserv}\rangle} = 0
+\end{equation}
+\begin{equation}
+{A\!R\!A\!N\!C} + {D\!I\!R}^{\mathrm{T}} + {P\!R\!O\!D}^{\mathrm{T}} - {T\!O\!T\!A\!L}^{\mathrm{TAX}} + {V\!A\!T} = 0
+\end{equation}
+\begin{equation}
+-{I\!N\!G}^{\mathrm{F}} + {P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{F}}} + {S\!A\!V}^{\mathrm{F}} + {T\!R}^{\mathrm{EMP}} + {{f\!i\!t}} {p^{\mathrm{k}}} {K^{\mathrm{f}}} = 0
+\end{equation}
+\begin{equation}
+{S\!A\!V} + {S\!A\!V}^{\mathrm{F}} + {S\!A\!V}^{\mathrm{ROW}} - {S\!A\!V}^{\mathrm{TOT}} + {S\!A\!V}^{\mathrm{G}} = 0
+\end{equation}
+\begin{equation}
+-{B\!T\!I\!N\!C} + L^{\mathrm{h}} + {P\!R\!E\!S\!T}^{\mathrm{SOC}} + {T\!R}^{\mathrm{EMP}} + {T\!R}^{\mathrm{GOV}} + {p^{\mathrm{k}}} {K^{\mathrm{h}}} = 0
+\end{equation}
+\begin{equation}
+{B\!T\!I\!N\!C} - {I\!N\!C} + {\pi}^{\langle \mathrm{Actprim}\rangle} + {\pi}^{\langle \mathrm{Actmanu}\rangle} + {\pi}^{\langle \mathrm{Actserv}\rangle} - {{p\!i\!t}} {{P\!I\!T}^{\mathrm{base}}} = 0
+\end{equation}
+\begin{equation}
+{C\!O\!N\!T}^{\mathrm{SOC}} - {I\!N\!C} + {S\!A\!V} + {{p}^{\langle \mathrm{Prodprim}\rangle}} {{D}^{\langle \mathrm{Prodprim}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}\right) + {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{D}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right) + {{p}^{\langle \mathrm{Prodserv}\rangle}} {{D}^{\langle \mathrm{Prodserv}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+-{I\!N\!G}^{\mathrm{ROW}} + L^{\mathrm{row}} + {p^{\mathrm{k}}} {K^{\mathrm{row}}} + {{p}^{\langle \mathrm{Prodprim}\rangle}} {{M}^{\langle \mathrm{Prodprim}\rangle}} + {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{M}^{\langle \mathrm{Prodmanu}\rangle}} + {{p}^{\langle \mathrm{Prodserv}\rangle}} {{M}^{\langle \mathrm{Prodserv}\rangle}} = 0
+\end{equation}
+\begin{equation}
+-{I\!N\!G}^{\mathrm{ROW}} + {S\!A\!V}^{\mathrm{ROW}} + {p^{\mathrm{k}}} {K^{\mathrm{pago}^{\mathrm{ROW}}}} + {{p}^{\langle \mathrm{Prodprim}\rangle}} {{{E\!X\!P\!O\!R\!T}}^{\langle \mathrm{Prodprim}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}\right) + {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{{E\!X\!P\!O\!R\!T}}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right) + {{p}^{\langle \mathrm{Prodserv}\rangle}} {{{E\!X\!P\!O\!R\!T}}^{\langle \mathrm{Prodserv}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+-{G\!T\!O}^{\mathrm{G}} + {P\!R\!E\!S\!T}^{\mathrm{SOC}^{\mathrm{G}}} + {S\!A\!V}^{\mathrm{G}} + {T\!R}^{\mathrm{GOV}} + {{p}^{\langle \mathrm{Prodprim}\rangle}} {{{G\!G}}^{\langle \mathrm{Prodprim}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}\right) + {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{{G\!G}}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right) + {{p}^{\langle \mathrm{Prodserv}\rangle}} {{{G\!G}}^{\langle \mathrm{Prodserv}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right) = 0
+\end{equation}
+\begin{equation}
+L^{\mathrm{h}} + L^{\mathrm{row}} - {L}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle} - {L}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle} - {L}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle} - {L}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle} - {L}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle} - {L}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle} - {L}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle} - {L}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle} - {L}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle} = 0
+\end{equation}
+\begin{equation}
+K^{\mathrm{h}} + K^{\mathrm{f}} - K^{\mathrm{pago}^{\mathrm{ROW}}} + K^{\mathrm{row}} + K^{\mathrm{g}} - {K}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle} - {K}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle} - {K}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle} - {K}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle} - {K}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle} - {K}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle} - {K}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle} - {K}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle} - {K}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{-1 + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} {{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} {{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} {{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} {{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} {{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} {{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} {{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} {{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} {{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} {{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} {{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} {{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} {{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} {{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodprim}\rangle}} {{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodmanu}\rangle}} {{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} {{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actprim}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} {{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actmanu}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}}} = 0
+\end{equation}
+\begin{equation}
+{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}} {{\gamma}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}} {{p}^{\langle \mathrm{Prodserv}\rangle}} {{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{-1} \left(1 - {t^{\mathrm{prod}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}\right) {{{K}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{L}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} {{{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actserv}\rangle}}^{{\beta^{\mathrm{x}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}}} = 0
+\end{equation}
+
+
+
+\section{Calibrating equations}
+
+\begin{equation}
+-{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle} + {Y}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle} + {Y}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle} + {Y}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle} + {Y}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle} + {Y}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle} + {Y}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle} + {Y}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle} + {Y}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle} = 0
+\end{equation}
+\begin{equation}
+-{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle} + {Y}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle} = 0
+\end{equation}
+\begin{equation}
+{D}^{\langle \mathrm{Prodmanu}\rangle} - {{d^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{D}^{\langle \mathrm{Prodserv}\rangle} - {{d^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}} \left(1 + {{v\!a\!t}}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{L}^{\langle \mathrm{Prodprim},\mathrm{Actprim}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle}} {{l^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{L}^{\langle \mathrm{Prodprim},\mathrm{Actmanu}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle}} {{l^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{L}^{\langle \mathrm{Prodprim},\mathrm{Actserv}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle}} {{l^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{L}^{\langle \mathrm{Prodmanu},\mathrm{Actprim}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle}} {{l^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{L}^{\langle \mathrm{Prodmanu},\mathrm{Actmanu}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle}} {{l^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{L}^{\langle \mathrm{Prodmanu},\mathrm{Actserv}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle}} {{l^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{L}^{\langle \mathrm{Prodserv},\mathrm{Actprim}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}} {{l^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Actprim}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{L}^{\langle \mathrm{Prodserv},\mathrm{Actmanu}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}} {{l^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Actmanu}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{L}^{\langle \mathrm{Prodserv},\mathrm{Actserv}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}} {{l^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Actserv}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actprim}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actmanu}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodprim},\mathrm{Prodprim},\mathrm{Actserv}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actprim}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodprim},\mathrm{Prodmanu},\mathrm{Actserv}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actprim}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actmanu}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodprim},\mathrm{Prodserv},\mathrm{Actserv}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actprim}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actmanu}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodprim},\mathrm{Actserv}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actprim}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodmanu},\mathrm{Actserv}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actprim}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actmanu}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodmanu},\mathrm{Prodserv},\mathrm{Actserv}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actprim}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actmanu}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodserv},\mathrm{Prodprim},\mathrm{Actserv}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actprim}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actmanu}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodserv},\mathrm{Prodmanu},\mathrm{Actserv}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actprim}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actprim}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actmanu}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actmanu}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{X}^{\langle \mathrm{Prodserv},\mathrm{Prodserv},\mathrm{Actserv}\rangle} - {{{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}} {{x^{\mathrm{data}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle}} \left({{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodprim}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodmanu}}\rangle} + {{d\!a\!t\!a}^{\mathrm{prod}^{\mathrm{s}}}}^{\langle \mathrm{\mathrm{Actserv}},\mathrm{\mathrm{Prodserv}}\rangle}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle} + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actprim}}\rangle} = 0
+\end{equation}
+\begin{equation}
+-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle} + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actmanu}}\rangle} = 0
+\end{equation}
+\begin{equation}
+-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle} + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodprim}},\mathrm{\mathrm{Actserv}}\rangle} = 0
+\end{equation}
+\begin{equation}
+-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle} + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actprim}}\rangle} = 0
+\end{equation}
+\begin{equation}
+-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle} + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actmanu}}\rangle} = 0
+\end{equation}
+\begin{equation}
+-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle} + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodmanu}},\mathrm{\mathrm{Actserv}}\rangle} = 0
+\end{equation}
+\begin{equation}
+-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle} + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actprim}}\rangle} = 0
+\end{equation}
+\begin{equation}
+-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle} + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actmanu}}\rangle} = 0
+\end{equation}
+\begin{equation}
+-1 + {\beta^{\mathrm{k}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle} + {\beta^{\mathrm{l}}}^{\langle \mathrm{\mathrm{Prodserv}},\mathrm{\mathrm{Actserv}}\rangle} = 0
+\end{equation}
+\begin{equation}
+-1 + {{\alpha}^{\langle \mathrm{\mathrm{Prodprim}}\rangle}}^{\omega} + {{\alpha}^{\langle \mathrm{\mathrm{Prodmanu}}\rangle}}^{\omega} + {{\alpha}^{\langle \mathrm{\mathrm{Prodserv}}\rangle}}^{\omega} = 0
+\end{equation}
+
+
+
+
+

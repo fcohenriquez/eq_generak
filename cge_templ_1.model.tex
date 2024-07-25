@@ -1,0 +1,215 @@
+% Generated on 2023-11-17 11:49:28 by gEcon ver. 1.2.2 (2023-07-10)
+% http://gecon.r-forge.r-project.org/
+
+% Model name: cge_templ_1
+
+\section*{Index sets}
+
+$${H\!H} = \{ \mathrm{P}, \mathrm{R} \}$$
+$${S\!E\!C} = \{ \mathrm{M}, \mathrm{N} \}$$
+
+\section{HOUSEHOLD $h\in {H\!H}$}
+
+\subsection{Optimisation problem}
+
+\begin{align}
+&\max_{\left({D}^{\langle h,s\rangle}\right)_{s\in {S\!E\!C}}
+} {U}^{\langle h\rangle} = \left(\sum_{s\in {S\!E\!C}} {{{\alpha}^{\langle h,s\rangle}}^{{{\sigma}^{\langle h\rangle}}^{-1}}} {{{D}^{\langle h,s\rangle}}^{{{\sigma}^{\langle h\rangle}}^{-1} \left(-1 + {\sigma}^{\langle h\rangle}\right)}}\right)^{{{\sigma}^{\langle h\rangle}} \left(-1 + {\sigma}^{\langle h\rangle}\right)^{-1}}\\
+&\mathrm{s.t.:}\nonumber\\
+& \sum_{s\in {S\!E\!C}} {{p}^{\langle s\rangle}} {{D}^{\langle h,s\rangle}} = {L}^{\langle h\rangle} + {{\phi}^{\langle h\rangle}} \left(\sum_{s\in {S\!E\!C}} {\pi}^{\langle s\rangle}\right) + {p^{\mathrm{k}}} {{K}^{\langle h\rangle}} \quad \left({\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle h\rangle}\right)
+\end{align}
+
+
+\subsection{Identities}
+
+\begin{equation}
+{h\!i}\in {H\!H}\colon\quad {K}^{\langle {h\!i}\rangle} = {{p\!a\!r}^{\mathrm{k}}}^{\langle {h\!i}\rangle}
+\end{equation}
+\begin{equation}
+{h\!i}\in {H\!H}\colon\quad {L}^{\langle {h\!i}\rangle} = {{p\!a\!r}^{\mathrm{l}}}^{\langle {h\!i}\rangle}
+\end{equation}
+
+
+\subsection{First order conditions}
+
+\begin{equation}
+s\in {S\!E\!C}\colon\quad -{{\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle h\rangle}} {{p}^{\langle s\rangle}} + {{{\alpha}^{\langle h,s\rangle}}^{{{\sigma}^{\langle h\rangle}}^{-1}}} {{{D}^{\langle h,s\rangle}}^{-1 + {{\sigma}^{\langle h\rangle}}^{-1} \left(-1 + {\sigma}^{\langle h\rangle}\right)}} {\left(\sum_{s\in {S\!E\!C}} {{{\alpha}^{\langle h,s\rangle}}^{{{\sigma}^{\langle h\rangle}}^{-1}}} {{{D}^{\langle h,s\rangle}}^{{{\sigma}^{\langle h\rangle}}^{-1} \left(-1 + {\sigma}^{\langle h\rangle}\right)}}\right)^{-1 + {{\sigma}^{\langle h\rangle}} \left(-1 + {\sigma}^{\langle h\rangle}\right)^{-1}}} = 0
+ \quad \left({D}^{\langle h,s\rangle}\right)
+\end{equation}
+
+
+
+
+\section{FIRM $s\in {S\!E\!C}$}
+
+\subsection{Optimisation problem}
+
+\begin{align}
+&\max_{{Y}^{\langle s\rangle}, {K}^{\langle s\rangle}, {L}^{\langle s\rangle}
+} {\pi}^{\langle s\rangle} = -{L}^{\langle s\rangle} - {p^{\mathrm{k}}} {{K}^{\langle s\rangle}} + {{p}^{\langle s\rangle}} {{Y}^{\langle s\rangle}}\\
+&\mathrm{s.t.:}\nonumber\\
+& {Y}^{\langle s\rangle} = {{\phi}^{\langle s\rangle}} {\left({{{\delta}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1}}} {{{L}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} + {{{K}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} {\left(1 - {\delta}^{\langle s\rangle}\right)^{{{\sigma}^{\langle s\rangle}}^{-1}}}\right)^{{{\sigma}^{\langle s\rangle}} \left(-1 + {\sigma}^{\langle s\rangle}\right)^{-1}}} \quad \left({\lambda^{\mathrm{FIRM}^{\mathrm{1}}}}^{\langle s\rangle}\right)
+\end{align}
+
+
+\subsection{First order conditions}
+
+\begin{equation}
+-{\lambda^{\mathrm{FIRM}^{\mathrm{1}}}}^{\langle s\rangle} + {p}^{\langle s\rangle} = 0
+ \quad \left({Y}^{\langle s\rangle}\right)
+\end{equation}
+\begin{equation}
+-p^{\mathrm{k}} + {{\phi}^{\langle s\rangle}} {{\lambda^{\mathrm{FIRM}^{\mathrm{1}}}}^{\langle s\rangle}} {{{K}^{\langle s\rangle}}^{-1 + {{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} {\left(1 - {\delta}^{\langle s\rangle}\right)^{{{\sigma}^{\langle s\rangle}}^{-1}}} {\left({{{\delta}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1}}} {{{L}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} + {{{K}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} {\left(1 - {\delta}^{\langle s\rangle}\right)^{{{\sigma}^{\langle s\rangle}}^{-1}}}\right)^{-1 + {{\sigma}^{\langle s\rangle}} \left(-1 + {\sigma}^{\langle s\rangle}\right)^{-1}}} = 0
+ \quad \left({K}^{\langle s\rangle}\right)
+\end{equation}
+\begin{equation}
+-1 + {{\phi}^{\langle s\rangle}} {{\lambda^{\mathrm{FIRM}^{\mathrm{1}}}}^{\langle s\rangle}} {{{\delta}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1}}} {{{L}^{\langle s\rangle}}^{-1 + {{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} {\left({{{\delta}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1}}} {{{L}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} + {{{K}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} {\left(1 - {\delta}^{\langle s\rangle}\right)^{{{\sigma}^{\langle s\rangle}}^{-1}}}\right)^{-1 + {{\sigma}^{\langle s\rangle}} \left(-1 + {\sigma}^{\langle s\rangle}\right)^{-1}}} = 0
+ \quad \left({L}^{\langle s\rangle}\right)
+\end{equation}
+
+
+\subsection{First order conditions after reduction}
+
+\begin{equation}
+-p^{\mathrm{k}} + {{\phi}^{\langle s\rangle}} {{p}^{\langle s\rangle}} {{{K}^{\langle s\rangle}}^{-1 + {{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} {\left(1 - {\delta}^{\langle s\rangle}\right)^{{{\sigma}^{\langle s\rangle}}^{-1}}} {\left({{{\delta}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1}}} {{{L}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} + {{{K}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} {\left(1 - {\delta}^{\langle s\rangle}\right)^{{{\sigma}^{\langle s\rangle}}^{-1}}}\right)^{-1 + {{\sigma}^{\langle s\rangle}} \left(-1 + {\sigma}^{\langle s\rangle}\right)^{-1}}} = 0
+ \quad \left({K}^{\langle s\rangle}\right)
+\end{equation}
+\begin{equation}
+-1 + {{\phi}^{\langle s\rangle}} {{p}^{\langle s\rangle}} {{{\delta}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1}}} {{{L}^{\langle s\rangle}}^{-1 + {{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} {\left({{{\delta}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1}}} {{{L}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} + {{{K}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} {\left(1 - {\delta}^{\langle s\rangle}\right)^{{{\sigma}^{\langle s\rangle}}^{-1}}}\right)^{-1 + {{\sigma}^{\langle s\rangle}} \left(-1 + {\sigma}^{\langle s\rangle}\right)^{-1}}} = 0
+ \quad \left({L}^{\langle s\rangle}\right)
+\end{equation}
+
+
+
+
+\section{EQUILIBRIUM}
+
+\subsection{Identities}
+
+\begin{equation}
+s\in {S\!E\!C}\colon\quad {Y}^{\langle s\rangle} = \sum_{h\in {H\!H}} {D}^{\langle h,s\rangle}
+\end{equation}
+\begin{equation}
+\sum_{h\in {H\!H}} {L}^{\langle h\rangle} = \sum_{s\in {S\!E\!C}} {L}^{\langle s\rangle}
+\end{equation}
+
+
+
+
+\section{Equilibrium relationships (before expansion and reduction)}
+
+\begin{equation}
+-\sum_{h\in {H\!H}} {L}^{\langle h\rangle} + \sum_{s\in {S\!E\!C}} {L}^{\langle s\rangle} = 0
+\end{equation}
+\begin{equation}
+{h\!i}\in {H\!H}\colon\quad {{p\!a\!r}^{\mathrm{k}}}^{\langle {h\!i}\rangle} - {K}^{\langle {h\!i}\rangle} = 0
+\end{equation}
+\begin{equation}
+{h\!i}\in {H\!H}\colon\quad {{p\!a\!r}^{\mathrm{l}}}^{\langle {h\!i}\rangle} - {L}^{\langle {h\!i}\rangle} = 0
+\end{equation}
+\begin{equation}
+h\in {H\!H}\colon\quad {U}^{\langle h\rangle} - \left(\sum_{s\in {S\!E\!C}} {{{\alpha}^{\langle h,s\rangle}}^{{{\sigma}^{\langle h\rangle}}^{-1}}} {{{D}^{\langle h,s\rangle}}^{{{\sigma}^{\langle h\rangle}}^{-1} \left(-1 + {\sigma}^{\langle h\rangle}\right)}}\right)^{{{\sigma}^{\langle h\rangle}} \left(-1 + {\sigma}^{\langle h\rangle}\right)^{-1}} = 0
+\end{equation}
+\begin{equation}
+h\in {H\!H}\colon\quad {L}^{\langle h\rangle} + {{\phi}^{\langle h\rangle}} \left(\sum_{s\in {S\!E\!C}} {\pi}^{\langle s\rangle}\right) + {p^{\mathrm{k}}} {{K}^{\langle h\rangle}} - \sum_{s\in {S\!E\!C}} {{p}^{\langle s\rangle}} {{D}^{\langle h,s\rangle}} = 0
+\end{equation}
+\begin{equation}
+h\in {H\!H}\colon\quad s\in {S\!E\!C}\colon\quad -{{\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle h\rangle}} {{p}^{\langle s\rangle}} + {{{\alpha}^{\langle h,s\rangle}}^{{{\sigma}^{\langle h\rangle}}^{-1}}} {{{D}^{\langle h,s\rangle}}^{-1 + {{\sigma}^{\langle h\rangle}}^{-1} \left(-1 + {\sigma}^{\langle h\rangle}\right)}} {\left(\sum_{s\in {S\!E\!C}} {{{\alpha}^{\langle h,s\rangle}}^{{{\sigma}^{\langle h\rangle}}^{-1}}} {{{D}^{\langle h,s\rangle}}^{{{\sigma}^{\langle h\rangle}}^{-1} \left(-1 + {\sigma}^{\langle h\rangle}\right)}}\right)^{-1 + {{\sigma}^{\langle h\rangle}} \left(-1 + {\sigma}^{\langle h\rangle}\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad -1 + {{\phi}^{\langle s\rangle}} {{p}^{\langle s\rangle}} {{{\delta}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1}}} {{{L}^{\langle s\rangle}}^{-1 + {{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} {\left({{{\delta}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1}}} {{{L}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} + {{{K}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} {\left(1 - {\delta}^{\langle s\rangle}\right)^{{{\sigma}^{\langle s\rangle}}^{-1}}}\right)^{-1 + {{\sigma}^{\langle s\rangle}} \left(-1 + {\sigma}^{\langle s\rangle}\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad -p^{\mathrm{k}} + {{\phi}^{\langle s\rangle}} {{p}^{\langle s\rangle}} {{{K}^{\langle s\rangle}}^{-1 + {{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} {\left(1 - {\delta}^{\langle s\rangle}\right)^{{{\sigma}^{\langle s\rangle}}^{-1}}} {\left({{{\delta}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1}}} {{{L}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} + {{{K}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} {\left(1 - {\delta}^{\langle s\rangle}\right)^{{{\sigma}^{\langle s\rangle}}^{-1}}}\right)^{-1 + {{\sigma}^{\langle s\rangle}} \left(-1 + {\sigma}^{\langle s\rangle}\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad -{Y}^{\langle s\rangle} + {{\phi}^{\langle s\rangle}} {\left({{{\delta}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1}}} {{{L}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} + {{{K}^{\langle s\rangle}}^{{{\sigma}^{\langle s\rangle}}^{-1} \left(-1 + {\sigma}^{\langle s\rangle}\right)}} {\left(1 - {\delta}^{\langle s\rangle}\right)^{{{\sigma}^{\langle s\rangle}}^{-1}}}\right)^{{{\sigma}^{\langle s\rangle}} \left(-1 + {\sigma}^{\langle s\rangle}\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad -{Y}^{\langle s\rangle} + \sum_{h\in {H\!H}} {D}^{\langle h,s\rangle} = 0
+\end{equation}
+\begin{equation}
+s\in {S\!E\!C}\colon\quad {\pi}^{\langle s\rangle} + {L}^{\langle s\rangle} + {p^{\mathrm{k}}} {{K}^{\langle s\rangle}} - {{p}^{\langle s\rangle}} {{Y}^{\langle s\rangle}} = 0
+\end{equation}
+
+
+
+\section{Equilibrium relationships (after expansion and reduction)}
+
+\begin{equation}
+-1 + {{\phi}^{\langle \mathrm{\mathrm{M}}\rangle}} {{p}^{\langle \mathrm{M}\rangle}} {{{\delta}^{\langle \mathrm{\mathrm{M}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1}}} {{{L}^{\langle \mathrm{M}\rangle}}^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}\right)}} {\left({{{\delta}^{\langle \mathrm{\mathrm{M}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1}}} {{{L}^{\langle \mathrm{M}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}\right)}} + {{{K}^{\langle \mathrm{M}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}\right)}} {\left(1 - {\delta}^{\langle \mathrm{\mathrm{M}}\rangle}\right)^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1}}}\right)^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+-1 + {{\phi}^{\langle \mathrm{\mathrm{N}}\rangle}} {{p}^{\langle \mathrm{N}\rangle}} {{{\delta}^{\langle \mathrm{\mathrm{N}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1}}} {{{L}^{\langle \mathrm{N}\rangle}}^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}\right)}} {\left({{{\delta}^{\langle \mathrm{\mathrm{N}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1}}} {{{L}^{\langle \mathrm{N}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}\right)}} + {{{K}^{\langle \mathrm{N}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}\right)}} {\left(1 - {\delta}^{\langle \mathrm{\mathrm{N}}\rangle}\right)^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1}}}\right)^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+{{p\!a\!r}^{\mathrm{k}}}^{\langle \mathrm{\mathrm{P}}\rangle} - {K}^{\langle \mathrm{P}\rangle} = 0
+\end{equation}
+\begin{equation}
+{{p\!a\!r}^{\mathrm{k}}}^{\langle \mathrm{\mathrm{R}}\rangle} - {K}^{\langle \mathrm{R}\rangle} = 0
+\end{equation}
+\begin{equation}
+{{p\!a\!r}^{\mathrm{l}}}^{\langle \mathrm{\mathrm{P}}\rangle} - {L}^{\langle \mathrm{P}\rangle} = 0
+\end{equation}
+\begin{equation}
+{{p\!a\!r}^{\mathrm{l}}}^{\langle \mathrm{\mathrm{R}}\rangle} - {L}^{\langle \mathrm{R}\rangle} = 0
+\end{equation}
+\begin{equation}
+-p^{\mathrm{k}} + {{\phi}^{\langle \mathrm{\mathrm{M}}\rangle}} {{p}^{\langle \mathrm{M}\rangle}} {{{K}^{\langle \mathrm{M}\rangle}}^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}\right)}} {\left(1 - {\delta}^{\langle \mathrm{\mathrm{M}}\rangle}\right)^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1}}} {\left({{{\delta}^{\langle \mathrm{\mathrm{M}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1}}} {{{L}^{\langle \mathrm{M}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}\right)}} + {{{K}^{\langle \mathrm{M}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}\right)}} {\left(1 - {\delta}^{\langle \mathrm{\mathrm{M}}\rangle}\right)^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1}}}\right)^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+-p^{\mathrm{k}} + {{\phi}^{\langle \mathrm{\mathrm{N}}\rangle}} {{p}^{\langle \mathrm{N}\rangle}} {{{K}^{\langle \mathrm{N}\rangle}}^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}\right)}} {\left(1 - {\delta}^{\langle \mathrm{\mathrm{N}}\rangle}\right)^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1}}} {\left({{{\delta}^{\langle \mathrm{\mathrm{N}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1}}} {{{L}^{\langle \mathrm{N}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}\right)}} + {{{K}^{\langle \mathrm{N}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}\right)}} {\left(1 - {\delta}^{\langle \mathrm{\mathrm{N}}\rangle}\right)^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1}}}\right)^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+{U}^{\langle \mathrm{P}\rangle} - \left({{{\alpha}^{\langle \mathrm{\mathrm{P}},\mathrm{\mathrm{M}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{P},\mathrm{M}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}\right)}} + {{{\alpha}^{\langle \mathrm{\mathrm{P}},\mathrm{\mathrm{N}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{P},\mathrm{N}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}\right)}}\right)^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}\right)^{-1}} = 0
+\end{equation}
+\begin{equation}
+{U}^{\langle \mathrm{R}\rangle} - \left({{{\alpha}^{\langle \mathrm{\mathrm{R}},\mathrm{\mathrm{M}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{R},\mathrm{M}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}\right)}} + {{{\alpha}^{\langle \mathrm{\mathrm{R}},\mathrm{\mathrm{N}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{R},\mathrm{N}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}\right)}}\right)^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}\right)^{-1}} = 0
+\end{equation}
+\begin{equation}
+-{Y}^{\langle \mathrm{M}\rangle} + {{\phi}^{\langle \mathrm{\mathrm{M}}\rangle}} {\left({{{\delta}^{\langle \mathrm{\mathrm{M}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1}}} {{{L}^{\langle \mathrm{M}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}\right)}} + {{{K}^{\langle \mathrm{M}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}\right)}} {\left(1 - {\delta}^{\langle \mathrm{\mathrm{M}}\rangle}\right)^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}}^{-1}}}\right)^{{{\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{M}}\rangle}\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+-{Y}^{\langle \mathrm{N}\rangle} + {{\phi}^{\langle \mathrm{\mathrm{N}}\rangle}} {\left({{{\delta}^{\langle \mathrm{\mathrm{N}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1}}} {{{L}^{\langle \mathrm{N}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}\right)}} + {{{K}^{\langle \mathrm{N}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}\right)}} {\left(1 - {\delta}^{\langle \mathrm{\mathrm{N}}\rangle}\right)^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}}^{-1}}}\right)^{{{\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{N}}\rangle}\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+-{{\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle \mathrm{P}\rangle}} {{p}^{\langle \mathrm{M}\rangle}} + {{{\alpha}^{\langle \mathrm{\mathrm{P}},\mathrm{\mathrm{M}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{P},\mathrm{M}\rangle}}^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}\right)}} {\left({{{\alpha}^{\langle \mathrm{\mathrm{P}},\mathrm{\mathrm{M}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{P},\mathrm{M}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}\right)}} + {{{\alpha}^{\langle \mathrm{\mathrm{P}},\mathrm{\mathrm{N}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{P},\mathrm{N}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}\right)}}\right)^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+-{{\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle \mathrm{P}\rangle}} {{p}^{\langle \mathrm{N}\rangle}} + {{{\alpha}^{\langle \mathrm{\mathrm{P}},\mathrm{\mathrm{N}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{P},\mathrm{N}\rangle}}^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}\right)}} {\left({{{\alpha}^{\langle \mathrm{\mathrm{P}},\mathrm{\mathrm{M}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{P},\mathrm{M}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}\right)}} + {{{\alpha}^{\langle \mathrm{\mathrm{P}},\mathrm{\mathrm{N}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{P},\mathrm{N}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}\right)}}\right)^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{P}}\rangle}\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+-{{\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle \mathrm{R}\rangle}} {{p}^{\langle \mathrm{M}\rangle}} + {{{\alpha}^{\langle \mathrm{\mathrm{R}},\mathrm{\mathrm{M}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{R},\mathrm{M}\rangle}}^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}\right)}} {\left({{{\alpha}^{\langle \mathrm{\mathrm{R}},\mathrm{\mathrm{M}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{R},\mathrm{M}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}\right)}} + {{{\alpha}^{\langle \mathrm{\mathrm{R}},\mathrm{\mathrm{N}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{R},\mathrm{N}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}\right)}}\right)^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+-{{\lambda^{\mathrm{HOUSEHOLD}^{\mathrm{1}}}}^{\langle \mathrm{R}\rangle}} {{p}^{\langle \mathrm{N}\rangle}} + {{{\alpha}^{\langle \mathrm{\mathrm{R}},\mathrm{\mathrm{N}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{R},\mathrm{N}\rangle}}^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}\right)}} {\left({{{\alpha}^{\langle \mathrm{\mathrm{R}},\mathrm{\mathrm{M}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{R},\mathrm{M}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}\right)}} + {{{\alpha}^{\langle \mathrm{\mathrm{R}},\mathrm{\mathrm{N}}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1}}} {{{D}^{\langle \mathrm{R},\mathrm{N}\rangle}}^{{{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}}^{-1} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}\right)}}\right)^{-1 + {{\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}} \left(-1 + {\sigma}^{\langle \mathrm{\mathrm{R}}\rangle}\right)^{-1}}} = 0
+\end{equation}
+\begin{equation}
+{D}^{\langle \mathrm{P},\mathrm{M}\rangle} + {D}^{\langle \mathrm{R},\mathrm{M}\rangle} - {Y}^{\langle \mathrm{M}\rangle} = 0
+\end{equation}
+\begin{equation}
+{D}^{\langle \mathrm{P},\mathrm{N}\rangle} + {D}^{\langle \mathrm{R},\mathrm{N}\rangle} - {Y}^{\langle \mathrm{N}\rangle} = 0
+\end{equation}
+\begin{equation}
+{\pi}^{\langle \mathrm{M}\rangle} + {L}^{\langle \mathrm{M}\rangle} + {p^{\mathrm{k}}} {{K}^{\langle \mathrm{M}\rangle}} - {{p}^{\langle \mathrm{M}\rangle}} {{Y}^{\langle \mathrm{M}\rangle}} = 0
+\end{equation}
+\begin{equation}
+{\pi}^{\langle \mathrm{N}\rangle} + {L}^{\langle \mathrm{N}\rangle} + {p^{\mathrm{k}}} {{K}^{\langle \mathrm{N}\rangle}} - {{p}^{\langle \mathrm{N}\rangle}} {{Y}^{\langle \mathrm{N}\rangle}} = 0
+\end{equation}
+\begin{equation}
+{L}^{\langle \mathrm{M}\rangle} + {L}^{\langle \mathrm{N}\rangle} - {L}^{\langle \mathrm{P}\rangle} - {L}^{\langle \mathrm{R}\rangle} = 0
+\end{equation}
+\begin{equation}
+{L}^{\langle \mathrm{P}\rangle} + {{\phi}^{\langle \mathrm{\mathrm{P}}\rangle}} \left({\pi}^{\langle \mathrm{M}\rangle} + {\pi}^{\langle \mathrm{N}\rangle}\right) + {p^{\mathrm{k}}} {{K}^{\langle \mathrm{P}\rangle}} - {{p}^{\langle \mathrm{M}\rangle}} {{D}^{\langle \mathrm{P},\mathrm{M}\rangle}} - {{p}^{\langle \mathrm{N}\rangle}} {{D}^{\langle \mathrm{P},\mathrm{N}\rangle}} = 0
+\end{equation}
+\begin{equation}
+{L}^{\langle \mathrm{R}\rangle} + {{\phi}^{\langle \mathrm{\mathrm{R}}\rangle}} \left({\pi}^{\langle \mathrm{M}\rangle} + {\pi}^{\langle \mathrm{N}\rangle}\right) + {p^{\mathrm{k}}} {{K}^{\langle \mathrm{R}\rangle}} - {{p}^{\langle \mathrm{M}\rangle}} {{D}^{\langle \mathrm{R},\mathrm{M}\rangle}} - {{p}^{\langle \mathrm{N}\rangle}} {{D}^{\langle \mathrm{R},\mathrm{N}\rangle}} = 0
+\end{equation}
+
+
+
+
+
+
+
+

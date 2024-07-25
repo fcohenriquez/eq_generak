@@ -1,0 +1,127 @@
+% Generated on 2023-11-13 23:36:35 by gEcon ver. 1.2.2 (2023-07-10)
+% http://gecon.r-forge.r-project.org/
+
+% Model name: pure_exchange
+
+\section{AGENT A}
+
+\subsection{Optimisation problem}
+
+\begin{align}
+&\max_{C^{\mathrm{A1}}, C^{\mathrm{A2}}
+} U^{\mathrm{A}} = \log{C^{\mathrm{A1}}} + {\psi^{\mathrm{A}}} {\log{C^{\mathrm{A2}}}}\\
+&\mathrm{s.t.:}\nonumber\\
+& {p^{\mathrm{1}}} {C^{\mathrm{A1}}} + {p^{\mathrm{2}}} {C^{\mathrm{A2}}} = {e^{\mathrm{A1}}} {p^{\mathrm{1}}} + {e^{\mathrm{A2}}} {p^{\mathrm{2}}} \quad \left(\lambda^{\mathrm{AGENT}^{\mathrm{A}^{\mathrm{1}}}}\right)
+\end{align}
+
+
+\subsection{Identities}
+
+\begin{equation}
+e^{\mathrm{A1}} = e^{\mathrm{A1}^{\mathrm{calibr}}}
+\end{equation}
+\begin{equation}
+e^{\mathrm{A2}} = e^{\mathrm{A2}^{\mathrm{calibr}}}
+\end{equation}
+
+
+\subsection{First order conditions}
+
+\begin{equation}
+{C^{\mathrm{A1}}}^{-1} - {\lambda^{\mathrm{AGENT}^{\mathrm{A}^{\mathrm{1}}}}} {p^{\mathrm{1}}} = 0
+ \quad \left(C^{\mathrm{A1}}\right)
+\end{equation}
+\begin{equation}
+{\psi^{\mathrm{A}}} {C^{\mathrm{A2}}}^{-1} - {\lambda^{\mathrm{AGENT}^{\mathrm{A}^{\mathrm{1}}}}} {p^{\mathrm{2}}} = 0
+ \quad \left(C^{\mathrm{A2}}\right)
+\end{equation}
+
+
+
+
+\section{AGENT B}
+
+\subsection{Optimisation problem}
+
+\begin{align}
+&\max_{C^{\mathrm{B1}}, C^{\mathrm{B2}}
+} U^{\mathrm{B}} = \log{C^{\mathrm{B1}}} + {\psi^{\mathrm{B}}} {\log{C^{\mathrm{B2}}}}\\
+&\mathrm{s.t.:}\nonumber\\
+& {p^{\mathrm{1}}} {C^{\mathrm{B1}}} + {p^{\mathrm{2}}} {C^{\mathrm{B2}}} = {e^{\mathrm{B1}}} {p^{\mathrm{1}}} + {e^{\mathrm{B2}}} {p^{\mathrm{2}}} \quad \left(\lambda^{\mathrm{AGENT}^{\mathrm{B}^{\mathrm{1}}}}\right)
+\end{align}
+
+
+\subsection{Identities}
+
+\begin{equation}
+e^{\mathrm{B1}} = e^{\mathrm{B1}^{\mathrm{calibr}}}
+\end{equation}
+\begin{equation}
+e^{\mathrm{B2}} = e^{\mathrm{B2}^{\mathrm{calibr}}}
+\end{equation}
+
+
+\subsection{First order conditions}
+
+\begin{equation}
+{C^{\mathrm{B1}}}^{-1} - {\lambda^{\mathrm{AGENT}^{\mathrm{B}^{\mathrm{1}}}}} {p^{\mathrm{1}}} = 0
+ \quad \left(C^{\mathrm{B1}}\right)
+\end{equation}
+\begin{equation}
+{\psi^{\mathrm{B}}} {C^{\mathrm{B2}}}^{-1} - {\lambda^{\mathrm{AGENT}^{\mathrm{B}^{\mathrm{1}}}}} {p^{\mathrm{2}}} = 0
+ \quad \left(C^{\mathrm{B2}}\right)
+\end{equation}
+
+
+
+
+\section{EQUILIBRIUM}
+
+\subsection{Identities}
+
+\begin{equation}
+p^{\mathrm{1}} = 1
+\end{equation}
+\begin{equation}
+C^{\mathrm{A1}} + C^{\mathrm{B1}} = e^{\mathrm{B1}} + e^{\mathrm{A1}}
+\end{equation}
+
+
+
+
+\section{Equilibrium relationships (after reduction)}
+
+\begin{equation}
+{\psi^{\mathrm{A}}} {C^{\mathrm{A2}}}^{-1} - {p^{\mathrm{2}}} \left(e^{\mathrm{A1}^{\mathrm{calibr}}} + e^{\mathrm{B1}^{\mathrm{calibr}}} - C^{\mathrm{B1}}\right)^{-1} = 0
+\end{equation}
+\begin{equation}
+{\psi^{\mathrm{B}}} {C^{\mathrm{B2}}}^{-1} - {p^{\mathrm{2}}} {C^{\mathrm{B1}}}^{-1} = 0
+\end{equation}
+\begin{equation}
+U^{\mathrm{A}} - \log\left(e^{\mathrm{A1}^{\mathrm{calibr}}} + e^{\mathrm{B1}^{\mathrm{calibr}}} - C^{\mathrm{B1}}\right) - {\psi^{\mathrm{A}}} {\log{C^{\mathrm{A2}}}} = 0
+\end{equation}
+\begin{equation}
+U^{\mathrm{B}} - \log{C^{\mathrm{B1}}} - {\psi^{\mathrm{B}}} {\log{C^{\mathrm{B2}}}} = 0
+\end{equation}
+\begin{equation}
+-e^{\mathrm{B1}^{\mathrm{calibr}}} + C^{\mathrm{B1}} + {e^{\mathrm{A2}^{\mathrm{calibr}}}} {p^{\mathrm{2}}} - {p^{\mathrm{2}}} {C^{\mathrm{A2}}} = 0
+\end{equation}
+\begin{equation}
+e^{\mathrm{B1}^{\mathrm{calibr}}} - C^{\mathrm{B1}} + {e^{\mathrm{B2}^{\mathrm{calibr}}}} {p^{\mathrm{2}}} - {p^{\mathrm{2}}} {C^{\mathrm{B2}}} = 0
+\end{equation}
+
+
+
+
+
+
+\section{Parameter settings}
+
+\begin{equation}
+\psi^{\mathrm{A}} = 1.72
+\end{equation}
+\begin{equation}
+\psi^{\mathrm{B}} = 2.22
+\end{equation}
+
+
