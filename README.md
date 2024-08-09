@@ -1,6 +1,9 @@
 # eq_general
 Modelo de equilibrio general para evaluar impuestos
 
+En esta rama se va a evaluar un modelo simplificado para ver si funciona esa version mas simple y de ahi ir complejizandola.
+
+
 El modelo que se utiliza es gEcon montado en R. En este link está su documentación.
 
 https://gecon.r-forge.r-project.org/
