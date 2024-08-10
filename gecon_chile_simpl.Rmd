@@ -80,9 +80,7 @@ model <- steady_state(model, calibration=T)
 
 
 # Listado de parametros
-```{r}
-flow1['Actprim', 'Prodprim' ]
-```
+
 
 ```{r}
 
