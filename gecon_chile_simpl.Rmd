@@ -83,6 +83,9 @@ model <- steady_state(model, calibration=T)
 ```
 
 # Listado de parametros
+```{r}
+flow1['Actprim', 'Prodprim' ]
+```
 
 ```{r}
 
@@ -95,39 +98,40 @@ g_o=2.6
 
 varlist=list(lambda__CONSUMER_1=0.5,
              p_k=1,
-
-             BTINC=71,
-             CONT_SOC=7.5,
-             CONT_SOC_F=6,
-             CONT_SOC_G=1.6,
-             DIR_T=6,
-             GTO_G=19,
-             INC=70,
-             ING_F=37,
-             ING_GOB=19,
-             K_h=12, K_f=31, K_g=1, 
-             L_h=33.5,
-             PIT_base=70,
-             PREST_SOC=6,
-             PREST_SOC_F=2,
-             PREST_SOC_G=4,
-
-             SAV=5,
-             SAV_F=13,
-             SAV_TOT=25,
-             SAV_G=3,
-             TOTAL_TAX=16,
-             TR_EMP=17,
-             TR_GOV=2,
              U=1,
-             VAT=6,
+
+             BTINC=flow1['Total', 'Hogares' ],
+             CONT_SOC=flow1['Total', 'Cont_soc' ],
+             CONT_SOC_F=flow1['Empresas', 'Cont_soc' ],
+             CONT_SOC_G=flow1['Gobierno', 'Cont_soc' ],
+             DIR_T=flow1['Total', 'Imp_dir' ],
+             GTO_G=flow1['Total', 'Gobierno' ],
+             INC=flow1['Total', 'Hogares' ]- flow1['Imp_dir', 'Hogares' ],
+             ING_F=flow1['Total', 'Empresas' ],
+             ING_GOB=flow1['Total', 'Gobierno' ],
+             K_h=flow1['Hogares', 'Capital' ], K_f=flow1['Empresas', 'Capital' ], K_g=flow1['Gobierno', 'Capital' ], 
+             L_h=flow1['Total', 'Trabajo' ],
+             PIT_base=flow1['Total', 'Hogares' ],
+             PREST_SOC=flow1['Total', 'Pres_soc' ],
+             PREST_SOC_F=flow1['Empresas', 'Pres_soc' ],
+             PREST_SOC_G=flow1['Gobierno', 'Pres_soc' ],
+
+             SAV=flow1['Hogares', 'SI' ],
+             SAV_F=flow1['Empresas', 'SI' ],
+             SAV_TOT=flow1['Total', 'SI' ],
+             SAV_G=flow1['Gobierno', 'SI' ],
+             TOTAL_TAX=flow1['Total', 'Imp_dir' ]+flow1['Total', 'IVA' ],
+             TR_EMP=flow1['Hogares', 'Empresas' ],
+             TR_GOV=flow1['Hogares', 'Gobierno' ],
+             
+             VAT=flow1['Total', 'IVA' ],
              p__Prodprim=1, p__Prodmanu=1, p__Prodserv=1, # Precios de los bienes
              pi__Actprim=0, pi__Actmanu=0, pi__Actserv=0, #Utilidades de las industrias
-             D__Prodprim=1, D__Prodmanu=23, D__Prodserv=33, #Demanda de los hogares
-             DA__Prodprim=35, DA__Prodmanu=97, DA__Prodserv=94, #Demanda agregada por producto
+             D__Prodprim=flow1['Prodprim', 'Hogares' ], D__Prodmanu=flow1['Prodmanu', 'Hogares' ], D__Prodserv=flow1['Prodserv', 'Hogares' ], #Demanda de los hogares
+             DA__Prodprim=flow1['Prodprim', 'Total' ], DA__Prodmanu=flow1['Prodmanu', 'Total' ], DA__Prodserv=flow1['Prodserv', 'Total' ], #Demanda agregada por producto
              
-             GG__Prodprim=0, GG__Prodmanu=0, GG__Prodserv=10, #Gasto de gobierno
-             I__Prodprim=0.3, I__Prodmanu=21, I__Prodserv=4, #Inversion
+             GG__Prodprim=flow1['Prodprim', 'Gobierno' ], GG__Prodmanu=flow1['Prodmanu', 'Gobierno' ], GG__Prodserv=flow1['Prodserv', 'Gobierno' ], #Gasto de gobierno
+             I__Prodprim=flow1['Prodprim', 'SI' ], I__Prodmanu=flow1['Prodmanu', 'SI' ], I__Prodserv=flow1['Prodserv', 'SI' ], #Inversion
              #Capital usado en cada producto en cada actividad
              K__Prodprim__Actprim=13, K__Prodprim__Actmanu=0.1, K__Prodprim__Actserv=0.2,
              K__Prodmanu__Actprim=0.01, K__Prodmanu__Actmanu=11, K__Prodmanu__Actserv=0.3,
@@ -137,14 +141,14 @@ varlist=list(lambda__CONSUMER_1=0.5,
              L__Prodmanu__Actprim=0.01, L__Prodmanu__Actmanu=6.8, L__Prodmanu__Actserv=0.3, 
              L__Prodserv__Actprim=0.0001, L__Prodserv__Actmanu=0.2, L__Prodserv__Actserv=23,
             
-             OA__Prodprim=35, OA__Prodmanu=97, OA__Prodserv=94, #Oferta agregada por producto
+             OA__Prodprim=flow1['Total', 'Prodprim' ], OA__Prodmanu=flow1['Total', 'Prodmanu' ], OA__Prodserv=flow1['Total', 'Prodserv' ], #Oferta agregada por producto
              
           
              
              # Produccion por actividad
-             Y__Prodprim__Actprim=29,  Y__Prodprim__Actmanu=1, Y__Prodprim__Actserv=1,
-             Y__Prodmanu__Actprim=0.2, Y__Prodmanu__Actmanu=63, Y__Prodmanu__Actserv=1,
-             Y__Prodserv__Actprim=0.0001, Y__Prodserv__Actmanu=1, Y__Prodserv__Actserv=86
+             Y__Prodprim__Actprim=flow1['Actprim', 'Prodprim' ],  Y__Prodprim__Actmanu=flow1['Actmanu', 'Prodprim' ], Y__Prodprim__Actserv=flow1['Actserv', 'Prodprim' ],
+             Y__Prodmanu__Actprim=flow1['Actprim', 'Prodmanu' ], Y__Prodmanu__Actmanu=flow1['Actmanu', 'Prodmanu' ], Y__Prodmanu__Actserv=flow1['Actserv', 'Prodmanu' ],
+             Y__Prodserv__Actprim=flow1['Actprim', 'Prodserv' ], Y__Prodserv__Actmanu=flow1['Actmanu', 'Prodserv' ], Y__Prodserv__Actserv=flow1['Actserv', 'Prodserv' ]
              
 )
 
@@ -171,8 +175,8 @@ model <- initval_calibr_par(model, listcalib)
 
 model <- initval_var(model, varlist)
 
-model <- steady_state(model, calibration=F, use_jac=T, last_solver_iter =F,
-                      options_list=list(method="Broyden",global="dbldog", 
+model <- steady_state(model, calibration=T, use_jac=F, last_solver_iter =F,
+                      options_list=list(method="Newton",global="qline", 
                                         max_iter=300,tol=1e-06, xscalm="auto", xtol=F)
 )
 ```
@@ -208,16 +212,16 @@ var_info(model,variables=c('p_k', 'p__Prodprim', 'p__Prodmanu', 'p__Prodserv'))
 var_info(model,variables=c('pi__Actserv', 'pi__Actprim', 'pi__Actmanu'))
 
 
-var_info(model,variables=c("OA__Prodmanu", "Y__Prodmanu__Actmanu", "Y__Prodmanu__Actprim", "Y__Prodmanu__Actserv",'M__Prodmanu','DA__Prodmanu',
-                           "D__Prodmanu","GG__Prodmanu", 'I__Prodmanu', "EXPORT__Prodmanu", 'p__Prodmanu' ))
+var_info(model,variables=c("OA__Prodmanu", "Y__Prodmanu__Actmanu", "Y__Prodmanu__Actprim", "Y__Prodmanu__Actserv",'DA__Prodmanu',
+                           "D__Prodmanu","GG__Prodmanu", 'I__Prodmanu', 'p__Prodmanu' ))
 
-var_info(model,variables=c("OA__Prodprim", "Y__Prodprim__Actmanu", "Y__Prodprim__Actprim", "Y__Prodprim__Actserv",'M__Prodprim','DA__Prodprim',
-                           "D__Prodprim","GG__Prodprim", 'I__Prodprim', "EXPORT__Prodprim", 'p__Prodprim' ))
+var_info(model,variables=c("OA__Prodprim", "Y__Prodprim__Actmanu", "Y__Prodprim__Actprim", "Y__Prodprim__Actserv",'DA__Prodprim',
+                           "D__Prodprim","GG__Prodprim", 'I__Prodprim',  'p__Prodprim' ))
 
-var_info(model,variables=c("OA__Prodserv", "Y__Prodserv__Actmanu", "Y__Prodserv__Actprim", "Y__Prodserv__Actserv",'M__Prodserv','DA__Prodserv',
-                           "D__Prodserv","GG__Prodserv", 'I__Prodserv', "EXPORT__Prodserv", 'p__Prodserv' ))
+var_info(model,variables=c("OA__Prodserv", "Y__Prodserv__Actmanu", "Y__Prodserv__Actprim", "Y__Prodserv__Actserv", 'DA__Prodserv',
+                           "D__Prodserv","GG__Prodserv", 'I__Prodserv', 'p__Prodserv' ))
 
-var_info(model,variables=c('VAT', 'DIR_T', 'PROD_T', 'ARANC' ))
+var_info(model,variables=c('VAT', 'DIR_T' ))
 
 
 ```
