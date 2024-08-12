@@ -139,7 +139,7 @@ block <s::SEC>SECTOR
     {
 		
 		<p::PRODS>beta_k<p,s> + beta_l<p,s> = 1 -> beta_k<p,s>;
-		<p::PRODS>L<p,s>[] = l_data<s>*data_prod_s<s,p>/(SUM<pi::PRODS>(data_prod_s<s,pi>)) -> beta_l<p,s>;
+		<p::PRODS>L<p,s>[] = l_data<p,s> -> beta_l<p,s>;
 		<p::PRODS>Y<p,s>[] = data_prod_s<s,p> -> gamma<p,s>;
 
     };
