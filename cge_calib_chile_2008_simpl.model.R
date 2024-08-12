@@ -1,10 +1,10 @@
-# Generated on 2024-08-10 12:38:06 by gEcon ver. 1.2.2 (2023-07-10)
+# Generated on 2024-08-12 22:17:25 by gEcon ver. 1.2.2 (2023-07-10)
 # http://gecon.r-forge.r-project.org/
 
 # Model name: cge_calib_chile_2008_simpl
 
 # info
-info__ <- c("cge_calib_chile_2008_simpl", "/cloud/project/cge_calib_chile_2008_simpl.gcn", "2024-08-10 12:38:06", "false")
+info__ <- c("cge_calib_chile_2008_simpl", "/cloud/project/cge_calib_chile_2008_simpl.gcn", "2024-08-12 22:17:25", "false")
 
 # index sets
 index_sets__ <- list(PRODS = c("Prodprim", "Prodmanu", "Prodserv"),
@@ -233,9 +233,15 @@ parameters__ <- c("fit",
                   "gamma__Prodserv__Actprim",
                   "gamma__Prodserv__Actmanu",
                   "gamma__Prodserv__Actserv",
-                  "l_data__Actprim",
-                  "l_data__Actmanu",
-                  "l_data__Actserv",
+                  "l_data__Prodprim__Actprim",
+                  "l_data__Prodprim__Actmanu",
+                  "l_data__Prodprim__Actserv",
+                  "l_data__Prodmanu__Actprim",
+                  "l_data__Prodmanu__Actmanu",
+                  "l_data__Prodmanu__Actserv",
+                  "l_data__Prodserv__Actprim",
+                  "l_data__Prodserv__Actmanu",
+                  "l_data__Prodserv__Actserv",
                   "vat__Prodprim",
                   "vat__Prodmanu",
                   "vat__Prodserv")
@@ -302,9 +308,15 @@ parameters_tex__ <- c("{f\\!i\\!t}",
                      "{\\gamma}^{\\langle \\mathrm{\\mathrm{Prodserv}},\\mathrm{\\mathrm{Actprim}}\\rangle}",
                      "{\\gamma}^{\\langle \\mathrm{\\mathrm{Prodserv}},\\mathrm{\\mathrm{Actmanu}}\\rangle}",
                      "{\\gamma}^{\\langle \\mathrm{\\mathrm{Prodserv}},\\mathrm{\\mathrm{Actserv}}\\rangle}",
-                     "{l^{\\mathrm{data}}}^{\\langle \\mathrm{\\mathrm{Actprim}}\\rangle}",
-                     "{l^{\\mathrm{data}}}^{\\langle \\mathrm{\\mathrm{Actmanu}}\\rangle}",
-                     "{l^{\\mathrm{data}}}^{\\langle \\mathrm{\\mathrm{Actserv}}\\rangle}",
+                     "{l^{\\mathrm{data}}}^{\\langle \\mathrm{\\mathrm{Prodprim}},\\mathrm{\\mathrm{Actprim}}\\rangle}",
+                     "{l^{\\mathrm{data}}}^{\\langle \\mathrm{\\mathrm{Prodprim}},\\mathrm{\\mathrm{Actmanu}}\\rangle}",
+                     "{l^{\\mathrm{data}}}^{\\langle \\mathrm{\\mathrm{Prodprim}},\\mathrm{\\mathrm{Actserv}}\\rangle}",
+                     "{l^{\\mathrm{data}}}^{\\langle \\mathrm{\\mathrm{Prodmanu}},\\mathrm{\\mathrm{Actprim}}\\rangle}",
+                     "{l^{\\mathrm{data}}}^{\\langle \\mathrm{\\mathrm{Prodmanu}},\\mathrm{\\mathrm{Actmanu}}\\rangle}",
+                     "{l^{\\mathrm{data}}}^{\\langle \\mathrm{\\mathrm{Prodmanu}},\\mathrm{\\mathrm{Actserv}}\\rangle}",
+                     "{l^{\\mathrm{data}}}^{\\langle \\mathrm{\\mathrm{Prodserv}},\\mathrm{\\mathrm{Actprim}}\\rangle}",
+                     "{l^{\\mathrm{data}}}^{\\langle \\mathrm{\\mathrm{Prodserv}},\\mathrm{\\mathrm{Actmanu}}\\rangle}",
+                     "{l^{\\mathrm{data}}}^{\\langle \\mathrm{\\mathrm{Prodserv}},\\mathrm{\\mathrm{Actserv}}\\rangle}",
                      "{{v\\!a\\!t}}^{\\langle \\mathrm{\\mathrm{Prodprim}}\\rangle}",
                      "{{v\\!a\\!t}}^{\\langle \\mathrm{\\mathrm{Prodmanu}}\\rangle}",
                      "{{v\\!a\\!t}}^{\\langle \\mathrm{\\mathrm{Prodserv}}\\rangle}")
@@ -342,15 +354,27 @@ parameters_free__ <- c("fit",
                        "data_gg_p__Prodprim",
                        "data_gg_p__Prodmanu",
                        "data_gg_p__Prodserv",
-                       "l_data__Actprim",
-                       "l_data__Actmanu",
-                       "l_data__Actserv",
+                       "l_data__Prodprim__Actprim",
+                       "l_data__Prodprim__Actmanu",
+                       "l_data__Prodprim__Actserv",
+                       "l_data__Prodmanu__Actprim",
+                       "l_data__Prodmanu__Actmanu",
+                       "l_data__Prodmanu__Actserv",
+                       "l_data__Prodserv__Actprim",
+                       "l_data__Prodserv__Actmanu",
+                       "l_data__Prodserv__Actserv",
                        "vat__Prodprim",
                        "vat__Prodmanu",
                        "vat__Prodserv")
 
 # free parameters' values
 parameters_free_val__ <- c(NA,
+                           NA,
+                           NA,
+                           NA,
+                           NA,
+                           NA,
+                           NA,
                            NA,
                            NA,
                            NA,
@@ -477,17 +501,17 @@ calibr_equations__ <- c("-data_prod_s<'Actprim','Prodprim'> + Y<'Prodprim','Actp
                         "-data_prod_s<'Actserv','Prodprim'> + Y<'Prodprim','Actserv'> = 0",
                         "-data_prod_s<'Actserv','Prodmanu'> + Y<'Prodmanu','Actserv'> = 0",
                         "-data_prod_s<'Actserv','Prodserv'> + Y<'Prodserv','Actserv'> = 0",
+                        "-l_data<'Prodprim','Actprim'> + L<'Prodprim','Actprim'> = 0",
+                        "-l_data<'Prodprim','Actmanu'> + L<'Prodprim','Actmanu'> = 0",
+                        "-l_data<'Prodprim','Actserv'> + L<'Prodprim','Actserv'> = 0",
+                        "-l_data<'Prodmanu','Actprim'> + L<'Prodmanu','Actprim'> = 0",
+                        "-l_data<'Prodmanu','Actmanu'> + L<'Prodmanu','Actmanu'> = 0",
+                        "-l_data<'Prodmanu','Actserv'> + L<'Prodmanu','Actserv'> = 0",
+                        "-l_data<'Prodserv','Actprim'> + L<'Prodserv','Actprim'> = 0",
+                        "-l_data<'Prodserv','Actmanu'> + L<'Prodserv','Actmanu'> = 0",
+                        "-l_data<'Prodserv','Actserv'> + L<'Prodserv','Actserv'> = 0",
                         "D<'Prodmanu'> - d_data<'Prodmanu'> * (1 + vat<'Prodmanu'>)^-1 = 0",
                         "D<'Prodserv'> - d_data<'Prodserv'> * (1 + vat<'Prodserv'>)^-1 = 0",
-                        "L<'Prodprim','Actprim'> - data_prod_s<'Actprim','Prodprim'> * l_data<'Actprim'> * (data_prod_s<'Actprim','Prodprim'> + data_prod_s<'Actprim','Prodmanu'> + data_prod_s<'Actprim','Prodserv'>)^-1 = 0",
-                        "L<'Prodprim','Actmanu'> - data_prod_s<'Actmanu','Prodprim'> * l_data<'Actmanu'> * (data_prod_s<'Actmanu','Prodprim'> + data_prod_s<'Actmanu','Prodmanu'> + data_prod_s<'Actmanu','Prodserv'>)^-1 = 0",
-                        "L<'Prodprim','Actserv'> - data_prod_s<'Actserv','Prodprim'> * l_data<'Actserv'> * (data_prod_s<'Actserv','Prodprim'> + data_prod_s<'Actserv','Prodmanu'> + data_prod_s<'Actserv','Prodserv'>)^-1 = 0",
-                        "L<'Prodmanu','Actprim'> - data_prod_s<'Actprim','Prodmanu'> * l_data<'Actprim'> * (data_prod_s<'Actprim','Prodprim'> + data_prod_s<'Actprim','Prodmanu'> + data_prod_s<'Actprim','Prodserv'>)^-1 = 0",
-                        "L<'Prodmanu','Actmanu'> - data_prod_s<'Actmanu','Prodmanu'> * l_data<'Actmanu'> * (data_prod_s<'Actmanu','Prodprim'> + data_prod_s<'Actmanu','Prodmanu'> + data_prod_s<'Actmanu','Prodserv'>)^-1 = 0",
-                        "L<'Prodmanu','Actserv'> - data_prod_s<'Actserv','Prodmanu'> * l_data<'Actserv'> * (data_prod_s<'Actserv','Prodprim'> + data_prod_s<'Actserv','Prodmanu'> + data_prod_s<'Actserv','Prodserv'>)^-1 = 0",
-                        "L<'Prodserv','Actprim'> - data_prod_s<'Actprim','Prodserv'> * l_data<'Actprim'> * (data_prod_s<'Actprim','Prodprim'> + data_prod_s<'Actprim','Prodmanu'> + data_prod_s<'Actprim','Prodserv'>)^-1 = 0",
-                        "L<'Prodserv','Actmanu'> - data_prod_s<'Actmanu','Prodserv'> * l_data<'Actmanu'> * (data_prod_s<'Actmanu','Prodprim'> + data_prod_s<'Actmanu','Prodmanu'> + data_prod_s<'Actmanu','Prodserv'>)^-1 = 0",
-                        "L<'Prodserv','Actserv'> - data_prod_s<'Actserv','Prodserv'> * l_data<'Actserv'> * (data_prod_s<'Actserv','Prodprim'> + data_prod_s<'Actserv','Prodmanu'> + data_prod_s<'Actserv','Prodserv'>)^-1 = 0",
                         "-1 + beta_k<'Prodprim','Actprim'> + beta_l<'Prodprim','Actprim'> = 0",
                         "-1 + beta_k<'Prodprim','Actmanu'> + beta_l<'Prodprim','Actmanu'> = 0",
                         "-1 + beta_k<'Prodprim','Actserv'> + beta_l<'Prodprim','Actserv'> = 0",
@@ -598,8 +622,8 @@ vareqmap__ <- sparseMatrix(i = c(1, 2, 2, 3, 3, 4, 4, 5, 5, 6,
 # variables / calibrating equations map
 varcalibreqmap__ <- sparseMatrix(i = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
                                        11, 12, 13, 14, 15, 16, 17, 18, 19, 20),
-                                 j = c(68, 71, 74, 69, 72, 75, 70, 73, 76, 36,
-                                       37, 56, 57, 58, 59, 60, 61, 62, 63, 64),
+                                 j = c(68, 71, 74, 69, 72, 75, 70, 73, 76, 56,
+                                       57, 58, 59, 60, 61, 62, 63, 64, 36, 37),
                                  x = rep(1, 20), dims = c(30, 76))
 
 # calibrated parameters / equations map
@@ -641,26 +665,22 @@ freepareqmap__ <- sparseMatrix(i = c(1, 2, 2, 3, 3, 4, 4, 5, 6, 7,
                                      38, 38, 39, 39, 40, 40, 42, 42, 48, 48,
                                      48, 49, 49, 49, 50, 52, 53, 53, 53, 54,
                                      54, 54),
-                               j = c(3, 30, 36, 31, 37, 32, 38, 10, 14, 17,
+                               j = c(3, 30, 42, 31, 43, 32, 44, 10, 14, 17,
                                      2, 5, 2, 6, 2, 7, 15, 16, 9, 13,
-                                     18, 11, 12, 4, 36, 36, 37, 37, 38, 38,
-                                     4, 36, 4, 37, 4, 38, 1, 8, 36, 37,
-                                     38, 36, 37, 38, 1, 8, 36, 37, 38, 36,
-                                     37, 38),
-                               x = rep(1, 52), dims = c(76, 38))
+                                     18, 11, 12, 4, 42, 42, 43, 43, 44, 44,
+                                     4, 42, 4, 43, 4, 44, 1, 8, 42, 43,
+                                     44, 42, 43, 44, 1, 8, 42, 43, 44, 42,
+                                     43, 44),
+                               x = rep(1, 52), dims = c(76, 44))
 
 # free parameters / calibrating equations map
 freeparcalibreqmap__ <- sparseMatrix(i = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-                                           10, 11, 11, 12, 12, 12, 12, 13, 13, 13,
-                                           13, 14, 14, 14, 14, 15, 15, 15, 15, 16,
-                                           16, 16, 16, 17, 17, 17, 17, 18, 18, 18,
-                                           18, 19, 19, 19, 19, 20, 20, 20, 20, 30),
-                                     j = c(21, 22, 23, 24, 25, 26, 27, 28, 29, 19,
-                                           37, 20, 38, 21, 22, 23, 33, 24, 25, 26,
-                                           34, 27, 28, 29, 35, 21, 22, 23, 33, 24,
-                                           25, 26, 34, 27, 28, 29, 35, 21, 22, 23,
-                                           33, 24, 25, 26, 34, 27, 28, 29, 35, 4),
-                                     x = rep(1, 50), dims = c(30, 38))
+                                           11, 12, 13, 14, 15, 16, 17, 18, 19, 19,
+                                           20, 20, 30),
+                                     j = c(21, 22, 23, 24, 25, 26, 27, 28, 29, 33,
+                                           34, 35, 36, 37, 38, 39, 40, 41, 19, 43,
+                                           20, 44, 4),
+                                     x = rep(1, 23), dims = c(30, 44))
 
 # shocks / equations map
 shockeqmap__ <- sparseMatrix(i = NULL, j = NULL, dims = c(76, 0))
@@ -670,9 +690,9 @@ ss_eq__ <- function(v, pc, pf)
 {
     r <- numeric(76)
     r[1] = pf[3] - v[15]
-    r[2] = pf[30] - v[29] * v[41] * (1 + pf[36])
-    r[3] = pf[31] - v[30] * v[42] * (1 + pf[37])
-    r[4] = pf[32] - v[31] * v[43] * (1 + pf[38])
+    r[2] = pf[30] - v[29] * v[41] * (1 + pf[42])
+    r[3] = pf[31] - v[30] * v[42] * (1 + pf[43])
+    r[4] = pf[32] - v[31] * v[43] * (1 + pf[44])
     r[5] = -v[4] + pf[10] * v[9]
     r[6] = -v[5] + pf[14] * v[4]
     r[7] = -v[6] + pf[17] * v[4]
@@ -688,12 +708,12 @@ ss_eq__ <- function(v, pc, pf)
     r[17] = -v[25] + pf[11] * v[10]
     r[18] = -v[26] + pf[12] * v[11]
     r[19] = v[27] - (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(pf[4] * (-1 + pf[4])^-1)
-    r[20] = -v[38] + v[29] * (1 + pf[36]) * (v[35] + v[41] + v[44])
-    r[21] = v[38] - v[65] * (1 + pf[36])
-    r[22] = -v[39] + v[30] * (1 + pf[37]) * (v[36] + v[42] + v[45])
-    r[23] = v[39] - v[66] * (1 + pf[37])
-    r[24] = -v[40] + v[31] * (1 + pf[38]) * (v[37] + v[43] + v[46])
-    r[25] = v[40] - v[67] * (1 + pf[38])
+    r[20] = -v[38] + v[29] * (1 + pf[42]) * (v[35] + v[41] + v[44])
+    r[21] = v[38] - v[65] * (1 + pf[42])
+    r[22] = -v[39] + v[30] * (1 + pf[43]) * (v[36] + v[42] + v[45])
+    r[23] = v[39] - v[66] * (1 + pf[43])
+    r[24] = -v[40] + v[31] * (1 + pf[44]) * (v[37] + v[43] + v[46])
+    r[25] = v[40] - v[67] * (1 + pf[44])
     r[26] = -v[65] + v[29] * (v[68] + v[69] + v[70])
     r[27] = -v[66] + v[30] * (v[71] + v[72] + v[73])
     r[28] = -v[67] + v[31] * (v[74] + v[75] + v[76])
@@ -706,9 +726,9 @@ ss_eq__ <- function(v, pc, pf)
     r[35] = -v[74] + pc[28] * v[53]^pc[10] * v[62]^pc[19]
     r[36] = -v[75] + pc[29] * v[54]^pc[11] * v[63]^pc[20]
     r[37] = -v[76] + pc[30] * v[55]^pc[12] * v[64]^pc[21]
-    r[38] = pc[1] * v[35]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-1 + pf[4] * (-1 + pf[4])^-1) + v[1] * v[29] * (1 + pf[36])
-    r[39] = pc[2] * v[36]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-1 + pf[4] * (-1 + pf[4])^-1) + v[1] * v[30] * (1 + pf[37])
-    r[40] = pc[3] * v[37]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-1 + pf[4] * (-1 + pf[4])^-1) + v[1] * v[31] * (1 + pf[38])
+    r[38] = pc[1] * v[35]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-1 + pf[4] * (-1 + pf[4])^-1) + v[1] * v[29] * (1 + pf[42])
+    r[39] = pc[2] * v[36]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-1 + pf[4] * (-1 + pf[4])^-1) + v[1] * v[30] * (1 + pf[43])
+    r[40] = pc[3] * v[37]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-1 + pf[4] * (-1 + pf[4])^-1) + v[1] * v[31] * (1 + pf[44])
     r[41] = v[5] - v[10] + v[2] * v[13]
     r[42] = -v[7] + pf[8] * v[16] + pf[1] * v[2] * v[13]
     r[43] = v[7] - v[24] + v[28]
@@ -716,13 +736,13 @@ ss_eq__ <- function(v, pc, pf)
     r[45] = -v[17] + v[18] + v[19]
     r[46] = v[6] - v[11] + v[24] + v[2] * v[14]
     r[47] = v[20] + v[21] - v[22] + v[23]
-    r[48] = -v[22] + v[29] * v[44] * (1 + pf[36]) + v[30] * v[45] * (1 + pf[37]) + v[31] * v[46] * (1 + pf[38])
-    r[49] = -v[28] + pf[36] * v[29] * (v[35] + v[41] + v[44]) + pf[37] * v[30] * (v[36] + v[42] + v[45]) + pf[38] * v[31] * (v[37] + v[43] + v[46])
+    r[48] = -v[22] + v[29] * v[44] * (1 + pf[42]) + v[30] * v[45] * (1 + pf[43]) + v[31] * v[46] * (1 + pf[44])
+    r[49] = -v[28] + pf[42] * v[29] * (v[35] + v[41] + v[44]) + pf[43] * v[30] * (v[36] + v[42] + v[45]) + pf[44] * v[31] * (v[37] + v[43] + v[46])
     r[50] = -v[10] + v[18] + v[21] + v[25] + pf[1] * v[2] * v[13]
     r[51] = -v[3] + v[15] + v[17] + v[25] + v[26] + v[2] * v[12]
     r[52] = v[3] - v[9] + v[32] + v[33] + v[34] - pf[8] * v[16]
-    r[53] = v[4] - v[9] + v[20] + v[29] * v[35] * (1 + pf[36]) + v[30] * v[36] * (1 + pf[37]) + v[31] * v[37] * (1 + pf[38])
-    r[54] = -v[8] + v[19] + v[23] + v[26] + v[29] * v[41] * (1 + pf[36]) + v[30] * v[42] * (1 + pf[37]) + v[31] * v[43] * (1 + pf[38])
+    r[53] = v[4] - v[9] + v[20] + v[29] * v[35] * (1 + pf[42]) + v[30] * v[36] * (1 + pf[43]) + v[31] * v[37] * (1 + pf[44])
+    r[54] = -v[8] + v[19] + v[23] + v[26] + v[29] * v[41] * (1 + pf[42]) + v[30] * v[42] * (1 + pf[43]) + v[31] * v[43] * (1 + pf[44])
     r[55] = v[32] + v[56] + v[59] + v[62] + v[2] * (v[47] + v[50] + v[53]) - v[29] * v[68] - v[30] * v[71] - v[31] * v[74]
     r[56] = v[33] + v[57] + v[60] + v[63] + v[2] * (v[48] + v[51] + v[54]) - v[29] * v[69] - v[30] * v[72] - v[31] * v[75]
     r[57] = v[34] + v[58] + v[61] + v[64] + v[2] * (v[49] + v[52] + v[55]) - v[29] * v[70] - v[30] * v[73] - v[31] * v[76]
@@ -762,17 +782,17 @@ calibr_eq__ <- function(v, pc, pf)
     r[7] = -pf[27] + v[70]
     r[8] = -pf[28] + v[73]
     r[9] = -pf[29] + v[76]
-    r[10] = v[36] - pf[19] * (1 + pf[37])^-1
-    r[11] = v[37] - pf[20] * (1 + pf[38])^-1
-    r[12] = v[56] - pf[21] * pf[33] * (pf[21] + pf[22] + pf[23])^-1
-    r[13] = v[57] - pf[24] * pf[34] * (pf[24] + pf[25] + pf[26])^-1
-    r[14] = v[58] - pf[27] * pf[35] * (pf[27] + pf[28] + pf[29])^-1
-    r[15] = v[59] - pf[22] * pf[33] * (pf[21] + pf[22] + pf[23])^-1
-    r[16] = v[60] - pf[25] * pf[34] * (pf[24] + pf[25] + pf[26])^-1
-    r[17] = v[61] - pf[28] * pf[35] * (pf[27] + pf[28] + pf[29])^-1
-    r[18] = v[62] - pf[23] * pf[33] * (pf[21] + pf[22] + pf[23])^-1
-    r[19] = v[63] - pf[26] * pf[34] * (pf[24] + pf[25] + pf[26])^-1
-    r[20] = v[64] - pf[29] * pf[35] * (pf[27] + pf[28] + pf[29])^-1
+    r[10] = -pf[33] + v[56]
+    r[11] = -pf[34] + v[57]
+    r[12] = -pf[35] + v[58]
+    r[13] = -pf[36] + v[59]
+    r[14] = -pf[37] + v[60]
+    r[15] = -pf[38] + v[61]
+    r[16] = -pf[39] + v[62]
+    r[17] = -pf[40] + v[63]
+    r[18] = -pf[41] + v[64]
+    r[19] = v[36] - pf[19] * (1 + pf[43])^-1
+    r[20] = v[37] - pf[20] * (1 + pf[44])^-1
     r[21] = -1 + pc[4] + pc[13]
     r[22] = -1 + pc[5] + pc[14]
     r[23] = -1 + pc[6] + pc[15]
@@ -793,12 +813,12 @@ ss_calibr_eq_jacob__ <- function(v, pc, pf)
     r <- numeric(30)
     jac <- numeric(441)
     jac[1] = -1
-    jac[2] = -v[41] * (1 + pf[36])
-    jac[3] = -v[29] * (1 + pf[36])
-    jac[4] = -v[42] * (1 + pf[37])
-    jac[5] = -v[30] * (1 + pf[37])
-    jac[6] = -v[43] * (1 + pf[38])
-    jac[7] = -v[31] * (1 + pf[38])
+    jac[2] = -v[41] * (1 + pf[42])
+    jac[3] = -v[29] * (1 + pf[42])
+    jac[4] = -v[42] * (1 + pf[43])
+    jac[5] = -v[30] * (1 + pf[43])
+    jac[6] = -v[43] * (1 + pf[44])
+    jac[7] = -v[31] * (1 + pf[44])
     jac[8] = -1
     jac[9] = pf[10]
     jac[10] = pf[14]
@@ -831,27 +851,27 @@ ss_calibr_eq_jacob__ <- function(v, pc, pf)
     jac[37] = -pf[4] * (-1 + pf[4])^-1 * v[35]^(pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-1 + pf[4] * (-1 + pf[4])^-1)
     jac[38] = -pf[4] * (-1 + pf[4])^-1 * v[36]^(pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-1 + pf[4] * (-1 + pf[4])^-1)
     jac[39] = -pf[4] * (-1 + pf[4])^-1 * v[37]^(pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-1 + pf[4] * (-1 + pf[4])^-1)
-    jac[40] = (1 + pf[36]) * (v[35] + v[41] + v[44])
-    jac[41] = v[29] * (1 + pf[36])
+    jac[40] = (1 + pf[42]) * (v[35] + v[41] + v[44])
+    jac[41] = v[29] * (1 + pf[42])
     jac[42] = -1
-    jac[43] = v[29] * (1 + pf[36])
-    jac[44] = v[29] * (1 + pf[36])
+    jac[43] = v[29] * (1 + pf[42])
+    jac[44] = v[29] * (1 + pf[42])
     jac[45] = 1
-    jac[46] = -1 - pf[36]
-    jac[47] = (1 + pf[37]) * (v[36] + v[42] + v[45])
-    jac[48] = v[30] * (1 + pf[37])
+    jac[46] = -1 - pf[42]
+    jac[47] = (1 + pf[43]) * (v[36] + v[42] + v[45])
+    jac[48] = v[30] * (1 + pf[43])
     jac[49] = -1
-    jac[50] = v[30] * (1 + pf[37])
-    jac[51] = v[30] * (1 + pf[37])
+    jac[50] = v[30] * (1 + pf[43])
+    jac[51] = v[30] * (1 + pf[43])
     jac[52] = 1
-    jac[53] = -1 - pf[37]
-    jac[54] = (1 + pf[38]) * (v[37] + v[43] + v[46])
-    jac[55] = v[31] * (1 + pf[38])
+    jac[53] = -1 - pf[43]
+    jac[54] = (1 + pf[44]) * (v[37] + v[43] + v[46])
+    jac[55] = v[31] * (1 + pf[44])
     jac[56] = -1
-    jac[57] = v[31] * (1 + pf[38])
-    jac[58] = v[31] * (1 + pf[38])
+    jac[57] = v[31] * (1 + pf[44])
+    jac[58] = v[31] * (1 + pf[44])
     jac[59] = 1
-    jac[60] = -1 - pf[38]
+    jac[60] = -1 - pf[44]
     jac[61] = v[68] + v[69] + v[70]
     jac[62] = -1
     jac[63] = v[29]
@@ -921,24 +941,24 @@ ss_calibr_eq_jacob__ <- function(v, pc, pf)
     jac[127] = pc[30] * log(v[55]) * v[55]^pc[12] * v[64]^pc[21]
     jac[128] = pc[30] * log(v[64]) * v[55]^pc[12] * v[64]^pc[21]
     jac[129] = v[55]^pc[12] * v[64]^pc[21]
-    jac[130] = v[29] * (1 + pf[36])
-    jac[131] = v[1] * (1 + pf[36])
+    jac[130] = v[29] * (1 + pf[42])
+    jac[131] = v[1] * (1 + pf[42])
     jac[132] = pc[1] * (-1 + pf[4]^-1 * (-1 + pf[4])) * v[35]^(-2 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-1 + pf[4] * (-1 + pf[4])^-1) + pf[4]^-1 * pc[1]^2 * (-1 + pf[4]) * (-1 + pf[4] * (-1 + pf[4])^-1) * (v[35]^(-1 + pf[4]^-1 * (-1 + pf[4])))^2 * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
     jac[133] = pf[4]^-1 * pc[1] * pc[2] * (-1 + pf[4]) * (-1 + pf[4] * (-1 + pf[4])^-1) * v[35]^(-1 + pf[4]^-1 * (-1 + pf[4])) * v[36]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
     jac[134] = pf[4]^-1 * pc[1] * pc[3] * (-1 + pf[4]) * (-1 + pf[4] * (-1 + pf[4])^-1) * v[35]^(-1 + pf[4]^-1 * (-1 + pf[4])) * v[37]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
     jac[135] = v[35]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-1 + pf[4] * (-1 + pf[4])^-1) + pc[1] * (-1 + pf[4] * (-1 + pf[4])^-1) * v[35]^(-1 + 2 * pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
     jac[136] = pc[1] * (-1 + pf[4] * (-1 + pf[4])^-1) * v[35]^(-1 + pf[4]^-1 * (-1 + pf[4])) * v[36]^(pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
     jac[137] = pc[1] * (-1 + pf[4] * (-1 + pf[4])^-1) * v[35]^(-1 + pf[4]^-1 * (-1 + pf[4])) * v[37]^(pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
-    jac[138] = v[30] * (1 + pf[37])
-    jac[139] = v[1] * (1 + pf[37])
+    jac[138] = v[30] * (1 + pf[43])
+    jac[139] = v[1] * (1 + pf[43])
     jac[140] = pf[4]^-1 * pc[1] * pc[2] * (-1 + pf[4]) * (-1 + pf[4] * (-1 + pf[4])^-1) * v[35]^(-1 + pf[4]^-1 * (-1 + pf[4])) * v[36]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
     jac[141] = pc[2] * (-1 + pf[4]^-1 * (-1 + pf[4])) * v[36]^(-2 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-1 + pf[4] * (-1 + pf[4])^-1) + pf[4]^-1 * pc[2]^2 * (-1 + pf[4]) * (-1 + pf[4] * (-1 + pf[4])^-1) * (v[36]^(-1 + pf[4]^-1 * (-1 + pf[4])))^2 * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
     jac[142] = pf[4]^-1 * pc[2] * pc[3] * (-1 + pf[4]) * (-1 + pf[4] * (-1 + pf[4])^-1) * v[36]^(-1 + pf[4]^-1 * (-1 + pf[4])) * v[37]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
     jac[143] = pc[2] * (-1 + pf[4] * (-1 + pf[4])^-1) * v[35]^(pf[4]^-1 * (-1 + pf[4])) * v[36]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
     jac[144] = v[36]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-1 + pf[4] * (-1 + pf[4])^-1) + pc[2] * (-1 + pf[4] * (-1 + pf[4])^-1) * v[36]^(-1 + 2 * pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
     jac[145] = pc[2] * (-1 + pf[4] * (-1 + pf[4])^-1) * v[36]^(-1 + pf[4]^-1 * (-1 + pf[4])) * v[37]^(pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
-    jac[146] = v[31] * (1 + pf[38])
-    jac[147] = v[1] * (1 + pf[38])
+    jac[146] = v[31] * (1 + pf[44])
+    jac[147] = v[1] * (1 + pf[44])
     jac[148] = pf[4]^-1 * pc[1] * pc[3] * (-1 + pf[4]) * (-1 + pf[4] * (-1 + pf[4])^-1) * v[35]^(-1 + pf[4]^-1 * (-1 + pf[4])) * v[37]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
     jac[149] = pf[4]^-1 * pc[2] * pc[3] * (-1 + pf[4]) * (-1 + pf[4] * (-1 + pf[4])^-1) * v[36]^(-1 + pf[4]^-1 * (-1 + pf[4])) * v[37]^(-1 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
     jac[150] = pc[3] * (-1 + pf[4]^-1 * (-1 + pf[4])) * v[37]^(-2 + pf[4]^-1 * (-1 + pf[4])) * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-1 + pf[4] * (-1 + pf[4])^-1) + pf[4]^-1 * pc[3]^2 * (-1 + pf[4]) * (-1 + pf[4] * (-1 + pf[4])^-1) * (v[37]^(-1 + pf[4]^-1 * (-1 + pf[4])))^2 * (pc[1] * v[35]^(pf[4]^-1 * (-1 + pf[4])) + pc[2] * v[36]^(pf[4]^-1 * (-1 + pf[4])) + pc[3] * v[37]^(pf[4]^-1 * (-1 + pf[4])))^(-2 + pf[4] * (-1 + pf[4])^-1)
@@ -973,25 +993,25 @@ ss_calibr_eq_jacob__ <- function(v, pc, pf)
     jac[179] = -1
     jac[180] = 1
     jac[181] = -1
-    jac[182] = v[44] * (1 + pf[36])
-    jac[183] = v[45] * (1 + pf[37])
-    jac[184] = v[46] * (1 + pf[38])
-    jac[185] = v[29] * (1 + pf[36])
-    jac[186] = v[30] * (1 + pf[37])
-    jac[187] = v[31] * (1 + pf[38])
+    jac[182] = v[44] * (1 + pf[42])
+    jac[183] = v[45] * (1 + pf[43])
+    jac[184] = v[46] * (1 + pf[44])
+    jac[185] = v[29] * (1 + pf[42])
+    jac[186] = v[30] * (1 + pf[43])
+    jac[187] = v[31] * (1 + pf[44])
     jac[188] = -1
-    jac[189] = pf[36] * (v[35] + v[41] + v[44])
-    jac[190] = pf[37] * (v[36] + v[42] + v[45])
-    jac[191] = pf[38] * (v[37] + v[43] + v[46])
-    jac[192] = pf[36] * v[29]
-    jac[193] = pf[37] * v[30]
-    jac[194] = pf[38] * v[31]
-    jac[195] = pf[36] * v[29]
-    jac[196] = pf[37] * v[30]
-    jac[197] = pf[38] * v[31]
-    jac[198] = pf[36] * v[29]
-    jac[199] = pf[37] * v[30]
-    jac[200] = pf[38] * v[31]
+    jac[189] = pf[42] * (v[35] + v[41] + v[44])
+    jac[190] = pf[43] * (v[36] + v[42] + v[45])
+    jac[191] = pf[44] * (v[37] + v[43] + v[46])
+    jac[192] = pf[42] * v[29]
+    jac[193] = pf[43] * v[30]
+    jac[194] = pf[44] * v[31]
+    jac[195] = pf[42] * v[29]
+    jac[196] = pf[43] * v[30]
+    jac[197] = pf[44] * v[31]
+    jac[198] = pf[42] * v[29]
+    jac[199] = pf[43] * v[30]
+    jac[200] = pf[44] * v[31]
     jac[201] = pf[1] * v[13]
     jac[202] = -1
     jac[203] = pf[1] * v[2]
@@ -1014,22 +1034,22 @@ ss_calibr_eq_jacob__ <- function(v, pc, pf)
     jac[220] = 1
     jac[221] = -1
     jac[222] = 1
-    jac[223] = v[35] * (1 + pf[36])
-    jac[224] = v[36] * (1 + pf[37])
-    jac[225] = v[37] * (1 + pf[38])
-    jac[226] = v[29] * (1 + pf[36])
-    jac[227] = v[30] * (1 + pf[37])
-    jac[228] = v[31] * (1 + pf[38])
+    jac[223] = v[35] * (1 + pf[42])
+    jac[224] = v[36] * (1 + pf[43])
+    jac[225] = v[37] * (1 + pf[44])
+    jac[226] = v[29] * (1 + pf[42])
+    jac[227] = v[30] * (1 + pf[43])
+    jac[228] = v[31] * (1 + pf[44])
     jac[229] = -1
     jac[230] = 1
     jac[231] = 1
     jac[232] = 1
-    jac[233] = v[41] * (1 + pf[36])
-    jac[234] = v[42] * (1 + pf[37])
-    jac[235] = v[43] * (1 + pf[38])
-    jac[236] = v[29] * (1 + pf[36])
-    jac[237] = v[30] * (1 + pf[37])
-    jac[238] = v[31] * (1 + pf[38])
+    jac[233] = v[41] * (1 + pf[42])
+    jac[234] = v[42] * (1 + pf[43])
+    jac[235] = v[43] * (1 + pf[44])
+    jac[236] = v[29] * (1 + pf[42])
+    jac[237] = v[30] * (1 + pf[43])
+    jac[238] = v[31] * (1 + pf[44])
     jac[239] = v[47] + v[50] + v[53]
     jac[240] = -v[68]
     jac[241] = -v[71]
@@ -1318,8 +1338,8 @@ ss_calibr_eq_jacob__ <- function(v, pc, pf)
                                 30, 51, 60, 84, 93, 102, 30, 52, 61, 85,
                                 94, 103, 31, 53, 62, 86, 95, 104, 31, 54,
                                 63, 87, 96, 105, 31, 55, 64, 88, 97, 106,
-                                68, 71, 74, 69, 72, 75, 70, 73, 76, 36,
-                                37, 56, 57, 58, 59, 60, 61, 62, 63, 64,
+                                68, 71, 74, 69, 72, 75, 70, 73, 76, 56,
+                                57, 58, 59, 60, 61, 62, 63, 64, 36, 37,
                                 80, 89, 81, 90, 82, 91, 83, 92, 84, 93,
                                 85, 94, 86, 95, 87, 96, 88, 97, 77, 78,
                                 79),
