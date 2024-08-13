@@ -47,7 +47,7 @@ sam_prod_sp<-c('Prodmanu', 'Prodserv')
 model <- make_model("cge_calib_chile_2008_simpl.gcn")
 
 
-model <- set_free_par(model, c(omega=2,
+model <- set_free_par(model, c(omega=1.1,
                                k_total_data=flow1['Total', 'Capital'],
                                par_k_h=flow1['Hogares', 'Capital']/flow1['Total', 'Capital'],
                                par_k_f=flow1['Empresas', 'Capital']/flow1['Total', 'Capital'],
@@ -105,9 +105,9 @@ gp_prim=3
 gp_manu=2.02
 gp_serv=2
 
-bl_prim=0.41
+bl_prim=0.416
 bl_manu=0.49
-bl_serv=0.49
+bl_serv=0.491
 
 chico=0.000005
 
@@ -130,9 +130,9 @@ listcalib<-c(get_flow_values(rep(0.2, n), "alpha", sam_prod),
 )
 
 
-varlist=list(lambda__CONSUMER_1=0.5,
+varlist=list(lambda__CONSUMER_1=0.8,
              p_k=1,
-             U=1,
+             U=0.5,
 
              BTINC=flow1['Total', 'Hogares' ],
              CONT_SOC=flow1['Total', 'Cont_soc' ],
@@ -212,9 +212,10 @@ model <- initval_var(model, varlist)
 
 model <- steady_state(model, calibration=T, use_jac=F, last_solver_iter =F,
                       options_list=list(method="Newton",global="qline", 
-                                        max_iter=300,tol=1e-06, xscalm="auto", xtol=F)
+                                        max_iter=3000,tol=1e-06, xscalm="auto", xtol=1e-6)
 )
 ```
+
 
 
 
@@ -227,6 +228,14 @@ Norm(model@residual_vector)
 
 ```
 
+```{r}
+model@residual_vector[c(19)]
+```
+
+[1] -0.2422669 con omega=1.1 y alfa=0.2 y U=0.5 y lambda=0.8
+[1] -0.3235121 con omega=1.1 y alfa=0.2 y U=1
+[1] -2.067182con omega=1.5
+[1] -4.390062 con omega=2
 
 
 ```{r}
@@ -241,7 +250,7 @@ model@residual_vector[c(29, 33, 37)] #Estos son los residuos de las funciones de
 
 
 ```{r}
-list_eq(model, eq_idx = c(68, 19, 72, 65, 62))
+list_eq(model, eq_idx = c(68, 72, 65, 62, 39))
 ```
 ```{r}
 var_info(model,variables=c('PREST_SOC', 'PREST_SOC_F', 'PREST_SOC_G')) 
