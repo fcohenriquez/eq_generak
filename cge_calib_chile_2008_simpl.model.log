@@ -1,4 +1,4 @@
-Generated on 2024-08-14 03:33:28 by gEcon ver. 1.2.2 (2023-07-10)
+Generated on 2024-08-16 02:11:48 by gEcon ver. 1.2.2 (2023-07-10)
 http://gecon.r-forge.r-project.org/
 
 Model name: cge_calib_chile_2008_simpl
@@ -37,7 +37,7 @@ Block: <s::SEC> SECTOR
  Controls:
     <p::PRODS> Y<p,s>, <p::PRODS> K<p,s>, <p::PRODS> L<p,s>
  Objective:
-    pi<s> = -L<s> - p_k * K<s> + SUM<p::PRODS> p<p> * Y<p,s>
+    pi<s> = -p_k * (SUM<p::PRODS> K<p,s>) - SUM<p::PRODS> L<p,s> + SUM<p::PRODS> p<p> * Y<p,s>
  Constraints:
     <p::PRODS> -Y<p,s> + gamma<p,s> * K<p,s>^beta_k<p,s> * L<p,s>^beta_l<p,s> = 0    (<p::PRODS> lambda__SECTOR_1<s,p>)
  Identities:
@@ -45,8 +45,8 @@ Block: <s::SEC> SECTOR
     -L<s> + SUM<p::PRODS> L<p,s> = 0
  First order conditions:
     <p::PRODS> -lambda__SECTOR_1<s,p> + p<p> = 0    (<p::PRODS> Y<p,s>)
-    <p::PRODS> beta_k<p,s> * gamma<p,s> * lambda__SECTOR_1<s,p> * K<p,s>^(-1 + beta_k<p,s>) * L<p,s>^beta_l<p,s> = 0    (<p::PRODS> K<p,s>)
-    <p::PRODS> beta_l<p,s> * gamma<p,s> * lambda__SECTOR_1<s,p> * K<p,s>^beta_k<p,s> * L<p,s>^(-1 + beta_l<p,s>) = 0    (<p::PRODS> L<p,s>)
+    <p::PRODS> -p_k + beta_k<p,s> * gamma<p,s> * lambda__SECTOR_1<s,p> * K<p,s>^(-1 + beta_k<p,s>) * L<p,s>^beta_l<p,s> = 0    (<p::PRODS> K<p,s>)
+    <p::PRODS> -1 + beta_l<p,s> * gamma<p,s> * lambda__SECTOR_1<s,p> * K<p,s>^beta_k<p,s> * L<p,s>^(-1 + beta_l<p,s>) = 0    (<p::PRODS> L<p,s>)
 
 Block: <p::PRODS> PRODUCTS
  Identities:
@@ -99,82 +99,82 @@ Calibrated parameters (30):
     alpha<'Prodprim'>, alpha<'Prodmanu'>, alpha<'Prodserv'>, beta_k<'Prodprim','Actprim'>, beta_k<'Prodprim','Actmanu'>, beta_k<'Prodprim','Actserv'>, beta_k<'Prodmanu','Actprim'>, beta_k<'Prodmanu','Actmanu'>, beta_k<'Prodmanu','Actserv'>, beta_k<'Prodserv','Actprim'>, beta_k<'Prodserv','Actmanu'>, beta_k<'Prodserv','Actserv'>, beta_l<'Prodprim','Actprim'>, beta_l<'Prodprim','Actmanu'>, beta_l<'Prodprim','Actserv'>, beta_l<'Prodmanu','Actprim'>, beta_l<'Prodmanu','Actmanu'>, beta_l<'Prodmanu','Actserv'>, beta_l<'Prodserv','Actprim'>, beta_l<'Prodserv','Actmanu'>, beta_l<'Prodserv','Actserv'>, gamma<'Prodprim','Actprim'>, gamma<'Prodprim','Actmanu'>, gamma<'Prodprim','Actserv'>, gamma<'Prodmanu','Actprim'>, gamma<'Prodmanu','Actmanu'>, gamma<'Prodmanu','Actserv'>, gamma<'Prodserv','Actprim'>, gamma<'Prodserv','Actmanu'>, gamma<'Prodserv','Actserv'>
 
 Equations (76):
- (1)  l_total_data - L_h = 0
- (2)  data_gg_p<'Prodprim'> - p<'Prodprim'> * GG<'Prodprim'> * (1 + vat<'Prodprim'>) = 0
- (3)  data_gg_p<'Prodmanu'> - p<'Prodmanu'> * GG<'Prodmanu'> * (1 + vat<'Prodmanu'>) = 0
- (4)  data_gg_p<'Prodserv'> - p<'Prodserv'> * GG<'Prodserv'> * (1 + vat<'Prodserv'>) = 0
- (5)  -CONT_SOC + por_cont * INC = 0
- (6)  -CONT_SOC_F + por_cont_soc_f * CONT_SOC = 0
- (7)  -CONT_SOC_G + por_cont_soc_g * CONT_SOC = 0
- (8)  GTO_G - ING_GOB = 0
- (9)  -K_h + k_total_data * par_k_h = 0
- (10)  -K_f + k_total_data * par_k_f = 0
- (11)  -K_g + k_total_data * par_k_g = 0
- (12)  -PREST_SOC_F + por_pres_soc_f * ING_F = 0
- (13)  -PREST_SOC_G + por_pres_soc_g * ING_GOB = 0
- (14)  -SAV + por_sav * INC = 0
- (15)  -SAV_F + por_sav_f * ING_F = 0
- (16)  -SAV_G + por_sav_g * ING_GOB = 0
- (17)  -TR_EMP + por_tremp * ING_F = 0
- (18)  -TR_GOV + por_trgov * ING_GOB = 0
- (19)  U - (alpha<'Prodprim'> * D<'Prodprim'>^(omega^-1 * (-1 + omega)) + alpha<'Prodmanu'> * D<'Prodmanu'>^(omega^-1 * (-1 + omega)) + alpha<'Prodserv'> * D<'Prodserv'>^(omega^-1 * (-1 + omega)))^(omega * (-1 + omega)^-1) = 0
- (20)  -DA<'Prodprim'> + p<'Prodprim'> * (1 + vat<'Prodprim'>) * (D<'Prodprim'> + GG<'Prodprim'> + I<'Prodprim'>) = 0
- (21)  DA<'Prodprim'> - OA<'Prodprim'> * (1 + vat<'Prodprim'>) = 0
- (22)  -DA<'Prodmanu'> + p<'Prodmanu'> * (1 + vat<'Prodmanu'>) * (D<'Prodmanu'> + GG<'Prodmanu'> + I<'Prodmanu'>) = 0
- (23)  DA<'Prodmanu'> - OA<'Prodmanu'> * (1 + vat<'Prodmanu'>) = 0
- (24)  -DA<'Prodserv'> + p<'Prodserv'> * (1 + vat<'Prodserv'>) * (D<'Prodserv'> + GG<'Prodserv'> + I<'Prodserv'>) = 0
- (25)  DA<'Prodserv'> - OA<'Prodserv'> * (1 + vat<'Prodserv'>) = 0
- (26)  -OA<'Prodprim'> + p<'Prodprim'> * (Y<'Prodprim','Actprim'> + Y<'Prodprim','Actmanu'> + Y<'Prodprim','Actserv'>) = 0
- (27)  -OA<'Prodmanu'> + p<'Prodmanu'> * (Y<'Prodmanu','Actprim'> + Y<'Prodmanu','Actmanu'> + Y<'Prodmanu','Actserv'>) = 0
- (28)  -OA<'Prodserv'> + p<'Prodserv'> * (Y<'Prodserv','Actprim'> + Y<'Prodserv','Actmanu'> + Y<'Prodserv','Actserv'>) = 0
- (29)  -Y<'Prodprim','Actprim'> + gamma<'Prodprim','Actprim'> * K<'Prodprim','Actprim'>^beta_k<'Prodprim','Actprim'> * L<'Prodprim','Actprim'>^beta_l<'Prodprim','Actprim'> = 0
- (30)  -Y<'Prodprim','Actmanu'> + gamma<'Prodprim','Actmanu'> * K<'Prodprim','Actmanu'>^beta_k<'Prodprim','Actmanu'> * L<'Prodprim','Actmanu'>^beta_l<'Prodprim','Actmanu'> = 0
- (31)  -Y<'Prodprim','Actserv'> + gamma<'Prodprim','Actserv'> * K<'Prodprim','Actserv'>^beta_k<'Prodprim','Actserv'> * L<'Prodprim','Actserv'>^beta_l<'Prodprim','Actserv'> = 0
- (32)  -Y<'Prodmanu','Actprim'> + gamma<'Prodmanu','Actprim'> * K<'Prodmanu','Actprim'>^beta_k<'Prodmanu','Actprim'> * L<'Prodmanu','Actprim'>^beta_l<'Prodmanu','Actprim'> = 0
- (33)  -Y<'Prodmanu','Actmanu'> + gamma<'Prodmanu','Actmanu'> * K<'Prodmanu','Actmanu'>^beta_k<'Prodmanu','Actmanu'> * L<'Prodmanu','Actmanu'>^beta_l<'Prodmanu','Actmanu'> = 0
- (34)  -Y<'Prodmanu','Actserv'> + gamma<'Prodmanu','Actserv'> * K<'Prodmanu','Actserv'>^beta_k<'Prodmanu','Actserv'> * L<'Prodmanu','Actserv'>^beta_l<'Prodmanu','Actserv'> = 0
- (35)  -Y<'Prodserv','Actprim'> + gamma<'Prodserv','Actprim'> * K<'Prodserv','Actprim'>^beta_k<'Prodserv','Actprim'> * L<'Prodserv','Actprim'>^beta_l<'Prodserv','Actprim'> = 0
- (36)  -Y<'Prodserv','Actmanu'> + gamma<'Prodserv','Actmanu'> * K<'Prodserv','Actmanu'>^beta_k<'Prodserv','Actmanu'> * L<'Prodserv','Actmanu'>^beta_l<'Prodserv','Actmanu'> = 0
- (37)  -Y<'Prodserv','Actserv'> + gamma<'Prodserv','Actserv'> * K<'Prodserv','Actserv'>^beta_k<'Prodserv','Actserv'> * L<'Prodserv','Actserv'>^beta_l<'Prodserv','Actserv'> = 0
- (38)  alpha<'Prodprim'> * D<'Prodprim'>^(-1 + omega^-1 * (-1 + omega)) * (alpha<'Prodprim'> * D<'Prodprim'>^(omega^-1 * (-1 + omega)) + alpha<'Prodmanu'> * D<'Prodmanu'>^(omega^-1 * (-1 + omega)) + alpha<'Prodserv'> * D<'Prodserv'>^(omega^-1 * (-1 + omega)))^(-1 + omega * (-1 + omega)^-1) + lambda__CONSUMER_1 * p<'Prodprim'> * (1 + vat<'Prodprim'>) = 0
- (39)  alpha<'Prodmanu'> * D<'Prodmanu'>^(-1 + omega^-1 * (-1 + omega)) * (alpha<'Prodprim'> * D<'Prodprim'>^(omega^-1 * (-1 + omega)) + alpha<'Prodmanu'> * D<'Prodmanu'>^(omega^-1 * (-1 + omega)) + alpha<'Prodserv'> * D<'Prodserv'>^(omega^-1 * (-1 + omega)))^(-1 + omega * (-1 + omega)^-1) + lambda__CONSUMER_1 * p<'Prodmanu'> * (1 + vat<'Prodmanu'>) = 0
- (40)  alpha<'Prodserv'> * D<'Prodserv'>^(-1 + omega^-1 * (-1 + omega)) * (alpha<'Prodprim'> * D<'Prodprim'>^(omega^-1 * (-1 + omega)) + alpha<'Prodmanu'> * D<'Prodmanu'>^(omega^-1 * (-1 + omega)) + alpha<'Prodserv'> * D<'Prodserv'>^(omega^-1 * (-1 + omega)))^(-1 + omega * (-1 + omega)^-1) + lambda__CONSUMER_1 * p<'Prodserv'> * (1 + vat<'Prodserv'>) = 0
- (41)  CONT_SOC_F - ING_F + p_k * K_f = 0
- (42)  -DIR_T + pit * PIT_base + fit * p_k * K_f = 0
- (43)  DIR_T - TOTAL_TAX + VAT = 0
- (44)  L_h - PIT_base + p_k * K_h = 0
- (45)  -PREST_SOC + PREST_SOC_F + PREST_SOC_G = 0
- (46)  CONT_SOC_G - ING_GOB + TOTAL_TAX + p_k * K_g = 0
- (47)  SAV + SAV_F - SAV_TOT + SAV_G = 0
- (48)  -SAV_TOT + p<'Prodprim'> * I<'Prodprim'> * (1 + vat<'Prodprim'>) + p<'Prodmanu'> * I<'Prodmanu'> * (1 + vat<'Prodmanu'>) + p<'Prodserv'> * I<'Prodserv'> * (1 + vat<'Prodserv'>) = 0
- (49)  -VAT + vat<'Prodprim'> * p<'Prodprim'> * (D<'Prodprim'> + GG<'Prodprim'> + I<'Prodprim'>) + vat<'Prodmanu'> * p<'Prodmanu'> * (D<'Prodmanu'> + GG<'Prodmanu'> + I<'Prodmanu'>) + vat<'Prodserv'> * p<'Prodserv'> * (D<'Prodserv'> + GG<'Prodserv'> + I<'Prodserv'>) = 0
- (50)  -ING_F + PREST_SOC_F + SAV_F + TR_EMP + fit * p_k * K_f = 0
- (51)  -BTINC + L_h + PREST_SOC + TR_EMP + TR_GOV + p_k * K_h = 0
- (52)  BTINC - INC + pi<'Actprim'> + pi<'Actmanu'> + pi<'Actserv'> - pit * PIT_base = 0
- (53)  CONT_SOC - INC + SAV + p<'Prodprim'> * D<'Prodprim'> * (1 + vat<'Prodprim'>) + p<'Prodmanu'> * D<'Prodmanu'> * (1 + vat<'Prodmanu'>) + p<'Prodserv'> * D<'Prodserv'> * (1 + vat<'Prodserv'>) = 0
- (54)  -GTO_G + PREST_SOC_G + SAV_G + TR_GOV + p<'Prodprim'> * GG<'Prodprim'> * (1 + vat<'Prodprim'>) + p<'Prodmanu'> * GG<'Prodmanu'> * (1 + vat<'Prodmanu'>) + p<'Prodserv'> * GG<'Prodserv'> * (1 + vat<'Prodserv'>) = 0
- (55)  pi<'Actprim'> + L<'Prodprim','Actprim'> + L<'Prodmanu','Actprim'> + L<'Prodserv','Actprim'> + p_k * (K<'Prodprim','Actprim'> + K<'Prodmanu','Actprim'> + K<'Prodserv','Actprim'>) - p<'Prodprim'> * Y<'Prodprim','Actprim'> - p<'Prodmanu'> * Y<'Prodmanu','Actprim'> - p<'Prodserv'> * Y<'Prodserv','Actprim'> = 0
- (56)  pi<'Actmanu'> + L<'Prodprim','Actmanu'> + L<'Prodmanu','Actmanu'> + L<'Prodserv','Actmanu'> + p_k * (K<'Prodprim','Actmanu'> + K<'Prodmanu','Actmanu'> + K<'Prodserv','Actmanu'>) - p<'Prodprim'> * Y<'Prodprim','Actmanu'> - p<'Prodmanu'> * Y<'Prodmanu','Actmanu'> - p<'Prodserv'> * Y<'Prodserv','Actmanu'> = 0
- (57)  pi<'Actserv'> + L<'Prodprim','Actserv'> + L<'Prodmanu','Actserv'> + L<'Prodserv','Actserv'> + p_k * (K<'Prodprim','Actserv'> + K<'Prodmanu','Actserv'> + K<'Prodserv','Actserv'>) - p<'Prodprim'> * Y<'Prodprim','Actserv'> - p<'Prodmanu'> * Y<'Prodmanu','Actserv'> - p<'Prodserv'> * Y<'Prodserv','Actserv'> = 0
- (58)  K_h + K_f + K_g - K<'Prodprim','Actprim'> - K<'Prodprim','Actmanu'> - K<'Prodprim','Actserv'> - K<'Prodmanu','Actprim'> - K<'Prodmanu','Actmanu'> - K<'Prodmanu','Actserv'> - K<'Prodserv','Actprim'> - K<'Prodserv','Actmanu'> - K<'Prodserv','Actserv'> = 0
- (59)  beta_k<'Prodprim','Actprim'> * gamma<'Prodprim','Actprim'> * p<'Prodprim'> * K<'Prodprim','Actprim'>^(-1 + beta_k<'Prodprim','Actprim'>) * L<'Prodprim','Actprim'>^beta_l<'Prodprim','Actprim'> = 0
- (60)  beta_k<'Prodprim','Actmanu'> * gamma<'Prodprim','Actmanu'> * p<'Prodprim'> * K<'Prodprim','Actmanu'>^(-1 + beta_k<'Prodprim','Actmanu'>) * L<'Prodprim','Actmanu'>^beta_l<'Prodprim','Actmanu'> = 0
- (61)  beta_k<'Prodprim','Actserv'> * gamma<'Prodprim','Actserv'> * p<'Prodprim'> * K<'Prodprim','Actserv'>^(-1 + beta_k<'Prodprim','Actserv'>) * L<'Prodprim','Actserv'>^beta_l<'Prodprim','Actserv'> = 0
- (62)  beta_k<'Prodmanu','Actprim'> * gamma<'Prodmanu','Actprim'> * p<'Prodmanu'> * K<'Prodmanu','Actprim'>^(-1 + beta_k<'Prodmanu','Actprim'>) * L<'Prodmanu','Actprim'>^beta_l<'Prodmanu','Actprim'> = 0
- (63)  beta_k<'Prodmanu','Actmanu'> * gamma<'Prodmanu','Actmanu'> * p<'Prodmanu'> * K<'Prodmanu','Actmanu'>^(-1 + beta_k<'Prodmanu','Actmanu'>) * L<'Prodmanu','Actmanu'>^beta_l<'Prodmanu','Actmanu'> = 0
- (64)  beta_k<'Prodmanu','Actserv'> * gamma<'Prodmanu','Actserv'> * p<'Prodmanu'> * K<'Prodmanu','Actserv'>^(-1 + beta_k<'Prodmanu','Actserv'>) * L<'Prodmanu','Actserv'>^beta_l<'Prodmanu','Actserv'> = 0
- (65)  beta_k<'Prodserv','Actprim'> * gamma<'Prodserv','Actprim'> * p<'Prodserv'> * K<'Prodserv','Actprim'>^(-1 + beta_k<'Prodserv','Actprim'>) * L<'Prodserv','Actprim'>^beta_l<'Prodserv','Actprim'> = 0
- (66)  beta_k<'Prodserv','Actmanu'> * gamma<'Prodserv','Actmanu'> * p<'Prodserv'> * K<'Prodserv','Actmanu'>^(-1 + beta_k<'Prodserv','Actmanu'>) * L<'Prodserv','Actmanu'>^beta_l<'Prodserv','Actmanu'> = 0
- (67)  beta_k<'Prodserv','Actserv'> * gamma<'Prodserv','Actserv'> * p<'Prodserv'> * K<'Prodserv','Actserv'>^(-1 + beta_k<'Prodserv','Actserv'>) * L<'Prodserv','Actserv'>^beta_l<'Prodserv','Actserv'> = 0
- (68)  beta_l<'Prodprim','Actprim'> * gamma<'Prodprim','Actprim'> * p<'Prodprim'> * K<'Prodprim','Actprim'>^beta_k<'Prodprim','Actprim'> * L<'Prodprim','Actprim'>^(-1 + beta_l<'Prodprim','Actprim'>) = 0
- (69)  beta_l<'Prodprim','Actmanu'> * gamma<'Prodprim','Actmanu'> * p<'Prodprim'> * K<'Prodprim','Actmanu'>^beta_k<'Prodprim','Actmanu'> * L<'Prodprim','Actmanu'>^(-1 + beta_l<'Prodprim','Actmanu'>) = 0
- (70)  beta_l<'Prodprim','Actserv'> * gamma<'Prodprim','Actserv'> * p<'Prodprim'> * K<'Prodprim','Actserv'>^beta_k<'Prodprim','Actserv'> * L<'Prodprim','Actserv'>^(-1 + beta_l<'Prodprim','Actserv'>) = 0
- (71)  beta_l<'Prodmanu','Actprim'> * gamma<'Prodmanu','Actprim'> * p<'Prodmanu'> * K<'Prodmanu','Actprim'>^beta_k<'Prodmanu','Actprim'> * L<'Prodmanu','Actprim'>^(-1 + beta_l<'Prodmanu','Actprim'>) = 0
- (72)  beta_l<'Prodmanu','Actmanu'> * gamma<'Prodmanu','Actmanu'> * p<'Prodmanu'> * K<'Prodmanu','Actmanu'>^beta_k<'Prodmanu','Actmanu'> * L<'Prodmanu','Actmanu'>^(-1 + beta_l<'Prodmanu','Actmanu'>) = 0
- (73)  beta_l<'Prodmanu','Actserv'> * gamma<'Prodmanu','Actserv'> * p<'Prodmanu'> * K<'Prodmanu','Actserv'>^beta_k<'Prodmanu','Actserv'> * L<'Prodmanu','Actserv'>^(-1 + beta_l<'Prodmanu','Actserv'>) = 0
- (74)  beta_l<'Prodserv','Actprim'> * gamma<'Prodserv','Actprim'> * p<'Prodserv'> * K<'Prodserv','Actprim'>^beta_k<'Prodserv','Actprim'> * L<'Prodserv','Actprim'>^(-1 + beta_l<'Prodserv','Actprim'>) = 0
- (75)  beta_l<'Prodserv','Actmanu'> * gamma<'Prodserv','Actmanu'> * p<'Prodserv'> * K<'Prodserv','Actmanu'>^beta_k<'Prodserv','Actmanu'> * L<'Prodserv','Actmanu'>^(-1 + beta_l<'Prodserv','Actmanu'>) = 0
- (76)  beta_l<'Prodserv','Actserv'> * gamma<'Prodserv','Actserv'> * p<'Prodserv'> * K<'Prodserv','Actserv'>^beta_k<'Prodserv','Actserv'> * L<'Prodserv','Actserv'>^(-1 + beta_l<'Prodserv','Actserv'>) = 0
+ (1)  -1 + beta_l<'Prodprim','Actprim'> * gamma<'Prodprim','Actprim'> * p<'Prodprim'> * K<'Prodprim','Actprim'>^beta_k<'Prodprim','Actprim'> * L<'Prodprim','Actprim'>^(-1 + beta_l<'Prodprim','Actprim'>) = 0
+ (2)  -1 + beta_l<'Prodprim','Actmanu'> * gamma<'Prodprim','Actmanu'> * p<'Prodprim'> * K<'Prodprim','Actmanu'>^beta_k<'Prodprim','Actmanu'> * L<'Prodprim','Actmanu'>^(-1 + beta_l<'Prodprim','Actmanu'>) = 0
+ (3)  -1 + beta_l<'Prodprim','Actserv'> * gamma<'Prodprim','Actserv'> * p<'Prodprim'> * K<'Prodprim','Actserv'>^beta_k<'Prodprim','Actserv'> * L<'Prodprim','Actserv'>^(-1 + beta_l<'Prodprim','Actserv'>) = 0
+ (4)  -1 + beta_l<'Prodmanu','Actprim'> * gamma<'Prodmanu','Actprim'> * p<'Prodmanu'> * K<'Prodmanu','Actprim'>^beta_k<'Prodmanu','Actprim'> * L<'Prodmanu','Actprim'>^(-1 + beta_l<'Prodmanu','Actprim'>) = 0
+ (5)  -1 + beta_l<'Prodmanu','Actmanu'> * gamma<'Prodmanu','Actmanu'> * p<'Prodmanu'> * K<'Prodmanu','Actmanu'>^beta_k<'Prodmanu','Actmanu'> * L<'Prodmanu','Actmanu'>^(-1 + beta_l<'Prodmanu','Actmanu'>) = 0
+ (6)  -1 + beta_l<'Prodmanu','Actserv'> * gamma<'Prodmanu','Actserv'> * p<'Prodmanu'> * K<'Prodmanu','Actserv'>^beta_k<'Prodmanu','Actserv'> * L<'Prodmanu','Actserv'>^(-1 + beta_l<'Prodmanu','Actserv'>) = 0
+ (7)  -1 + beta_l<'Prodserv','Actprim'> * gamma<'Prodserv','Actprim'> * p<'Prodserv'> * K<'Prodserv','Actprim'>^beta_k<'Prodserv','Actprim'> * L<'Prodserv','Actprim'>^(-1 + beta_l<'Prodserv','Actprim'>) = 0
+ (8)  -1 + beta_l<'Prodserv','Actmanu'> * gamma<'Prodserv','Actmanu'> * p<'Prodserv'> * K<'Prodserv','Actmanu'>^beta_k<'Prodserv','Actmanu'> * L<'Prodserv','Actmanu'>^(-1 + beta_l<'Prodserv','Actmanu'>) = 0
+ (9)  -1 + beta_l<'Prodserv','Actserv'> * gamma<'Prodserv','Actserv'> * p<'Prodserv'> * K<'Prodserv','Actserv'>^beta_k<'Prodserv','Actserv'> * L<'Prodserv','Actserv'>^(-1 + beta_l<'Prodserv','Actserv'>) = 0
+ (10)  l_total_data - L_h = 0
+ (11)  data_gg_p<'Prodprim'> - p<'Prodprim'> * GG<'Prodprim'> * (1 + vat<'Prodprim'>) = 0
+ (12)  data_gg_p<'Prodmanu'> - p<'Prodmanu'> * GG<'Prodmanu'> * (1 + vat<'Prodmanu'>) = 0
+ (13)  data_gg_p<'Prodserv'> - p<'Prodserv'> * GG<'Prodserv'> * (1 + vat<'Prodserv'>) = 0
+ (14)  -p_k + beta_k<'Prodprim','Actprim'> * gamma<'Prodprim','Actprim'> * p<'Prodprim'> * K<'Prodprim','Actprim'>^(-1 + beta_k<'Prodprim','Actprim'>) * L<'Prodprim','Actprim'>^beta_l<'Prodprim','Actprim'> = 0
+ (15)  -p_k + beta_k<'Prodprim','Actmanu'> * gamma<'Prodprim','Actmanu'> * p<'Prodprim'> * K<'Prodprim','Actmanu'>^(-1 + beta_k<'Prodprim','Actmanu'>) * L<'Prodprim','Actmanu'>^beta_l<'Prodprim','Actmanu'> = 0
+ (16)  -p_k + beta_k<'Prodprim','Actserv'> * gamma<'Prodprim','Actserv'> * p<'Prodprim'> * K<'Prodprim','Actserv'>^(-1 + beta_k<'Prodprim','Actserv'>) * L<'Prodprim','Actserv'>^beta_l<'Prodprim','Actserv'> = 0
+ (17)  -p_k + beta_k<'Prodmanu','Actprim'> * gamma<'Prodmanu','Actprim'> * p<'Prodmanu'> * K<'Prodmanu','Actprim'>^(-1 + beta_k<'Prodmanu','Actprim'>) * L<'Prodmanu','Actprim'>^beta_l<'Prodmanu','Actprim'> = 0
+ (18)  -p_k + beta_k<'Prodmanu','Actmanu'> * gamma<'Prodmanu','Actmanu'> * p<'Prodmanu'> * K<'Prodmanu','Actmanu'>^(-1 + beta_k<'Prodmanu','Actmanu'>) * L<'Prodmanu','Actmanu'>^beta_l<'Prodmanu','Actmanu'> = 0
+ (19)  -p_k + beta_k<'Prodmanu','Actserv'> * gamma<'Prodmanu','Actserv'> * p<'Prodmanu'> * K<'Prodmanu','Actserv'>^(-1 + beta_k<'Prodmanu','Actserv'>) * L<'Prodmanu','Actserv'>^beta_l<'Prodmanu','Actserv'> = 0
+ (20)  -p_k + beta_k<'Prodserv','Actprim'> * gamma<'Prodserv','Actprim'> * p<'Prodserv'> * K<'Prodserv','Actprim'>^(-1 + beta_k<'Prodserv','Actprim'>) * L<'Prodserv','Actprim'>^beta_l<'Prodserv','Actprim'> = 0
+ (21)  -p_k + beta_k<'Prodserv','Actmanu'> * gamma<'Prodserv','Actmanu'> * p<'Prodserv'> * K<'Prodserv','Actmanu'>^(-1 + beta_k<'Prodserv','Actmanu'>) * L<'Prodserv','Actmanu'>^beta_l<'Prodserv','Actmanu'> = 0
+ (22)  -p_k + beta_k<'Prodserv','Actserv'> * gamma<'Prodserv','Actserv'> * p<'Prodserv'> * K<'Prodserv','Actserv'>^(-1 + beta_k<'Prodserv','Actserv'>) * L<'Prodserv','Actserv'>^beta_l<'Prodserv','Actserv'> = 0
+ (23)  -CONT_SOC + por_cont * INC = 0
+ (24)  -CONT_SOC_F + por_cont_soc_f * CONT_SOC = 0
+ (25)  -CONT_SOC_G + por_cont_soc_g * CONT_SOC = 0
+ (26)  GTO_G - ING_GOB = 0
+ (27)  -K_h + k_total_data * par_k_h = 0
+ (28)  -K_f + k_total_data * par_k_f = 0
+ (29)  -K_g + k_total_data * par_k_g = 0
+ (30)  -PREST_SOC_F + por_pres_soc_f * ING_F = 0
+ (31)  -PREST_SOC_G + por_pres_soc_g * ING_GOB = 0
+ (32)  -SAV + por_sav * INC = 0
+ (33)  -SAV_F + por_sav_f * ING_F = 0
+ (34)  -SAV_G + por_sav_g * ING_GOB = 0
+ (35)  -TR_EMP + por_tremp * ING_F = 0
+ (36)  -TR_GOV + por_trgov * ING_GOB = 0
+ (37)  U - (alpha<'Prodprim'> * D<'Prodprim'>^(omega^-1 * (-1 + omega)) + alpha<'Prodmanu'> * D<'Prodmanu'>^(omega^-1 * (-1 + omega)) + alpha<'Prodserv'> * D<'Prodserv'>^(omega^-1 * (-1 + omega)))^(omega * (-1 + omega)^-1) = 0
+ (38)  -DA<'Prodprim'> + p<'Prodprim'> * (1 + vat<'Prodprim'>) * (D<'Prodprim'> + GG<'Prodprim'> + I<'Prodprim'>) = 0
+ (39)  DA<'Prodprim'> - OA<'Prodprim'> * (1 + vat<'Prodprim'>) = 0
+ (40)  -DA<'Prodmanu'> + p<'Prodmanu'> * (1 + vat<'Prodmanu'>) * (D<'Prodmanu'> + GG<'Prodmanu'> + I<'Prodmanu'>) = 0
+ (41)  DA<'Prodmanu'> - OA<'Prodmanu'> * (1 + vat<'Prodmanu'>) = 0
+ (42)  -DA<'Prodserv'> + p<'Prodserv'> * (1 + vat<'Prodserv'>) * (D<'Prodserv'> + GG<'Prodserv'> + I<'Prodserv'>) = 0
+ (43)  DA<'Prodserv'> - OA<'Prodserv'> * (1 + vat<'Prodserv'>) = 0
+ (44)  -OA<'Prodprim'> + p<'Prodprim'> * (Y<'Prodprim','Actprim'> + Y<'Prodprim','Actmanu'> + Y<'Prodprim','Actserv'>) = 0
+ (45)  -OA<'Prodmanu'> + p<'Prodmanu'> * (Y<'Prodmanu','Actprim'> + Y<'Prodmanu','Actmanu'> + Y<'Prodmanu','Actserv'>) = 0
+ (46)  -OA<'Prodserv'> + p<'Prodserv'> * (Y<'Prodserv','Actprim'> + Y<'Prodserv','Actmanu'> + Y<'Prodserv','Actserv'>) = 0
+ (47)  -Y<'Prodprim','Actprim'> + gamma<'Prodprim','Actprim'> * K<'Prodprim','Actprim'>^beta_k<'Prodprim','Actprim'> * L<'Prodprim','Actprim'>^beta_l<'Prodprim','Actprim'> = 0
+ (48)  -Y<'Prodprim','Actmanu'> + gamma<'Prodprim','Actmanu'> * K<'Prodprim','Actmanu'>^beta_k<'Prodprim','Actmanu'> * L<'Prodprim','Actmanu'>^beta_l<'Prodprim','Actmanu'> = 0
+ (49)  -Y<'Prodprim','Actserv'> + gamma<'Prodprim','Actserv'> * K<'Prodprim','Actserv'>^beta_k<'Prodprim','Actserv'> * L<'Prodprim','Actserv'>^beta_l<'Prodprim','Actserv'> = 0
+ (50)  -Y<'Prodmanu','Actprim'> + gamma<'Prodmanu','Actprim'> * K<'Prodmanu','Actprim'>^beta_k<'Prodmanu','Actprim'> * L<'Prodmanu','Actprim'>^beta_l<'Prodmanu','Actprim'> = 0
+ (51)  -Y<'Prodmanu','Actmanu'> + gamma<'Prodmanu','Actmanu'> * K<'Prodmanu','Actmanu'>^beta_k<'Prodmanu','Actmanu'> * L<'Prodmanu','Actmanu'>^beta_l<'Prodmanu','Actmanu'> = 0
+ (52)  -Y<'Prodmanu','Actserv'> + gamma<'Prodmanu','Actserv'> * K<'Prodmanu','Actserv'>^beta_k<'Prodmanu','Actserv'> * L<'Prodmanu','Actserv'>^beta_l<'Prodmanu','Actserv'> = 0
+ (53)  -Y<'Prodserv','Actprim'> + gamma<'Prodserv','Actprim'> * K<'Prodserv','Actprim'>^beta_k<'Prodserv','Actprim'> * L<'Prodserv','Actprim'>^beta_l<'Prodserv','Actprim'> = 0
+ (54)  -Y<'Prodserv','Actmanu'> + gamma<'Prodserv','Actmanu'> * K<'Prodserv','Actmanu'>^beta_k<'Prodserv','Actmanu'> * L<'Prodserv','Actmanu'>^beta_l<'Prodserv','Actmanu'> = 0
+ (55)  -Y<'Prodserv','Actserv'> + gamma<'Prodserv','Actserv'> * K<'Prodserv','Actserv'>^beta_k<'Prodserv','Actserv'> * L<'Prodserv','Actserv'>^beta_l<'Prodserv','Actserv'> = 0
+ (56)  alpha<'Prodprim'> * D<'Prodprim'>^(-1 + omega^-1 * (-1 + omega)) * (alpha<'Prodprim'> * D<'Prodprim'>^(omega^-1 * (-1 + omega)) + alpha<'Prodmanu'> * D<'Prodmanu'>^(omega^-1 * (-1 + omega)) + alpha<'Prodserv'> * D<'Prodserv'>^(omega^-1 * (-1 + omega)))^(-1 + omega * (-1 + omega)^-1) + lambda__CONSUMER_1 * p<'Prodprim'> * (1 + vat<'Prodprim'>) = 0
+ (57)  alpha<'Prodmanu'> * D<'Prodmanu'>^(-1 + omega^-1 * (-1 + omega)) * (alpha<'Prodprim'> * D<'Prodprim'>^(omega^-1 * (-1 + omega)) + alpha<'Prodmanu'> * D<'Prodmanu'>^(omega^-1 * (-1 + omega)) + alpha<'Prodserv'> * D<'Prodserv'>^(omega^-1 * (-1 + omega)))^(-1 + omega * (-1 + omega)^-1) + lambda__CONSUMER_1 * p<'Prodmanu'> * (1 + vat<'Prodmanu'>) = 0
+ (58)  alpha<'Prodserv'> * D<'Prodserv'>^(-1 + omega^-1 * (-1 + omega)) * (alpha<'Prodprim'> * D<'Prodprim'>^(omega^-1 * (-1 + omega)) + alpha<'Prodmanu'> * D<'Prodmanu'>^(omega^-1 * (-1 + omega)) + alpha<'Prodserv'> * D<'Prodserv'>^(omega^-1 * (-1 + omega)))^(-1 + omega * (-1 + omega)^-1) + lambda__CONSUMER_1 * p<'Prodserv'> * (1 + vat<'Prodserv'>) = 0
+ (59)  CONT_SOC_F - ING_F + p_k * K_f = 0
+ (60)  -DIR_T + pit * PIT_base + fit * p_k * K_f = 0
+ (61)  DIR_T - TOTAL_TAX + VAT = 0
+ (62)  L_h - PIT_base + p_k * K_h = 0
+ (63)  -PREST_SOC + PREST_SOC_F + PREST_SOC_G = 0
+ (64)  CONT_SOC_G - ING_GOB + TOTAL_TAX + p_k * K_g = 0
+ (65)  SAV + SAV_F - SAV_TOT + SAV_G = 0
+ (66)  -SAV_TOT + p<'Prodprim'> * I<'Prodprim'> * (1 + vat<'Prodprim'>) + p<'Prodmanu'> * I<'Prodmanu'> * (1 + vat<'Prodmanu'>) + p<'Prodserv'> * I<'Prodserv'> * (1 + vat<'Prodserv'>) = 0
+ (67)  -VAT + vat<'Prodprim'> * p<'Prodprim'> * (D<'Prodprim'> + GG<'Prodprim'> + I<'Prodprim'>) + vat<'Prodmanu'> * p<'Prodmanu'> * (D<'Prodmanu'> + GG<'Prodmanu'> + I<'Prodmanu'>) + vat<'Prodserv'> * p<'Prodserv'> * (D<'Prodserv'> + GG<'Prodserv'> + I<'Prodserv'>) = 0
+ (68)  -ING_F + PREST_SOC_F + SAV_F + TR_EMP + fit * p_k * K_f = 0
+ (69)  -BTINC + L_h + PREST_SOC + TR_EMP + TR_GOV + p_k * K_h = 0
+ (70)  BTINC - INC + pi<'Actprim'> + pi<'Actmanu'> + pi<'Actserv'> - pit * PIT_base = 0
+ (71)  CONT_SOC - INC + SAV + p<'Prodprim'> * D<'Prodprim'> * (1 + vat<'Prodprim'>) + p<'Prodmanu'> * D<'Prodmanu'> * (1 + vat<'Prodmanu'>) + p<'Prodserv'> * D<'Prodserv'> * (1 + vat<'Prodserv'>) = 0
+ (72)  -GTO_G + PREST_SOC_G + SAV_G + TR_GOV + p<'Prodprim'> * GG<'Prodprim'> * (1 + vat<'Prodprim'>) + p<'Prodmanu'> * GG<'Prodmanu'> * (1 + vat<'Prodmanu'>) + p<'Prodserv'> * GG<'Prodserv'> * (1 + vat<'Prodserv'>) = 0
+ (73)  pi<'Actprim'> + L<'Prodprim','Actprim'> + L<'Prodmanu','Actprim'> + L<'Prodserv','Actprim'> + p_k * (K<'Prodprim','Actprim'> + K<'Prodmanu','Actprim'> + K<'Prodserv','Actprim'>) - p<'Prodprim'> * Y<'Prodprim','Actprim'> - p<'Prodmanu'> * Y<'Prodmanu','Actprim'> - p<'Prodserv'> * Y<'Prodserv','Actprim'> = 0
+ (74)  pi<'Actmanu'> + L<'Prodprim','Actmanu'> + L<'Prodmanu','Actmanu'> + L<'Prodserv','Actmanu'> + p_k * (K<'Prodprim','Actmanu'> + K<'Prodmanu','Actmanu'> + K<'Prodserv','Actmanu'>) - p<'Prodprim'> * Y<'Prodprim','Actmanu'> - p<'Prodmanu'> * Y<'Prodmanu','Actmanu'> - p<'Prodserv'> * Y<'Prodserv','Actmanu'> = 0
+ (75)  pi<'Actserv'> + L<'Prodprim','Actserv'> + L<'Prodmanu','Actserv'> + L<'Prodserv','Actserv'> + p_k * (K<'Prodprim','Actserv'> + K<'Prodmanu','Actserv'> + K<'Prodserv','Actserv'>) - p<'Prodprim'> * Y<'Prodprim','Actserv'> - p<'Prodmanu'> * Y<'Prodmanu','Actserv'> - p<'Prodserv'> * Y<'Prodserv','Actserv'> = 0
+ (76)  K_h + K_f + K_g - K<'Prodprim','Actprim'> - K<'Prodprim','Actmanu'> - K<'Prodprim','Actserv'> - K<'Prodmanu','Actprim'> - K<'Prodmanu','Actmanu'> - K<'Prodmanu','Actserv'> - K<'Prodserv','Actprim'> - K<'Prodserv','Actmanu'> - K<'Prodserv','Actserv'> = 0
 
 Calibrating equations (30):
  (1)  -data_prod_s<'Actprim','Prodprim'> + Y<'Prodprim','Actprim'> = 0
