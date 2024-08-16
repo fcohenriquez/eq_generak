@@ -92,6 +92,9 @@ model <- steady_state(model, calibration=T)
 # Listado de parametros
 
 
+alpha__Prodprim                 0.577
+alpha__Prodmanu                 0.063
+alpha__Prodserv                 0.168
 
 
 ```{r}
@@ -113,6 +116,7 @@ bl_serv=0.491
 chico=0.000005
 
 listcalib<-c(get_flow_values(rep(0.2, n), "alpha", sam_prod),
+
              
              get_flow_values(matrix(1-bl_prim, n), "beta_k", sam_prod, "Actprim"),
              get_flow_values(matrix(1-bl_manu, n), "beta_k", sam_prod, "Actmanu"),
@@ -133,7 +137,7 @@ listcalib<-c(get_flow_values(rep(0.2, n), "alpha", sam_prod),
 
 varlist=list(#lambda__CONSUMER_1=0.8,
              p_k=1,
-             #U=0.5,
+             U=1,
 
              BTINC=flow1['Total', 'Hogares' ],
              CONT_SOC=flow1['Total', 'Cont_soc' ],
@@ -179,6 +183,7 @@ varlist=list(#lambda__CONSUMER_1=0.8,
              I__Prodmanu=flow1['Prodmanu', 'SI' ]/(1+flow1['IVA','Prodmanu']/(flow1['Total','Prodmanu']-flow1['IVA','Prodmanu'])), 
              I__Prodserv=flow1['Prodserv', 'SI' ]/(1+flow1['IVA','Prodserv']/(flow1['Total','Prodserv']-flow1['IVA','Prodserv'])), #Inversion
              #Capital usado en cada producto en cada actividad
+             
              K__Prodprim__Actprim=flow1['Capital','Actprim'], K__Prodprim__Actmanu=chico, K__Prodprim__Actserv=chico,
              K__Prodmanu__Actprim=chico, K__Prodmanu__Actmanu=flow1['Capital','Actmanu'], K__Prodmanu__Actserv=chico,
              K__Prodserv__Actprim=chico, K__Prodserv__Actmanu=chico, K__Prodserv__Actserv=flow1['Capital','Actserv'],
@@ -211,12 +216,11 @@ model <- initval_calibr_par(model, listcalib)
 
 model <- initval_var(model, varlist)
 
-model <- steady_state(model, calibration=T, use_jac=F, last_solver_iter =F,
-                      options_list=list(method="Newton",global="qline", 
+model <- steady_state(model, calibration=T, use_jac=T, last_solver_iter =F,
+                      options_list=list(method="Newton",global="gline", 
                                         max_iter=300,tol=1e-06, xscalm="auto", xtol=1e-6)
 )
 ```
-
 
 
 
@@ -230,8 +234,10 @@ Norm(model@residual_vector)
 ```
 
 ```{r}
-model@residual_vector[c(19)]
+model@residual_vector[c(19)] # Residuo de la funcion de utilidad
+var_info(model,variables=c('U', 'lambda__CONSUMER_1')) 
 ```
+[1] 0.0361397 con omega=1.1 y alfa=0.2 y U=1
 [1] -0.1892402 con omega=1.1 y alfa=0.2 sin U ni lambda
 [1] -0.2169825 con omega=1.1 y alfa=0.2 y U=0.5 y lambda=0.8
 [1] -0.3235121 con omega=1.1 y alfa=0.2 y U=1
@@ -243,16 +249,26 @@ model@residual_vector[c(19)]
 model@residual_vector[c(29, 33, 37)] #Estos son los residuos de las funciones de produccion
 
 ```
-[1] -0.01213083 -0.03457481 -0.00746783 con param excel
+[1] -0.013180964 -0.034711270 -0.008319843 con param excel
 
 
 ```{r}
-#list_eq(model, eq_idx = c(68, 72, 65, 62, 39))
-list_eq(model, eq_idx = c(68))
+round(model@residual_vector[c(68, 72, 65, 62, 39)], digits=4 )
+list_eq(model, eq_idx = c(68, 72, 65, 62, 39))
+
+round(model@residual_vector[c(29, 55, 58, 59, 68)], digits=4 )
+list_eq(model, eq_idx = c(29, 55, 58, 59, 68)) #la 58 es el cierre del mercado de capital
 ```
 ```{r}
 var_info(model,variables=c('p__Prodprim', 'K__Prodprim__Actprim', 'L__Prodprim__Actprim')) 
-get_par_values(model,parameters =c('beta_l__Prodprim__Actprim', 'gamma__Prodprim__Actprim', 'beta_k__Prodprim__Actprim'))
+#get_par_values(model,parameters =c('beta_l__Prodprim__Actprim', 'gamma__Prodprim__Actprim', 'beta_k__Prodprim__Actprim'))
+```
+
+No aparecen los capitales de cada sector K<s>, estan representados por sus productos
+
+```{r}
+var_info(model,variables=c('K_h', 'K_f', 'K_g', 'K__Prodprim__Actprim', 'K__Prodprim__Actmanu', 'K__Prodprim__Actserv', 'K__Prodmanu__Actprim', 'K__Prodmanu__Actmanu', 'K__Prodmanu__Actserv', 'K__Prodserv__Actprim', 'K__Prodserv__Actmanu', 'K__Prodserv__Actserv'))
+
 ```
 
 ```{r}
@@ -283,14 +299,6 @@ var_info(model,variables=c('K__Prodprim__Actprim', 'K__Prodmanu__Actmanu', 'K__P
 var_info(model,variables=c('VAT', 'DIR_T' ))
 
 
-```
-
-```{r}
-get_flow_values(1-flow1['IVA',sam_prod]/(flow1['Total',sam_prod]-flow1['IVA',sam_prod]), "vat",sam_prod)
-get_flow_values((flow1['Imp_prod', acts]+flow1['Imptos_Espec', acts])/(flow1['Total', acts]-flow1['Imp_prod', acts]-flow1['Imptos_Espec', acts]), "t_prod", acts)
-```
-```{r}
-var_info(model, all =T)
 ```
 
 ```{r}
