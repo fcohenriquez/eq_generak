@@ -1,4 +1,4 @@
-% Generated on 2024-08-16 02:11:48 by gEcon ver. 1.2.2 (2023-07-10)
+% Generated on 2024-08-16 15:07:30 by gEcon ver. 1.2.2 (2023-07-10)
 % http://gecon.r-forge.r-project.org/
 
 % Model name: cge_calib_chile_2008_simpl
@@ -201,7 +201,7 @@ p\in {P\!R\!O\!D\!S}\colon\quad {{p}^{\langle p\rangle}} {{{G\!G}}^{\langle p\ra
 \subsection{Identities}
 
 \begin{equation}
-\sum_{s\in {S\!E\!C}} {K}^{\langle s\rangle} = K^{\mathrm{h}} + K^{\mathrm{f}} + K^{\mathrm{g}}
+\sum_{p\in {P\!R\!O\!D\!S}} \sum_{s\in {S\!E\!C}} {K}^{\langle p,s\rangle} = K^{\mathrm{h}} + K^{\mathrm{f}} + K^{\mathrm{g}}
 \end{equation}
 
 
@@ -288,7 +288,7 @@ L^{\mathrm{h}} - {P\!I\!T}^{\mathrm{base}} + {p^{\mathrm{k}}} {K^{\mathrm{h}}} =
 {C\!O\!N\!T}^{\mathrm{SOC}^{\mathrm{G}}} - {I\!N\!G}^{\mathrm{GOB}} + {T\!O\!T\!A\!L}^{\mathrm{TAX}} + {p^{\mathrm{k}}} {K^{\mathrm{g}}} = 0
 \end{equation}
 \begin{equation}
-K^{\mathrm{h}} + K^{\mathrm{f}} + K^{\mathrm{g}} - \sum_{s\in {S\!E\!C}} {K}^{\langle s\rangle} = 0
+K^{\mathrm{h}} + K^{\mathrm{f}} + K^{\mathrm{g}} - \sum_{p\in {P\!R\!O\!D\!S}} \sum_{s\in {S\!E\!C}} {K}^{\langle p,s\rangle} = 0
 \end{equation}
 \begin{equation}
 {S\!A\!V} + {S\!A\!V}^{\mathrm{F}} - {S\!A\!V}^{\mathrm{TOT}} + {S\!A\!V}^{\mathrm{G}} = 0

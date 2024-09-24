@@ -1,10 +1,10 @@
-# Generated on 2024-08-16 02:11:48 by gEcon ver. 1.2.2 (2023-07-10)
+# Generated on 2024-08-16 15:07:30 by gEcon ver. 1.2.2 (2023-07-10)
 # http://gecon.r-forge.r-project.org/
 
 # Model name: cge_calib_chile_2008_simpl
 
 # info
-info__ <- c("cge_calib_chile_2008_simpl", "/cloud/project/cge_calib_chile_2008_simpl.gcn", "2024-08-16 02:11:48", "false")
+info__ <- c("cge_calib_chile_2008_simpl", "/cloud/project/cge_calib_chile_2008_simpl.gcn", "2024-08-16 15:07:30", "false")
 
 # index sets
 index_sets__ <- list(PRODS = c("Prodprim", "Prodmanu", "Prodserv"),

@@ -106,16 +106,19 @@ g_p=2.5
 g_o=2
 
 gp_prim=3.001
-gp_manu=2.02
-gp_serv=2
+gp_manu=2.02*0+2.02379871630269
+gp_serv=2*0+2.00018954448853
 
 bl_prim=0.416
-bl_manu=0.49
-bl_serv=0.491
+bl_manu=0.49*0+0.490342131
+bl_serv=0.491*0+0.491338513
 
-chico=0.000005
+chico=0.000002
 
-listcalib<-c(get_flow_values(rep(0.2, n), "alpha", sam_prod),
+listcalib<-c(#get_flow_values(rep(0.3683438, n), "alpha", sam_prod),
+             alpha__Prodprim=0.3,              
+            alpha__Prodmanu=0.6,                 
+            alpha__Prodserv=0.02,                 
 
              
              get_flow_values(matrix(1-bl_prim, n), "beta_k", sam_prod, "Actprim"),
@@ -130,6 +133,8 @@ listcalib<-c(get_flow_values(rep(0.2, n), "alpha", sam_prod),
              gamma__Prodprim__Actmanu=g_o, gamma__Prodmanu__Actmanu=gp_manu, gamma__Prodserv__Actmanu=g_o,
              gamma__Prodprim__Actserv=g_o, gamma__Prodmanu__Actserv=g_o, gamma__Prodserv__Actserv=gp_serv
              
+
+
 
              
 )
@@ -222,8 +227,6 @@ model <- steady_state(model, calibration=T, use_jac=T, last_solver_iter =F,
 )
 ```
 
-
-
 # Estadisticas de residuos
 
 ```{r}
@@ -234,30 +237,27 @@ Norm(model@residual_vector)
 ```
 
 ```{r}
-model@residual_vector[c(19)] # Residuo de la funcion de utilidad
+model@residual_vector[c(37)] # Residuo de la funcion de utilidad
 var_info(model,variables=c('U', 'lambda__CONSUMER_1')) 
 ```
-[1] 0.0361397 con omega=1.1 y alfa=0.2 y U=1
-[1] -0.1892402 con omega=1.1 y alfa=0.2 sin U ni lambda
-[1] -0.2169825 con omega=1.1 y alfa=0.2 y U=0.5 y lambda=0.8
-[1] -0.3235121 con omega=1.1 y alfa=0.2 y U=1
-[1] -2.067182con omega=1.5
-[1] -4.390062 con omega=2
+[1] 0.05499548 con omega=1.1 y alfa=0.2 y U=0.1
+[1] 0.3549955 con omega=1.1 y alfa=0.2 y U=0.4
+[1] 0.4549955 con omega=1.1 y alfa=0.2 y U=0.5
+[1] 0.018 con omega=1.1 y alfa=0.2 y U=1
 
 
 ```{r}
-model@residual_vector[c(29, 33, 37)] #Estos son los residuos de las funciones de produccion
+round(model@residual_vector[c(47, 51, 55)], digits = 6) #Estos son los residuos de las funciones de produccion
 
 ```
-[1] -0.013180964 -0.034711270 -0.008319843 con param excel
+[1] 0.006135  0.000000 -0.004836 con param excel
 
 
 ```{r}
-round(model@residual_vector[c(68, 72, 65, 62, 39)], digits=4 )
-list_eq(model, eq_idx = c(68, 72, 65, 62, 39))
+round(model@residual_vector[c(1, 57, 58, 56, 37)], digits=4 )
+list_eq(model, eq_idx = c(1, 57, 58, 56, 37))
 
-round(model@residual_vector[c(29, 55, 58, 59, 68)], digits=4 )
-list_eq(model, eq_idx = c(29, 55, 58, 59, 68)) #la 58 es el cierre del mercado de capital
+
 ```
 ```{r}
 var_info(model,variables=c('p__Prodprim', 'K__Prodprim__Actprim', 'L__Prodprim__Actprim')) 
@@ -272,7 +272,7 @@ var_info(model,variables=c('K_h', 'K_f', 'K_g', 'K__Prodprim__Actprim', 'K__Prod
 ```
 
 ```{r}
-list_calibr_eq(model, c(18,14, 10))
+list_calibr_eq(model, c(30))
 ```
 
 

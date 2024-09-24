@@ -1,4 +1,4 @@
-Generated on 2024-08-16 02:11:48 by gEcon ver. 1.2.2 (2023-07-10)
+Generated on 2024-08-16 15:07:30 by gEcon ver. 1.2.2 (2023-07-10)
 http://gecon.r-forge.r-project.org/
 
 Model name: cge_calib_chile_2008_simpl
@@ -84,7 +84,7 @@ Block: GOB
 
 Block: EQUILIBRIUM
  Identities:
-    K_h + K_f + K_g - SUM<s::SEC> K<s> = 0
+    K_h + K_f + K_g - SUM<p::PRODS> SUM<s::SEC> K<p,s> = 0
 
 Variables (76):
     lambda__CONSUMER_1, p_k, BTINC, CONT_SOC, CONT_SOC_F, CONT_SOC_G, DIR_T, GTO_G, INC, ING_F, ING_GOB, K_h, K_f, K_g, L_h, PIT_base, PREST_SOC, PREST_SOC_F, PREST_SOC_G, SAV, SAV_F, SAV_TOT, SAV_G, TOTAL_TAX, TR_EMP, TR_GOV, U, VAT, p<'Prodprim'>, p<'Prodmanu'>, p<'Prodserv'>, pi<'Actprim'>, pi<'Actmanu'>, pi<'Actserv'>, D<'Prodprim'>, D<'Prodmanu'>, D<'Prodserv'>, DA<'Prodprim'>, DA<'Prodmanu'>, DA<'Prodserv'>, GG<'Prodprim'>, GG<'Prodmanu'>, GG<'Prodserv'>, I<'Prodprim'>, I<'Prodmanu'>, I<'Prodserv'>, K<'Prodprim','Actprim'>, K<'Prodprim','Actmanu'>, K<'Prodprim','Actserv'>, K<'Prodmanu','Actprim'>, K<'Prodmanu','Actmanu'>, K<'Prodmanu','Actserv'>, K<'Prodserv','Actprim'>, K<'Prodserv','Actmanu'>, K<'Prodserv','Actserv'>, L<'Prodprim','Actprim'>, L<'Prodprim','Actmanu'>, L<'Prodprim','Actserv'>, L<'Prodmanu','Actprim'>, L<'Prodmanu','Actmanu'>, L<'Prodmanu','Actserv'>, L<'Prodserv','Actprim'>, L<'Prodserv','Actmanu'>, L<'Prodserv','Actserv'>, OA<'Prodprim'>, OA<'Prodmanu'>, OA<'Prodserv'>, Y<'Prodprim','Actprim'>, Y<'Prodprim','Actmanu'>, Y<'Prodprim','Actserv'>, Y<'Prodmanu','Actprim'>, Y<'Prodmanu','Actmanu'>, Y<'Prodmanu','Actserv'>, Y<'Prodserv','Actprim'>, Y<'Prodserv','Actmanu'>, Y<'Prodserv','Actserv'>
