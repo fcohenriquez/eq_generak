@@ -119,11 +119,13 @@ block <s::SEC>SECTOR
 
     objective
     {
-         pi<s>[] =  (SUM<p::PRODS>(Y<p,s>[] * p<p>[]) - (K<s>[] * p_k[] + L<s>[]) );
+         #pi<s>[] =  (SUM<p::PRODS>(Y<p,s>[] * p<p>[]) - (K<s>[] * p_k[] + L<s>[]) );
+         pi<s>[] =  SUM<p::PRODS>(Y<p,s>[] * p<p>[] -K<p,s>[] * p_k[] - L<p,s>[]) ;
+         
     };
     constraints
     {
-        <p::PRODS>Y<p,s>[] = gamma<p,s> * K<p,s>[]^beta_k<p,s> * L<p,s>[]^beta_l<p,s>;
+        <p::PRODS>Y<p,s>[] = gamma<p,s> * (K<p,s>[]^beta_k<p,s>) * (L<p,s>[]^beta_l<p,s>);
 
     };
     
@@ -139,7 +141,7 @@ block <s::SEC>SECTOR
     {
 		
 		<p::PRODS>beta_k<p,s> + beta_l<p,s> = 1 -> beta_k<p,s>;
-		<p::PRODS>L<p,s>[] = l_data<s>*data_prod_s<s,p>/(SUM<pi::PRODS>(data_prod_s<s,pi>)) -> beta_l<p,s>;
+		<p::PRODS>L<p,s>[] = l_data<p,s> -> beta_l<p,s>;
 		<p::PRODS>Y<p,s>[] = data_prod_s<s,p> -> gamma<p,s>;
 
     };
@@ -280,7 +282,8 @@ block EQUILIBRIUM
 identities 
 	{
 		#SUM<s::SEC>L<s>[]=L_h[];
-		SUM<s::SEC>K<s>[]=K_h[]+K_f[]+K_g[];
+		(SUM<s::SEC>K<s>[])=(K_h[]+K_f[]+K_g[]);
+		#(SUM<p::PRODS>(SUM<s::SEC>K<p,s>[]))=(K_h[]+K_f[]+K_g[]);
 
 		
 		
